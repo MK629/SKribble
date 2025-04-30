@@ -1,4 +1,4 @@
-package com.sKribble.api.error.errorMessages;
+package com.sKribble.api.messages.errorMessages;
 
 public class EnumErrorMessages {
 

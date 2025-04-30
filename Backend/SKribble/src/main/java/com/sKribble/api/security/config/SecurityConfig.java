@@ -31,7 +31,6 @@ public class SecurityConfig {
 		http.csrf(c -> c.disable());
 		
 		http.authorizeHttpRequests(c -> {
-			c.requestMatchers("/graphiql/**").permitAll();
 			c.anyRequest().permitAll();
 		});
 		

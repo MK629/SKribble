@@ -1,4 +1,4 @@
-package com.sKribble.api.security.user;
+package com.sKribble.api.security.userDetails;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

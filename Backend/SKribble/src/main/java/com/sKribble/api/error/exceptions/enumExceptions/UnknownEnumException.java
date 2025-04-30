@@ -6,5 +6,9 @@ public class UnknownEnumException extends RuntimeException{
 
 	public UnknownEnumException(String message) {
 		super(message);
-	}	
+	}
+	
+	public UnknownEnumException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
