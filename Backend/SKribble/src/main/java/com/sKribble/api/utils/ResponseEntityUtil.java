@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 public class ResponseEntityUtil {
 	
-	private static final String errorCausePrefix = "Root cause: ";
+	private static final String errorCausePrefix = " Root cause: ";
 	
 	
 	//Success responses

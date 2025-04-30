@@ -19,8 +19,8 @@ public class CredentialsServiceExceptionHandler {
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<String> handleInputExceptions(UnknownEnumException e){
-		return ResponseEntityUtil.return400(e);
+	public ResponseEntity<String> handleInputExceptions(MethodArgumentNotValidException e){
+		return ResponseEntityUtil.return400(new RuntimeException(e.getBindingResult().getFieldError().getDefaultMessage()));
 	}
 	
 	@ExceptionHandler(UserRegstrationException.class)
