@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Confidential ###
+/src/main/resources/appConfig/*.properties
