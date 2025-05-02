@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
@@ -27,7 +28,12 @@ public class User {
 	private String id;
 	
 	@NonNull
+	@Indexed(unique = true)
 	private String username;
+	
+	@NonNull
+	@Indexed(unique = true)
+	private String email;
 	
 	@NonNull
 	private String password;
@@ -35,9 +41,10 @@ public class User {
 	@NonNull
 	private List<String> roles = new ArrayList<String>();
 	
-	public User(String username, String password) {
+	public User(String username, String email, String password) {
 		this.id = UUID.randomUUID().toString();
 		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
 	
