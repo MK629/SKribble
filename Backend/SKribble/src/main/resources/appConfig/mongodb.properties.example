@@ -1,1 +1,6 @@
+SKribble.mongodb.host=${insert custom mongodb host address}
+SKribble.mongodb.port=${insert custom mongodb port}
+SKribble.mongodb.authDb=${insert admin db, where users are created in mongodb}
 SKribble.mongodb.database=${insert custom mongodb database name}
+SKribble.mongodb.user=${insert custom mongodb user name (Not required if authentication is disabled)}
+Skribble.mongodb.password=${insert custom mongodb user password (Not required if authentication is disabled)}
