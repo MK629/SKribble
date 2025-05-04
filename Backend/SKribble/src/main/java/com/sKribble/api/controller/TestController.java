@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class TestController {
 	
-	@Value("${jwtToken}")
+	@Value("${SKribble.jwtToken}")
 	String token;
 	
 	@QueryMapping
