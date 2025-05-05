@@ -54,7 +54,6 @@ public class User {
 		
 		switch(userRole) {
 			case Developer: roles.add(prefix + "DEVELOPER"); break;
-			case Admin: roles.add(prefix + "ADMIN"); break;
 			case User: roles.add(prefix + "USER"); break;
 			default: throw new UnknownEnumException(EnumErrorMessages.UNKNOWN);
 		}

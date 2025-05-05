@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/credentials")
+@RequestMapping("${SKribble.auth.path}")
 @RequiredArgsConstructor
 public class CredentialsServiceController {
 	

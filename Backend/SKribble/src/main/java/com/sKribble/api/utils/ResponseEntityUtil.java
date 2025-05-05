@@ -36,10 +36,13 @@ public class ResponseEntityUtil {
 	
 	
 	//Centralized functions
+	
+	//Success
 	private static ResponseEntity<String> buildSuccessResponseEntity(String message, HttpStatus httpStatus){
 		return new ResponseEntity<String>(message, httpStatus);
 	}
 	
+	//Error
 	private static ResponseEntity<String> buildErrorResponseEntity(Exception e, HttpStatus httpStatus) {
 		
 		String cause = "";

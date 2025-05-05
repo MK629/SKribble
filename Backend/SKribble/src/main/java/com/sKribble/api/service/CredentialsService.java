@@ -74,12 +74,12 @@ public class CredentialsService {
 					.authenticate(new UsernamePasswordAuthenticationToken(usernameLoginForm.username(), usernameLoginForm.password()));
 			
 			if(authenticationStatus.isAuthenticated()) {
-				return ResponseEntityUtil.return200(jwtUtil.generateToken(usernameLoginForm.username()));
+				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName(), authenticationStatus.getAuthorities()));
 			}
 			else {
 				throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.TRY_AGAIN);
 			}
-		} 
+		}
 		catch (BadCredentialsException e) {
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_USERNAME);
 		}

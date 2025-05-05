@@ -1,1 +1,3 @@
 SKribble.jwt.secretToken=${insert custom jwt token}
+SKribble.jwt.issuer=${insert custom jwt issuer}
+SKribble.jwt.encryptionKey=${insert custom jwt encryption key}
