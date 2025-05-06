@@ -20,8 +20,8 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 	
-	@Value("${SKribble.jwtToken}")
-	private String secretToken;
+	@Value("${SKribble.jwtTokenKey}")
+	private String secretTokenKey;
 	
 	@Value("${SKribble.jwtTokenIssuer}")
 	private String issuer;
@@ -30,7 +30,7 @@ public class JwtUtil {
 	private String encryptionKey;
 	
 	private SecretKey getSigningKey() {
-		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretToken)); //On raw strings, Decoders.BASE64.decode() turns them into a byte[]
+		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretTokenKey)); //On raw strings, Decoders.BASE64.decode() turns them into a byte[]
 	}
 	
 	private SecretKey getEncryptionKey() {
