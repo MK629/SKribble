@@ -12,7 +12,7 @@ public class AuthenticationErrorMessages {
 	
 	public static final String UNKNOWN_ERROR = "An unknown error occured.";
 	
-	public static final String USER_NOT_FOUND = "User not found.";
+	public static final String USER_NON_EXISTENT = "User does not exist.";
 	
 	public static final String CORRUPTED_TOKEN = "Token is either altered or corrupted. Authentication failed.";
 

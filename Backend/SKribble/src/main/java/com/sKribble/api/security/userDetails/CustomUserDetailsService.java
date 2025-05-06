@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 			return new CustomUserDetails(loadedUser);
 		}
 		else {
-			throw new UsernameNotFoundException(AuthenticationErrorMessages.USER_NOT_FOUND);
+			throw new UsernameNotFoundException(AuthenticationErrorMessages.USER_NON_EXISTENT);
 		}
 	}
 

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sKribble.api.error.exceptions.credentialsExceptions.JwtTokenException;
-import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 import com.sKribble.api.security.userDetails.CustomUserDetailsService;
 
 import jakarta.servlet.FilterChain;
@@ -17,9 +16,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Component
 @RequiredArgsConstructor
+@Log4j2
 public class JwtFilter extends OncePerRequestFilter{
 	
 	private final JwtUtil jwtUtil;
@@ -29,22 +30,31 @@ public class JwtFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		String authorizationHeader = request.getHeader("Authorization");
-		
-		if(authorizationHeader != null && !authorizationHeader.isBlank() && authorizationHeader.startsWith("Bearer ")) {
-			String token = authorizationHeader.substring(7);
+		try {
+			String authorizationHeader = request.getHeader("Authorization");
 			
-			Boolean isAuthenticated = jwtUtil.validateJWE(token);
+			if(authorizationHeader != null && !authorizationHeader.isBlank() && authorizationHeader.startsWith("Bearer ")) {
+				
+				String token = authorizationHeader.substring(7);
+				
+				if(jwtUtil.validateJWE(token)) {
+					UserDetails userDetails = customUserDetailsService.loadUserByUsername(jwtUtil.extractUsername(token));
+					SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities()));
+				}
+			}
 			
-			if(isAuthenticated) {
-				UserDetails userDetails = customUserDetailsService.loadUserByUsername(jwtUtil.extractUsername(token));
-				SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities()));
-			}
-			else{
-				throw new JwtTokenException(AuthenticationErrorMessages.CORRUPTED_TOKEN);
-			}
+			filterChain.doFilter(request, response);
 		}
-		
-		filterChain.doFilter(request, response);
+		catch(JwtTokenException e) {
+			response.setStatus(401);
+			response.getWriter().write(e.getMessage());
+			log.error(e.getMessage());
+		}
+		catch(Exception e) {
+			response.setStatus(401);
+			response.getWriter().write(e.getMessage());
+			log.error(e.getMessage());
+		}
+
 	}
 }

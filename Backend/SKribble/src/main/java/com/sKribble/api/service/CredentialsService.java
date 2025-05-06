@@ -49,6 +49,7 @@ public class CredentialsService {
 			
 			String message = "";
 			
+			//Fix later
 			if(e.getMessage().contains("username")) {
 				message += InputErrorMessages.DUPLICATE_USERNAME;
 			}
@@ -83,14 +84,30 @@ public class CredentialsService {
 		catch (BadCredentialsException e) {
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_USERNAME);
 		}
-		catch (AuthenticationException e) {
-			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR);
+		catch (Exception e) {
+			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
 		}
 	}
 	
 	//E-Mail login
 	public ResponseEntity<String> emailLogin(@Valid EMailLoginForm eMailLoginForm){
-		return null;
+		try {
+			Authentication authenticationStatus = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(eMailLoginForm.email(), eMailLoginForm.password()));
+			
+			if(authenticationStatus.isAuthenticated()) {
+				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName(), authenticationStatus.getAuthorities()));
+			}
+			else {
+				throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.TRY_AGAIN);
+			}
+		}
+		catch (BadCredentialsException e) {
+			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_EMAIL);
+		}
+		catch (Exception e) {
+			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
+		}
 	}
 	
 }

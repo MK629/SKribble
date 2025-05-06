@@ -12,7 +12,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.sKribble.api.error.exceptions.credentialsExceptions.JwtTokenException;
+import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
+
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.JwtParserBuilder;
 import io.jsonwebtoken.Jwts;
@@ -82,9 +87,12 @@ public class JwtUtil {
 			.verifyWith(getSigningKey())
 			.build()
 			.parseSignedClaims(decryptToJWS(token));
-		} 
+		}
+		catch(JwtException e) {
+			throw new JwtTokenException(AuthenticationErrorMessages.CORRUPTED_TOKEN);
+		}
 		catch (Exception e) {
-			throw e;
+			throw new JwtTokenException(e.getMessage());
 		}
 		return true;
 	}
