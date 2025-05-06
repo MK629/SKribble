@@ -74,7 +74,7 @@ public class CredentialsService {
 					.authenticate(new UsernamePasswordAuthenticationToken(usernameLoginForm.username(), usernameLoginForm.password()));
 			
 			if(authenticationStatus.isAuthenticated()) {
-				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName(), authenticationStatus.getAuthorities()));
+				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName()));
 			}
 			else {
 				throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.TRY_AGAIN);
@@ -95,7 +95,7 @@ public class CredentialsService {
 					.authenticate(new UsernamePasswordAuthenticationToken(eMailLoginForm.email(), eMailLoginForm.password()));
 			
 			if(authenticationStatus.isAuthenticated()) {
-				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName(), authenticationStatus.getAuthorities()));
+				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName()));
 			}
 			else {
 				throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.TRY_AGAIN);

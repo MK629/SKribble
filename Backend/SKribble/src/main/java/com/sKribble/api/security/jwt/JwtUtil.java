@@ -1,12 +1,10 @@
 package com.sKribble.api.security.jwt;
 
-import java.util.Collection;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.sKribble.api.error.exceptions.credentialsExceptions.JwtTokenException;
@@ -47,7 +45,7 @@ public class JwtUtil {
 		return new String(jwsBytesFormat); //Had to do this because of a bullshit exception.
 	}
 	
-	public String generateJWE(String reciever, Collection<? extends GrantedAuthority> authorities) {
+	public String generateJWE(String reciever) {
 		//Build JWS
 		String signedToken = Jwts.builder()
 								.claims()
