@@ -8,9 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sKribble.api.database.entity.User;
-import com.sKribble.api.database.enums.UserRoles;
+import com.sKribble.api.database.entity.enums.UserRoles;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.EMailLoginForm;
 import com.sKribble.api.dto.input.UserRegisterForm;
@@ -37,6 +38,7 @@ public class CredentialsService {
 	private final JwtUtil jwtUtil;
 	
 	//Register a new user.
+	@Transactional
 	public ResponseEntity<String> register(@Valid UserRegisterForm userRegisterForm) {
 		
 		try {
@@ -108,5 +110,4 @@ public class CredentialsService {
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
 		}
 	}
-	
 }

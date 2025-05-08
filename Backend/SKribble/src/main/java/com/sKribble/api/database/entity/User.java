@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
-import com.sKribble.api.database.enums.UserRoles;
+import com.sKribble.api.database.entity.enums.UserRoles;
 import com.sKribble.api.error.exceptions.enumExceptions.UnknownEnumException;
 import com.sKribble.api.messages.errorMessages.EnumErrorMessages;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Document(collection = "users")
 @Getter
 @Setter
-@NoArgsConstructor
+@TypeAlias("User")
 public class User {
 	
 	@Id
@@ -45,7 +45,7 @@ public class User {
 		this.id = UUID.randomUUID().toString();
 		this.username = username;
 		this.email = email;
-		this.password = password;
+		this.password = null;
 	}
 	
 	public void assignRole(UserRoles userRole) {
