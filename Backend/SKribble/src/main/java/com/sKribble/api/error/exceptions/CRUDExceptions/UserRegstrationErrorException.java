@@ -1,8 +1,8 @@
-package com.sKribble.api.error.exceptions.credentialsExceptions;
+package com.sKribble.api.error.exceptions.CRUDExceptions;
 
 public class UserRegstrationErrorException extends RuntimeException{
 
-	private static final long serialVersionUID = 1180438378911560594L;
+	private static final long serialVersionUID = 101L;
 
 	public UserRegstrationErrorException(String message) {
 		super(message);

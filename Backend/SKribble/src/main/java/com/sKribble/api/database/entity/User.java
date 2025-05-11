@@ -15,12 +15,14 @@ import com.sKribble.api.error.exceptions.enumExceptions.UnknownEnumException;
 import com.sKribble.api.messages.errorMessages.EnumErrorMessages;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Document(collection = "users")
 @Getter
 @Setter
 @TypeAlias("User")
+@NoArgsConstructor
 public class User {
 	
 	@Id
@@ -45,7 +47,7 @@ public class User {
 		this.id = UUID.randomUUID().toString();
 		this.username = username;
 		this.email = email;
-		this.password = null;
+		this.password = password;
 	}
 	
 	public void assignRole(UserRoles userRole) {

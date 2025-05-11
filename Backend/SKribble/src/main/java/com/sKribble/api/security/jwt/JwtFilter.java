@@ -5,10 +5,12 @@ import java.io.IOException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sKribble.api.error.exceptions.credentialsExceptions.JwtTokenException;
+import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 import com.sKribble.api.security.userDetails.CustomUserDetailsService;
 
 import jakarta.servlet.FilterChain;
@@ -50,11 +52,15 @@ public class JwtFilter extends OncePerRequestFilter{
 			response.getWriter().write(e.getMessage());
 			log.error(e.getMessage());
 		}
+		catch(UsernameNotFoundException e){
+			response.setStatus(401);
+			response.getWriter().write(AuthenticationErrorMessages.UNKNOWN_ERROR);
+			log.error(e.getMessage());
+		}
 		catch(Exception e) {
 			response.setStatus(401);
 			response.getWriter().write(e.getMessage());
 			log.error(e.getMessage());
 		}
-
 	}
 }

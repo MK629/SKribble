@@ -2,6 +2,8 @@ package com.sKribble.api.error.exceptions.credentialsExceptions;
 
 public class JwtTokenException extends RuntimeException{
 
+	private static final long serialVersionUID = 202L;
+
 	public JwtTokenException(String message, Throwable cause) {
 		super(message, cause);
 	}
@@ -10,7 +12,4 @@ public class JwtTokenException extends RuntimeException{
 		super(message);
 
 	}
-
-	private static final long serialVersionUID = -4928789242581318652L;
-
 }

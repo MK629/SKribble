@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
 
+import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,13 +20,15 @@ public class Project {
 
     @Id
     @NonNull
-    String id;
+    private String id;
 
-    @NonNull
-    String name;
 
-    protected Project(String name){
+
+    @Nonnull
+    private String author;
+
+    protected Project(String author){
         this.id = UUID.randomUUID().toString();
-        this.name = name;
+        this.author = author;
     }
 }

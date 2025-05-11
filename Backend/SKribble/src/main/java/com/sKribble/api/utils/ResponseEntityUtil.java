@@ -33,6 +33,10 @@ public class ResponseEntityUtil {
 	public static ResponseEntity<String> return404(Exception e){
 		return buildErrorResponseEntity(e, HttpStatus.NOT_FOUND);
 	}
+
+	public static ResponseEntity<String> return500(Exception e){
+		return buildErrorResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 	
 	//Centralized functions

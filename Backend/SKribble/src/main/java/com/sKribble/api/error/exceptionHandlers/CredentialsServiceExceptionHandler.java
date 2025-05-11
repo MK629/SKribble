@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.sKribble.api.controller.CredentialsServiceController;
+import com.sKribble.api.error.exceptions.CRUDExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.credentialsExceptions.LoginErrorException;
-import com.sKribble.api.error.exceptions.credentialsExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.enumExceptions.UnknownEnumException;
 import com.sKribble.api.utils.ResponseEntityUtil;
 

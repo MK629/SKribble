@@ -2,7 +2,7 @@ package com.sKribble.api.error.exceptions.credentialsExceptions;
 
 public class LoginErrorException extends RuntimeException{
 
-	private static final long serialVersionUID = 6949337144876635424L;
+	private static final long serialVersionUID = 201L;
 
 	public LoginErrorException(String message, Throwable cause) {
 		super(message, cause);

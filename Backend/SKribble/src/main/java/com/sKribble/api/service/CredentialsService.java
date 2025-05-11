@@ -16,8 +16,8 @@ import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.EMailLoginForm;
 import com.sKribble.api.dto.input.UserRegisterForm;
 import com.sKribble.api.dto.input.UsernameLoginForm;
+import com.sKribble.api.error.exceptions.CRUDExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.credentialsExceptions.LoginErrorException;
-import com.sKribble.api.error.exceptions.credentialsExceptions.UserRegstrationErrorException;
 import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
@@ -27,9 +27,11 @@ import com.sKribble.api.utils.ResponseEntityUtil;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class CredentialsService {
 	
 	private final UserRepository userRepo;
@@ -58,7 +60,7 @@ public class CredentialsService {
 			if(e.getMessage().contains("email")) {
 			    message += InputErrorMessages.DUPLICATE_EMAIL;
 			}
-			
+
 			throw new UserRegstrationErrorException(CRUDErrorMessages.REGISTER_FAILED, new RuntimeException(message));
 		}
 		catch(Exception e) {
