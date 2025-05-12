@@ -22,13 +22,11 @@ public class Project {
     @NonNull
     private String id;
 
-
-
     @Nonnull
-    private String author;
+    private String ownerId;
 
-    protected Project(String author){
+    protected Project(String ownerId){
         this.id = UUID.randomUUID().toString();
-        this.author = author;
+        this.ownerId = ownerId;
     }
 }

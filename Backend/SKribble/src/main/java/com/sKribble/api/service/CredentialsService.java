@@ -27,11 +27,9 @@ import com.sKribble.api.utils.ResponseEntityUtil;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class CredentialsService {
 	
 	private final UserRepository userRepo;
@@ -61,7 +59,7 @@ public class CredentialsService {
 			    message += InputErrorMessages.DUPLICATE_EMAIL;
 			}
 
-			throw new UserRegstrationErrorException(CRUDErrorMessages.REGISTER_FAILED, new RuntimeException(message));
+			throw new UserRegstrationErrorException(CRUDErrorMessages.REGISTER_FAILED, new DuplicateKeyException(message));
 		}
 		catch(Exception e) {
 			throw new UserRegstrationErrorException(CRUDErrorMessages.REGISTER_FAILED, e);
@@ -81,7 +79,7 @@ public class CredentialsService {
 				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName()));
 			}
 			else {
-				throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.TRY_AGAIN);
+				throw new LoginErrorException(AuthenticationErrorMessages.TRY_AGAIN);
 			}
 		}
 		catch (BadCredentialsException e) {
@@ -102,7 +100,7 @@ public class CredentialsService {
 				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName()));
 			}
 			else {
-				throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.TRY_AGAIN);
+				throw new LoginErrorException(AuthenticationErrorMessages.TRY_AGAIN);
 			}
 		}
 		catch (BadCredentialsException e) {

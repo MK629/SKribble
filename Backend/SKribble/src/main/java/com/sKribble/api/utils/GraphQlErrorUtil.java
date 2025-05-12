@@ -3,8 +3,12 @@ package com.sKribble.api.utils;
 import org.springframework.graphql.execution.ErrorType;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class GraphQlErrorUtil {
+
+    private static final String errorCausePrefix = " Root cause:";
 
     public static GraphQLError return400(Exception e){
         return buildGraphQLError(e, ErrorType.BAD_REQUEST);
@@ -27,7 +31,22 @@ public class GraphQlErrorUtil {
     }
 
     private static GraphQLError buildGraphQLError(Exception e, ErrorType errorType){
-        return GraphqlErrorBuilder.newError().message(e.getMessage()).errorType(errorType).build();
+        
+        String cause = " ";
+
+        if(e.getCause() != null){
+            cause += e.getCause().getMessage();
+        }
+        else{
+            cause = "";
+        }
+
+        if(errorType == ErrorType.UNAUTHORIZED || errorType == ErrorType.FORBIDDEN || errorType == ErrorType.INTERNAL_ERROR){
+            String causeLog = (cause.isEmpty() || cause.isBlank()) ? "" : errorCausePrefix + cause;
+            log.error(e.getMessage() + causeLog);
+        }
+
+        return GraphqlErrorBuilder.newError().message(e.getMessage() + cause).errorType(errorType).build();
     }
 
 }

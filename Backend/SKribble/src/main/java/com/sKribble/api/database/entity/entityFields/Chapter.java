@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class Chapter {
 
-    Integer chapterNumber;
+    private Integer chapterNumber;
 
-    String chapterName;
+    private String chapterName;
 
-    String text;
+    private String text;
 
     @PersistenceCreator
     public Chapter(Integer chapterNumber, String chapterName, String text){

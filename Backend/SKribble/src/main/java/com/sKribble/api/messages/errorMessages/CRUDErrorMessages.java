@@ -5,4 +5,6 @@ public class CRUDErrorMessages {
 	public static final String REGISTER_FAILED = "User registration failed.";
 
 	public static final String DUPLICATE_CHAPTER = "This chapter number already exists.";
+
+	public static final String ILLOGICAL_ERROR = "Illogical processing result. Please contact the developer.";
 }

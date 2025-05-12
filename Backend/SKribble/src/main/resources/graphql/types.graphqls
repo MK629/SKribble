@@ -1,0 +1,13 @@
+type Chapter{
+    chapterNumber: Int
+    chapterName: String
+    text: String
+}
+
+type StoryOutput{
+    id: String
+    title: String
+    type: ProjectTypes
+    chapters: [Chapter]
+    owner: String
+}

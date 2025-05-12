@@ -7,8 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class CurrentUserInfoUtil {
 
-    public static String getCurrentUserPrincipal(){
-        return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public static String getCurrentUserPrincipalName(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     public static Collection<? extends GrantedAuthority> getCurrentUseAuthorities(){

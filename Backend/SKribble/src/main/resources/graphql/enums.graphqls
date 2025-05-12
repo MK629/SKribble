@@ -1,0 +1,8 @@
+enum ProjectTypes {
+    Story
+    Essay
+    Assignment
+    Research
+    Thesis
+    Song
+}

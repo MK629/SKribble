@@ -1,5 +1,5 @@
 type Query{
-	greet : String!
+	findStoriesByTitle(title: String!) : [StoryOutput]
 }
 
 type Mutation{

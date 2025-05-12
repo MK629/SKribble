@@ -20,16 +20,16 @@ import lombok.Setter;
 @TypeAlias("Story")
 public class Story extends Project{
 
-    private final String name;
+    private final String title;
 
     private final ProjectTypes type;
 
     private List<Chapter> chapters;
 
     @PersistenceCreator
-    public Story(String name, ProjectTypes type, List<Chapter> chapters, String author) {
-        super(author);
-        this.name = name;
+    public Story(String title, ProjectTypes type, List<Chapter> chapters, String ownerId) {
+        super(ownerId);
+        this.title = title;
         this.type = type;
         this.chapters = (this.chapters == null) ? new ArrayList<>() : chapters;
     }
