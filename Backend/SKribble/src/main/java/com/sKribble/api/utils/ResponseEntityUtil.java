@@ -3,6 +3,8 @@ package com.sKribble.api.utils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.sKribble.api.dto.output.TokenCarrier;
+
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -18,6 +20,11 @@ public class ResponseEntityUtil {
 	
 	public static ResponseEntity<String> return201(String message){
 		return buildSuccessResponseEntity(message, HttpStatus.CREATED);
+	}
+
+	//Response with token
+	public static ResponseEntity<TokenCarrier> returnToken(TokenCarrier tokenCarrier){
+		return new ResponseEntity<TokenCarrier>(tokenCarrier, HttpStatus.OK);
 	}
 	
 	//Error responses
@@ -61,6 +68,7 @@ public class ResponseEntityUtil {
 			cause = "";
 		}
 
+		//Log to console if status is 401, 403 or 500.
 		if(httpStatus == HttpStatus.UNAUTHORIZED || httpStatus == HttpStatus.FORBIDDEN || httpStatus == HttpStatus.INTERNAL_SERVER_ERROR){
 			String causeLog = (cause.isEmpty() || cause.isBlank()) ? "" : errorCausePrefix + cause;
 			log.error(e.getMessage() + causeLog);

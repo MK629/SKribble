@@ -15,5 +15,4 @@ public class AuthenticationErrorMessages {
 	public static final String USER_NON_EXISTENT = "User does not exist.";
 	
 	public static final String CORRUPTED_TOKEN = "Token is either altered or corrupted. Authentication failed.";
-
 }

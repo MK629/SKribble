@@ -8,4 +8,5 @@ public class CRUDSuccessMessages {
 
 	public static final String CHAPTER_ADD_SUCCESS = "A new chapter has been successfully added to the story.";
 
+	public static final String CHARACTER_CREATION_SUCCESS = "A new character has been successfully created.";
 }

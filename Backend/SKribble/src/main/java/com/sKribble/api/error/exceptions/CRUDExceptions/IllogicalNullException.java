@@ -1,14 +1,14 @@
 package com.sKribble.api.error.exceptions.CRUDExceptions;
 
-public class IllogicalException extends RuntimeException{
+public class IllogicalNullException extends RuntimeException{
 
     public static final long serialVersionUID = 103L;
 
-    public IllogicalException(String message){
+    public IllogicalNullException(String message){
         super(message);
     }
 
-    public IllogicalException(String message, Throwable cause){
+    public IllogicalNullException(String message, Throwable cause){
         super(message, cause);
     }
 }

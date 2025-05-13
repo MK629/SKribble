@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sKribble.api.dto.input.EMailLoginForm;
 import com.sKribble.api.dto.input.UserRegisterForm;
 import com.sKribble.api.dto.input.UsernameLoginForm;
+import com.sKribble.api.dto.output.TokenCarrier;
 import com.sKribble.api.service.CredentialsService;
 
 import jakarta.validation.Valid;
@@ -27,12 +28,12 @@ public class CredentialsServiceController {
 	}
 	
 	@PostMapping("/uLogin")
-	public ResponseEntity<String> usernameLogin(@RequestBody @Valid UsernameLoginForm usernameLoginForm){
+	public ResponseEntity<TokenCarrier> usernameLogin(@RequestBody @Valid UsernameLoginForm usernameLoginForm){
 		return credentialsService.usernameLogin(usernameLoginForm);
 	}
 	
 	@PostMapping("/eLogin")
-	public ResponseEntity<String> emailLogin(@RequestBody @Valid EMailLoginForm eMailLoginForm){
+	public ResponseEntity<TokenCarrier> emailLogin(@RequestBody @Valid EMailLoginForm eMailLoginForm){
 		return credentialsService.emailLogin(eMailLoginForm);
 	}
 }

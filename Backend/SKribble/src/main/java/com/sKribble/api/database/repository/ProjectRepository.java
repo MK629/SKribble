@@ -9,6 +9,9 @@ import com.sKribble.api.database.entity.Project;
 import com.sKribble.api.database.entity.childEntities.Story;
 
 public interface ProjectRepository extends MongoRepository<Project, String>{
+
+    @Query("{'_id' : ?0}")
+    Story findStoryByIdentification(String id);
     
     @Query("{'title' : {$regex: ?0, $options: 'i'}}")
     List<Story> findStoriesByTitle(String title);

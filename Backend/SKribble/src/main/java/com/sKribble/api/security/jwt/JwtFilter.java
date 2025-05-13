@@ -54,7 +54,7 @@ public class JwtFilter extends OncePerRequestFilter{
 		}
 		catch(UsernameNotFoundException e){
 			response.setStatus(401);
-			response.getWriter().write(AuthenticationErrorMessages.UNKNOWN_ERROR);
+			response.getWriter().write(AuthenticationErrorMessages.UNKNOWN_ERROR + " " + AuthenticationErrorMessages.TRY_AGAIN);
 			log.error(e.getMessage());
 		}
 		catch(Exception e) {

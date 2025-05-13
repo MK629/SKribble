@@ -34,11 +34,14 @@ public class Story extends Project{
         this.chapters = (this.chapters == null) ? new ArrayList<>() : chapters;
     }
 
-    public void addChapter(Integer chapterNumber, Chapter chapter){
-        if(this.chapters.stream().anyMatch((c) -> {return c.getChapterNumber() == chapterNumber;})){
+    public void addChapter(Chapter chapter){
+        
+        if(this.chapters.stream().anyMatch((c) -> {return c.getChapterNumber() == chapter.getChapterNumber();})){
             throw new DuplicateChapterException(CRUDErrorMessages.DUPLICATE_CHAPTER);
         }
 
-        this.chapters.add(chapterNumber - 1, chapter);
+        this.chapters.add(chapter);
+
+        this.chapters.sort((chapter1, chapter2) -> {return Integer.compare(chapter1.getChapterNumber(), chapter2.getChapterNumber());});
     }
 }

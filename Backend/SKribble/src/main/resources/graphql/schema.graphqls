@@ -3,5 +3,5 @@ type Query{
 }
 
 type Mutation{
-	newStory(name: String!) : String!
+	newStory(title: String!) : String!
 }

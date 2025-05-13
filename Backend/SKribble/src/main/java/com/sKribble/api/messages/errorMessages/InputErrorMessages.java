@@ -15,4 +15,10 @@ public class InputErrorMessages {
 	public static final String DUPLICATE_USERNAME = "This username already exists.";
 	
 	public static final String DUPLICATE_EMAIL = "This E-Mail is already registered to another user.";
+
+	public static final String REQUIRES_STORY_ID = "Story ID is empty. Unable to proceed.";
+
+	public static final String REQUIRES_CHAPTER_NUMBER = "Please define a number for your chapter.";
+
+	public static final String REQUIRES_CHAPTER_NAME = "Please define a name for your chapter.";
 }

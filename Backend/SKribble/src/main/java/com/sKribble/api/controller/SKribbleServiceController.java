@@ -24,7 +24,7 @@ public class SKribbleServiceController {
     }
 
     @MutationMapping
-    public String newStory(@Argument("name") String name){
-        return sKribbleStoryService.newStory(name);
+    public String newStory(@Argument("title") String title){
+        return sKribbleStoryService.newStory(title);
     }
 }

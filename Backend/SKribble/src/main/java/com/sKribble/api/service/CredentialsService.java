@@ -16,13 +16,16 @@ import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.EMailLoginForm;
 import com.sKribble.api.dto.input.UserRegisterForm;
 import com.sKribble.api.dto.input.UsernameLoginForm;
+import com.sKribble.api.dto.output.TokenCarrier;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.credentialsExceptions.LoginErrorException;
 import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
+import com.sKribble.api.messages.successMessages.AuthenticationSuccessMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.security.jwt.JwtUtil;
+import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.ResponseEntityUtil;
 
 import jakarta.validation.Valid;
@@ -69,21 +72,22 @@ public class CredentialsService {
 	}
 	
 	//User name login
-	public ResponseEntity<String> usernameLogin(@Valid UsernameLoginForm usernameLoginForm){
+	public ResponseEntity<TokenCarrier> usernameLogin(@Valid UsernameLoginForm usernameLoginForm){
 		
 		try {
 			Authentication authenticationStatus = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(usernameLoginForm.username(), usernameLoginForm.password()));
 			
 			if(authenticationStatus.isAuthenticated()) {
-				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName()));
+				String token = jwtUtil.generateJWE(authenticationStatus.getName());
+				return ResponseEntityUtil.returnToken(DTOConverter.makeTokenCarrier(AuthenticationSuccessMessages.USERNAME_LOGIN_SUCCESS, token));
 			}
 			else {
-				throw new LoginErrorException(AuthenticationErrorMessages.TRY_AGAIN);
+				throw new LoginErrorException( AuthenticationErrorMessages.UNKNOWN_ERROR + " " + AuthenticationErrorMessages.TRY_AGAIN);
 			}
 		}
 		catch (BadCredentialsException e) {
-			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_USERNAME);
+			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_USERNAME, e);
 		}
 		catch (Exception e) {
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
@@ -91,20 +95,21 @@ public class CredentialsService {
 	}
 	
 	//E-Mail login
-	public ResponseEntity<String> emailLogin(@Valid EMailLoginForm eMailLoginForm){
+	public ResponseEntity<TokenCarrier> emailLogin(@Valid EMailLoginForm eMailLoginForm){
 		try {
 			Authentication authenticationStatus = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(eMailLoginForm.email(), eMailLoginForm.password()));
 			
 			if(authenticationStatus.isAuthenticated()) {
-				return ResponseEntityUtil.return200(jwtUtil.generateJWE(authenticationStatus.getName()));
+				String token = jwtUtil.generateJWE(authenticationStatus.getName());
+				return ResponseEntityUtil.returnToken(DTOConverter.makeTokenCarrier(AuthenticationSuccessMessages.EMAIL_LOGIN_SUCCESS, token));
 			}
 			else {
-				throw new LoginErrorException(AuthenticationErrorMessages.TRY_AGAIN);
+				throw new LoginErrorException( AuthenticationErrorMessages.UNKNOWN_ERROR + " " + AuthenticationErrorMessages.TRY_AGAIN);
 			}
 		}
 		catch (BadCredentialsException e) {
-			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_EMAIL);
+			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_EMAIL, e);
 		}
 		catch (Exception e) {
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
