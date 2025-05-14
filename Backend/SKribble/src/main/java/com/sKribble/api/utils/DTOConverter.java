@@ -7,7 +7,7 @@ import com.sKribble.api.dto.output.TokenCarrier;
 public class DTOConverter {
 
     public static StoryOutput getStoryOutput(Story story, String owner){
-        return new StoryOutput(story.getId(), story.getTitle(), story.getType(), story.getChapters(), owner);
+        return new StoryOutput(story.getId(), story.getTitle(), story.getType(), story.getChaptersForDTO(), story.getCharactersForDTO(), owner);
     }
 
     public static TokenCarrier makeTokenCarrier(String message, String token){

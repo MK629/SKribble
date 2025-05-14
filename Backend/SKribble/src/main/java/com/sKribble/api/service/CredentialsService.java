@@ -43,10 +43,11 @@ public class CredentialsService {
 	//Register a new user.
 	@Transactional
 	public ResponseEntity<String> register(@Valid UserRegisterForm userRegisterForm) {
+
+		User user = new User(userRegisterForm.username(), userRegisterForm.email(), passwordEncoder.encode(userRegisterForm.password()));
+		user.assignRole(UserRoles.User);
 		
 		try {
-			User user = new User(userRegisterForm.username(), userRegisterForm.email(), passwordEncoder.encode(userRegisterForm.password()));
-			user.assignRole(UserRoles.User);
 			userRepo.save(user);
 		}
 		catch(DuplicateKeyException e) {

@@ -1,7 +1,7 @@
 type Query{
-	findStoriesByTitle(title: String!) : [StoryOutput]
+	findStoriesByTitle(storyTitleInput: StoryTitleInput!) : [StoryOutput]
 }
 
 type Mutation{
-	newStory(title: String!) : String!
+	newStory(storyTitleInput: StoryTitleInput!) : String
 }

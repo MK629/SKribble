@@ -4,10 +4,16 @@ type Chapter{
     text: String
 }
 
+type StoryCharacter{
+    name: String
+    description: String
+}
+
 type StoryOutput{
     id: String
     title: String
     type: ProjectTypes
     chapters: [Chapter]
+    characters: [StoryCharacter]
     owner: String
 }

@@ -7,9 +7,11 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.sKribble.api.dto.input.StoryTitleInput;
 import com.sKribble.api.dto.output.StoryOutput;
 import com.sKribble.api.service.SKribbleStoryService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -19,12 +21,12 @@ public class SKribbleServiceController {
     private final SKribbleStoryService sKribbleStoryService;
 	
     @QueryMapping
-    public List<StoryOutput> findStoriesByTitle(@Argument("title") String title){
-        return sKribbleStoryService.findStoriesByTitle(title);
+    public List<StoryOutput> findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
+        return sKribbleStoryService.findStoriesByTitle(storyTitleInput);
     }
 
     @MutationMapping
-    public String newStory(@Argument("title") String title){
-        return sKribbleStoryService.newStory(title);
+    public String newStory(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
+        return sKribbleStoryService.newStory(storyTitleInput);
     }
 }

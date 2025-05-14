@@ -1,0 +1,9 @@
+input StoryTitleInput{
+    title: String
+}
+
+input AddChapterForm{
+    storyId: String
+    chapterNumber: Int
+    chapterName: String
+}
