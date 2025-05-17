@@ -10,27 +10,27 @@ public class GraphQlErrorUtil {
 
     private static final String errorCausePrefix = " Root cause:";
 
-    public static GraphQLError return400(Exception e){
+    public static GraphQLError return400(Throwable e){
         return buildGraphQLError(e, ErrorType.BAD_REQUEST);
     }
 
-    public static GraphQLError return401(Exception e){
+    public static GraphQLError return401(Throwable e){
         return buildGraphQLError(e, ErrorType.UNAUTHORIZED);
     }
     
-    public static GraphQLError return403(Exception e){
+    public static GraphQLError return403(Throwable e){
         return buildGraphQLError(e, ErrorType.FORBIDDEN);
     }
 
-    public GraphQLError return404(Exception e){
+    public static GraphQLError return404(Throwable e){
         return buildGraphQLError(e, ErrorType.NOT_FOUND);
     }
 
-    public GraphQLError return500(Exception e){
+    public static GraphQLError return500(Throwable e){
         return buildGraphQLError(e, ErrorType.INTERNAL_ERROR);
     }
 
-    private static GraphQLError buildGraphQLError(Exception e, ErrorType errorType){
+    private static GraphQLError buildGraphQLError(Throwable e, ErrorType errorType){
         
         String cause = " ";
 

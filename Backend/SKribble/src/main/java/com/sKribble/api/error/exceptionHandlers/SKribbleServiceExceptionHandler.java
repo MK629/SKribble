@@ -1,19 +1,25 @@
 package com.sKribble.api.error.exceptionHandlers;
 
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
+import org.springframework.stereotype.Component;
 
-import com.sKribble.api.controller.SKribbleServiceController;
 import com.sKribble.api.utils.GraphQlErrorUtil;
 
 import graphql.GraphQLError;
+import graphql.schema.DataFetchingEnvironment;
+import jakarta.validation.ConstraintViolationException;
 
-@ControllerAdvice(assignableTypes = SKribbleServiceController.class)
-public class SKribbleServiceExceptionHandler {
-	
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public GraphQLError handleInputExceptions(MethodArgumentNotValidException e){
-        return GraphQlErrorUtil.return400(new Exception(e.getBindingResult().getFieldError().getDefaultMessage()));
+//Can't use @ControllerAdvice for graphQl related stuff.
+@Component
+public class SKribbleServiceExceptionHandler extends DataFetcherExceptionResolverAdapter{
+
+    @Override
+    protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
+        if(ex instanceof ConstraintViolationException){
+            return GraphQlErrorUtil.return400(ex);
+        }
+        
+        return GraphQlErrorUtil.return500(ex);
     }
+
 }

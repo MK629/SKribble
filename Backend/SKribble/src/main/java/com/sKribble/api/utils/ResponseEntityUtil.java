@@ -28,23 +28,23 @@ public class ResponseEntityUtil {
 	}
 	
 	//Error responses
-	public static ResponseEntity<String> return400(Exception e){
+	public static ResponseEntity<String> return400(Throwable e){
 		return buildErrorResponseEntity(e, HttpStatus.BAD_REQUEST);
 	}
 	
-	public static ResponseEntity<String> return401(Exception e){
+	public static ResponseEntity<String> return401(Throwable e){
 		return buildErrorResponseEntity(e, HttpStatus.UNAUTHORIZED);
 	}
 	
-	public static ResponseEntity<String> return403(Exception e){
+	public static ResponseEntity<String> return403(Throwable e){
 		return buildErrorResponseEntity(e, HttpStatus.FORBIDDEN);
 	}
 	
-	public static ResponseEntity<String> return404(Exception e){
+	public static ResponseEntity<String> return404(Throwable e){
 		return buildErrorResponseEntity(e, HttpStatus.NOT_FOUND);
 	}
 
-	public static ResponseEntity<String> return500(Exception e){
+	public static ResponseEntity<String> return500(Throwable e){
 		return buildErrorResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
@@ -57,7 +57,7 @@ public class ResponseEntityUtil {
 	}
 	
 	//Error
-	private static ResponseEntity<String> buildErrorResponseEntity(Exception e, HttpStatus httpStatus) {
+	private static ResponseEntity<String> buildErrorResponseEntity(Throwable e, HttpStatus httpStatus) {
 		
 		String cause = " ";
 		
