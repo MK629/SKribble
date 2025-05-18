@@ -3,6 +3,7 @@ package com.sKribble.api.database.entity.childEntities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
@@ -27,17 +28,17 @@ public class Story extends Project{
 
     private final ProjectTypes type;
 
-    private HashMap<Integer, Chapter> chapters;
+    private Map<Integer, Chapter> chapters;
 
-    private HashMap<String, StoryCharacter> characters;
+    private Map<String, StoryCharacter> characters;
 
     @PersistenceCreator
-    public Story(String title, ProjectTypes type, HashMap<Integer, Chapter> chapters, HashMap<String, StoryCharacter> characters, String ownerId) {
+    public Story(String title, ProjectTypes type, Map<Integer, Chapter> chapters, Map<String, StoryCharacter> characters, String ownerId) {
         super(ownerId);
         this.title = title;
         this.type = type;
-        this.chapters = (this.chapters == null) ? new HashMap<Integer, Chapter>() : chapters;
-        this.characters = (this.characters == null) ? new HashMap<String, StoryCharacter>(): characters;
+        this.chapters = (chapters == null) ? new HashMap<Integer, Chapter>() : chapters;
+        this.characters = (characters == null) ? new HashMap<String, StoryCharacter>(): characters;
     }
 
     public void addChapter(Chapter chapter){

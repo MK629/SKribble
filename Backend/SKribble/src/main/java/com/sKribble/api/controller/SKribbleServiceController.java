@@ -7,6 +7,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.sKribble.api.dto.input.AddChapterForm;
 import com.sKribble.api.dto.input.StoryTitleInput;
 import com.sKribble.api.dto.output.StoryOutput;
 import com.sKribble.api.service.SKribbleStoryService;
@@ -28,5 +29,10 @@ public class SKribbleServiceController {
     @MutationMapping
     public String newStory(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
         return sKribbleStoryService.newStory(storyTitleInput);
+    }
+
+    @MutationMapping
+    public String newChapter(@Argument("addChapterForm") @Valid AddChapterForm addChapterForm){
+        return sKribbleStoryService.newChapter(addChapterForm);
     }
 }

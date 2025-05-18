@@ -17,8 +17,10 @@ import com.sKribble.api.dto.input.EMailLoginForm;
 import com.sKribble.api.dto.input.UserRegisterForm;
 import com.sKribble.api.dto.input.UsernameLoginForm;
 import com.sKribble.api.dto.output.TokenCarrier;
+import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.credentialsExceptions.LoginErrorException;
+import com.sKribble.api.error.exceptions.enumExceptions.UnknownEnumException;
 import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
@@ -30,9 +32,11 @@ import com.sKribble.api.utils.ResponseEntityUtil;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class CredentialsService {
 	
 	private final UserRepository userRepo;
@@ -63,10 +67,14 @@ public class CredentialsService {
 			    message += InputErrorMessages.DUPLICATE_EMAIL;
 			}
 
-			throw new UserRegstrationErrorException(CRUDErrorMessages.REGISTER_FAILED, new DuplicateKeyException(message));
+			throw new UserRegstrationErrorException(message);
+		}
+		catch(UnknownEnumException e){
+			log.error(e.getMessage());
+			throw new UserRegstrationErrorException(CRUDErrorMessages.REGISTER_FAILED);
 		}
 		catch(Exception e) {
-			throw new UserRegstrationErrorException(CRUDErrorMessages.REGISTER_FAILED, e);
+			throw new PersistenceErrorException(CRUDErrorMessages.REGISTER_FAILED, e);
 		}
 		
 		return ResponseEntityUtil.return201(CRUDSuccessMessages.REGISTER_SUCCESS);
@@ -88,9 +96,10 @@ public class CredentialsService {
 			}
 		}
 		catch (BadCredentialsException e) {
-			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_USERNAME, e);
+			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_USERNAME);
 		}
 		catch (Exception e) {
+			log.error(e.getMessage());
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
 		}
 	}
@@ -110,9 +119,10 @@ public class CredentialsService {
 			}
 		}
 		catch (BadCredentialsException e) {
-			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_EMAIL, e);
+			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.WRONG_EMAIL);
 		}
 		catch (Exception e) {
+			log.error(e.getMessage());
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
 		}
 	}

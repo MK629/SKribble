@@ -74,6 +74,6 @@ public class ResponseEntityUtil {
 			log.error(e.getMessage() + causeLog);
 		}
 
-		return new ResponseEntity<String>(e.getMessage() + cause, httpStatus);
+		return new ResponseEntity<String>(e.getMessage(), httpStatus);
 	}
 }

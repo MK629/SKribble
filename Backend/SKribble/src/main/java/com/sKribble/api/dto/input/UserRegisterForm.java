@@ -3,7 +3,7 @@ package com.sKribble.api.dto.input;
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;;
+import jakarta.validation.constraints.NotBlank;
 
 public record UserRegisterForm(
 		@NotBlank(message = InputErrorMessages.REQUIRES_USERNAME)

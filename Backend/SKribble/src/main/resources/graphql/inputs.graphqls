@@ -6,4 +6,5 @@ input AddChapterForm{
     storyId: String
     chapterNumber: Int
     chapterName: String
+    text: String
 }

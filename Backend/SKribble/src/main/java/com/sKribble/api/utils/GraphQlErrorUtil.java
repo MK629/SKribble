@@ -34,6 +34,8 @@ public class GraphQlErrorUtil {
         
         String cause = " ";
 
+        String graphQlErrorMessage = "";
+
         if(e.getCause() != null){
             cause += e.getCause().getMessage();
         }
@@ -46,7 +48,9 @@ public class GraphQlErrorUtil {
             log.error(e.getMessage() + causeLog);
         }
 
-        return GraphqlErrorBuilder.newError().message(e.getMessage() + cause).errorType(errorType).build();
-    }
+        String[] splitMessage = e.getMessage().split(": ");
+        graphQlErrorMessage = splitMessage.length > 1 ? splitMessage[1] : splitMessage[0];
 
+        return GraphqlErrorBuilder.newError().message(graphQlErrorMessage).errorType(errorType).build();
+    }
 }
