@@ -12,5 +12,7 @@ public class CRUDErrorMessages {
 
 	public static final String PERSISTENCE_FAILED = "An error occured while processing.";
 
-	public static final String ASSET_NOT_OWNED = "You are not the owner of this project.";
+	public static final String ASSET_NOT_OWNED = "Incorrect ownership for the selected project.";
+
+	public static final String PROJECT_NOT_FOUND = "Project not found. It is either deleted or non-existent.";
 }

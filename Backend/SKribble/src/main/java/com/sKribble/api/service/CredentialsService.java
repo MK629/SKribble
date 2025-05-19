@@ -47,7 +47,6 @@ public class CredentialsService {
 	//Register a new user.
 	@Transactional
 	public ResponseEntity<String> register(@Valid UserRegisterForm userRegisterForm) {
-
 		User user = new User(userRegisterForm.username(), userRegisterForm.email(), passwordEncoder.encode(userRegisterForm.password()));
 		user.assignRole(UserRoles.User);
 		
@@ -55,10 +54,9 @@ public class CredentialsService {
 			userRepo.save(user);
 		}
 		catch(DuplicateKeyException e) {
-			
 			String message = "";
 			
-			//Fix later
+			//Fix later. Looks kinda stupid.
 			if(e.getMessage().contains("username")) {
 				message += InputErrorMessages.DUPLICATE_USERNAME;
 			}
@@ -82,7 +80,6 @@ public class CredentialsService {
 	
 	//User name login
 	public ResponseEntity<TokenCarrier> usernameLogin(@Valid UsernameLoginForm usernameLoginForm){
-		
 		try {
 			Authentication authenticationStatus = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(usernameLoginForm.username(), usernameLoginForm.password()));

@@ -8,7 +8,7 @@ public class PersistenceErrorException extends RuntimeException{
         super(message);
     }
 
-    public PersistenceErrorException(String message, Throwable e){
-        super(message, e);
+    public PersistenceErrorException(String message, Throwable cause){
+        super(message, cause);
     }
 }

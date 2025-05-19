@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class GraphQlErrorUtil {
 
-    private static final String errorCausePrefix = " Root cause:";
+    private static final String errorCausePrefix = " Root cause: ";
 
     public static GraphQLError return400(Throwable e){
         return buildGraphQLError(e, ErrorType.BAD_REQUEST);
@@ -31,16 +31,12 @@ public class GraphQlErrorUtil {
     }
 
     private static GraphQLError buildGraphQLError(Throwable e, ErrorType errorType){
-        
-        String cause = " ";
+        String cause = "";
 
         String graphQlErrorMessage = "";
 
         if(e.getCause() != null){
             cause += e.getCause().getMessage();
-        }
-        else{
-            cause = "";
         }
 
         if(errorType == ErrorType.UNAUTHORIZED || errorType == ErrorType.FORBIDDEN || errorType == ErrorType.INTERNAL_ERROR){

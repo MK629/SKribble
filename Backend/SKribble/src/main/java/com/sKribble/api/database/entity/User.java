@@ -51,7 +51,6 @@ public class User {
 	}
 	
 	public void assignRole(UserRoles userRole) {
-		
 		String prefix = "ROLE_";
 		
 		switch(userRole) {

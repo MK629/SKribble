@@ -11,6 +11,6 @@ public interface UserRepository extends MongoRepository<User, String>{
 	@Query("{'_id': ?0}")
 	public User findByIdentification(String id);
 	
-	@Query("{ $or : [ { 'username': ?0 } , { 'email': ?0} ]}")
+	@Query("{ $or : [ { 'username': ?0 } , { 'email': ?0} ] }")
 	public User findUserByUsernameOrEmail(@Param("usernameOrEmail") String usernameOrEmail);
 }

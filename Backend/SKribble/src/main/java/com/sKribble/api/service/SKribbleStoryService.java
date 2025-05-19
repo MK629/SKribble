@@ -17,15 +17,13 @@ import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.AddChapterForm;
 import com.sKribble.api.dto.input.StoryTitleInput;
 import com.sKribble.api.dto.output.StoryOutput;
-import com.sKribble.api.error.exceptions.CRUDExceptions.AssetNotOwnedException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateChapterException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
 import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.OwnershipChecker;
+import com.sKribble.api.utils.ProjectEntityUtil;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,26 +39,21 @@ public class SKribbleStoryService {
 
     //Query
     public List<StoryOutput> findStoriesByTitle(@Valid StoryTitleInput storyTitleInput){
-        return projectRepository.findStoriesByTitle(storyTitleInput.title())
+        return projectRepository.findStoriesByTitle(storyTitleInput.title(), ProjectTypes.Story)
         .stream()
         .map((story) -> {
             User owner = userRepository.findByIdentification(story.getOwnerId());
-            return DTOConverter.getStoryOutput(story, owner != null? owner.getUsername() : DefaultContents.DELETED_USER);
-        }).collect(Collectors.toList());
+            return DTOConverter.getStoryOutput(story, owner != null ? owner.getUsername() : DefaultContents.DELETED_USER);
+        })
+        .collect(Collectors.toList());
     }
 
     //Mutation
     @Transactional
     public String newStory(@Valid StoryTitleInput storyTitleInput){
-
         User invoker = getInvoker();
 
-        try{
-            CurrentUserInfoUtil.checkExistence(invoker); //Throws an exception.
-        }
-        catch(IllogicalNullException e){
-            throw e;
-        }
+        CurrentUserInfoUtil.checkExistence(invoker); //Throws an exception.
 
         Project newStory = new Story(storyTitleInput.title(), ProjectTypes.Story, null, null, invoker.getId());
 
@@ -77,28 +70,20 @@ public class SKribbleStoryService {
     //Mutation
     @Transactional
     public String newChapter(@Valid AddChapterForm addChapterForm){
-
         User invoker = getInvoker();
 
-        Story storyToAddChapter = projectRepository.findStoryByIdentification(addChapterForm.storyId());
+        CurrentUserInfoUtil.checkExistence(invoker);
 
-        try{
-            OwnershipChecker.checkOwnership(invoker, storyToAddChapter); //Throws an exception.
-        }
-        catch(IllogicalNullException e){
-            throw e;
-        }
-        catch(AssetNotOwnedException e){
-            throw e;
-        }
+        Story storyToAddChapter = projectRepository.findStoryByIdentification(addChapterForm.storyId(), ProjectTypes.Story);
 
-        storyToAddChapter.addChapter(new Chapter(addChapterForm.chapterNumber(), addChapterForm.chapterName(), addChapterForm.text()));
+        ProjectEntityUtil.checkExistence(storyToAddChapter);
+
+        OwnershipChecker.checkOwnership(invoker, storyToAddChapter); //Throws an exception.
+
+        storyToAddChapter.addChapter(new Chapter(addChapterForm.chapterNumber(), addChapterForm.chapterName(), addChapterForm.text())); //Throws an exception
 
         try{
             projectRepository.save(storyToAddChapter);
-        }
-        catch(DuplicateChapterException e){
-            throw e;
         }
         catch(Exception e){
             throw new PersistenceErrorException(CRUDErrorMessages.PERSISTENCE_FAILED, e);
@@ -107,6 +92,7 @@ public class SKribbleStoryService {
         return CRUDSuccessMessages.CHAPTER_ADD_SUCCESS;
     }
 
+    //Get the User entity of the user who made the request.
     private User getInvoker(){
         return userRepository.findUserByUsernameOrEmail(CurrentUserInfoUtil.getCurrentUserPrincipalName());
     }

@@ -38,11 +38,10 @@ public class Story extends Project{
         this.title = title;
         this.type = type;
         this.chapters = (chapters == null) ? new HashMap<Integer, Chapter>() : chapters;
-        this.characters = (characters == null) ? new HashMap<String, StoryCharacter>(): characters;
+        this.characters = (characters == null) ? new HashMap<String, StoryCharacter>() : characters;
     }
 
     public void addChapter(Chapter chapter){
-
         if(this.chapters.containsKey(chapter.getChapterNumber())){
             throw new DuplicateChapterException(CRUDErrorMessages.DUPLICATE_CHAPTER);
         }
@@ -51,7 +50,6 @@ public class Story extends Project{
     }
 
     public void addCharacter(StoryCharacter character){
-        
         if(this.characters.containsKey(character.getName())){
             throw new DuplicateCharacterException(CRUDErrorMessages.DUPLICATE_CHARACTER);
         }

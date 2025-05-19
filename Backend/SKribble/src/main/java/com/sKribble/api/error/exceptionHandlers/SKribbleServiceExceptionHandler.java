@@ -8,6 +8,7 @@ import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateChapterExceptio
 import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateCharacterException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.ProjectNotFoundException;
 import com.sKribble.api.utils.GraphQlErrorUtil;
 
 import graphql.GraphQLError;
@@ -26,6 +27,10 @@ public class SKribbleServiceExceptionHandler extends DataFetcherExceptionResolve
 
         else if(ex instanceof AssetNotOwnedException){
             return GraphQlErrorUtil.return403(ex);
+        }
+
+        else if(ex instanceof ProjectNotFoundException){
+            return GraphQlErrorUtil.return404(ex);
         }
         
         else if(ex instanceof IllogicalNullException || ex instanceof PersistenceErrorException){

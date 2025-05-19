@@ -8,9 +8,6 @@ import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 public class OwnershipChecker {
 
     public static void checkOwnership(User user, Project project){
-
-        CurrentUserInfoUtil.checkExistence(user);
-
         if(!user.getId().equals(project.getOwnerId())){
             throw new AssetNotOwnedException(CRUDErrorMessages.ASSET_NOT_OWNED);
         }

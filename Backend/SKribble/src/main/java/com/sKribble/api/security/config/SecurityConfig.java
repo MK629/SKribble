@@ -40,7 +40,6 @@ public class SecurityConfig {
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
 		http.httpBasic(Customizer.withDefaults());
 		
 		http.csrf(c -> c.disable());

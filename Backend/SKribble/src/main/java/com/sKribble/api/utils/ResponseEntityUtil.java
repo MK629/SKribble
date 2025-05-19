@@ -10,8 +10,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ResponseEntityUtil {
 	
-	private static final String errorCausePrefix = " Root cause:";
-	
+	private static final String errorCausePrefix = " Root cause: ";
 	
 	//Success responses
 	public static ResponseEntity<String> return200(String message){
@@ -58,17 +57,13 @@ public class ResponseEntityUtil {
 	
 	//Error
 	private static ResponseEntity<String> buildErrorResponseEntity(Throwable e, HttpStatus httpStatus) {
-		
-		String cause = " ";
+		String cause = "";
 		
 		if(e.getCause() != null) {
 			cause += e.getCause().getMessage();
 		}
-		else{
-			cause = "";
-		}
 
-		//Log to console if status is 401, 403 or 500.
+		//Log to console by default if status is 401, 403 or 500.
 		if(httpStatus == HttpStatus.UNAUTHORIZED || httpStatus == HttpStatus.FORBIDDEN || httpStatus == HttpStatus.INTERNAL_SERVER_ERROR){
 			String causeLog = (cause.isEmpty() || cause.isBlank()) ? "" : errorCausePrefix + cause;
 			log.error(e.getMessage() + causeLog);
