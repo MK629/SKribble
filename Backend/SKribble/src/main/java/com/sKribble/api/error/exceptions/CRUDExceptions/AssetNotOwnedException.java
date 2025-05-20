@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class AssetNotOwnedException extends RuntimeException{
 
-    public static final long serialVersionUID = 105L;
+    private static final long serialVersionUID = 105L;
 
     private String responseMessage;
 

@@ -8,3 +8,12 @@ input AddChapterForm{
     chapterName: String
     text: String
 }
+
+#You're probably thinking: "This shit is redundant". And you'd be right. Thing is: as long as I or anyone else can read and understand it, I don't really care.
+#Open for suggestions.
+input EditChapterForm{
+    storyId: String
+    chapterNumber: Int
+    chapterName: String
+    text: String
+}

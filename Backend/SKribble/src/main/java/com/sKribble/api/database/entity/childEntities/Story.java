@@ -12,6 +12,7 @@ import com.sKribble.api.database.entity.Project;
 import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.entityFields.Chapter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
+import com.sKribble.api.error.exceptions.CRUDExceptions.ContentNotFoundException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateChapterException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateCharacterException;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
@@ -49,18 +50,32 @@ public class Story extends Project{
         this.chapters.put(chapter.getChapterNumber(), chapter);
     }
 
-    public void addCharacter(StoryCharacter character){
-        if(this.characters.containsKey(character.getName())){
-            throw new DuplicateCharacterException(CRUDErrorMessages.DUPLICATE_CHARACTER);
+    public void editChapter(Integer chapterNumber, String chapterName, String text){
+        if(!this.chapters.containsKey(chapterNumber)){
+            throw new ContentNotFoundException(CRUDErrorMessages.CHAPTER_NOT_FOUND);
         }
 
-        this.characters.put(character.getName(), character);
+        if(!chapterName.isBlank() || !chapterName.isEmpty()){
+            this.chapters.get(chapterNumber).setChapterName(chapterName);
+        }
+
+        if(!text.isBlank() || !text.isEmpty()){
+            this.chapters.get(chapterNumber).setText(text);
+        }
     }
 
     public List<Chapter> getChaptersForDTO(){
         List<Chapter> chaptersForDTO = new ArrayList<>(this.chapters.values());
         chaptersForDTO.sort((chap1, chap2) -> {return Integer.compare(chap1.getChapterNumber(), chap2.getChapterNumber());});
         return chaptersForDTO;
+    }
+
+    public void addCharacter(StoryCharacter character){
+        if(this.characters.containsKey(character.getName())){
+            throw new DuplicateCharacterException(CRUDErrorMessages.DUPLICATE_CHARACTER);
+        }
+
+        this.characters.put(character.getName(), character);
     }
 
     public List<StoryCharacter> getCharactersForDTO(){
