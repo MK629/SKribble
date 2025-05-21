@@ -24,7 +24,7 @@ public class JwtUtil {
 	@Value("${SKribble.jwtTokenIssuer}")
 	private String issuer;
 	
-	@Value("${SKribble.jwt.encryptionKey}")
+	@Value("${SKribble.jwtEncryptionKey}")
 	private String encryptionKey;
 	
 	private SecretKey getSigningKey() {

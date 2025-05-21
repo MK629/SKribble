@@ -1,3 +1,0 @@
-SKribble.graphiql.endpoint=${insert custom graphiql endpoint}
-SKribble.graphql.endpoint=${insert custom graphql endpoint}
-SKribble.auth.endpoint=${insert custom authentication endpoint}

@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Confidential ###
-/src/main/resources/appConfig/*.properties
+/src/main/resources/.env
