@@ -15,8 +15,8 @@
     "description": "The issuer of the token. A.K.A the developer."
   },
   {
-    "name": "SKribble.encryptionKey",
+    "name": "SKribble.jwtEncryptionKey",
     "type": "java.lang.String",
-    "description": "Token encryption key."
+    "description": "Secret key for encryption."
   }
 ]}
