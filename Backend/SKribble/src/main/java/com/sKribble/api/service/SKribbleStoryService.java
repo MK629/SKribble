@@ -10,11 +10,12 @@ import com.sKribble.api.database.entity.User;
 import com.sKribble.api.database.entity.childEntities.Story;
 import com.sKribble.api.database.entity.constants.DefaultContents;
 import com.sKribble.api.database.entity.entityFields.Chapter;
+import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
-import com.sKribble.api.dto.input.AddChapterForm;
-import com.sKribble.api.dto.input.EditChapterForm;
+import com.sKribble.api.dto.input.AddOrEditChapterForm;
+import com.sKribble.api.dto.input.AddOrEditCharacterForm;
 import com.sKribble.api.dto.input.StoryTitleInput;
 import com.sKribble.api.dto.output.StoryOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
@@ -64,7 +65,7 @@ public class SKribbleStoryService {
 
     //Mutation
     @Transactional
-    public String newChapter(@Valid AddChapterForm addChapterForm){
+    public String newChapter(@Valid AddOrEditChapterForm addChapterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
@@ -84,7 +85,7 @@ public class SKribbleStoryService {
 
     //Mutation
     @Transactional
-    public String editChapter(@Valid EditChapterForm editChapterForm){
+    public String editChapter(@Valid AddOrEditChapterForm editChapterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
@@ -100,6 +101,25 @@ public class SKribbleStoryService {
         persistStory(storyToEditChapter); //Throws an exception.
 
         return CRUDSuccessMessages.CHAPTER_EDIT_SUCCESS;
+    }
+
+    @Transactional
+    public String newCharacter(@Valid AddOrEditCharacterForm addCharacterForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
+
+        Story storyToAddCharacter = projectRepository.findStoryById(addCharacterForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToAddCharacter); //Throws an Exception
+
+        OwnershipChecker.checkOwnership(invoker, storyToAddCharacter); //Throws an Exception
+
+        storyToAddCharacter.addCharacter(new StoryCharacter(addCharacterForm.name(), addCharacterForm.description()));
+
+        persistStory(storyToAddCharacter); //Throws an Exception
+
+        return CRUDSuccessMessages.CHARACTER_CREATION_SUCCESS;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

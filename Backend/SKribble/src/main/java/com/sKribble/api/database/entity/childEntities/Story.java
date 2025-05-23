@@ -9,6 +9,7 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
 
 import com.sKribble.api.database.entity.Project;
+import com.sKribble.api.database.entity.constants.DefaultContents;
 import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.entityFields.Chapter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
@@ -16,6 +17,7 @@ import com.sKribble.api.error.exceptions.CRUDExceptions.ContentNotFoundException
 import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateChapterException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateCharacterException;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
+import com.sKribble.api.utils.StringCheckerUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -55,12 +57,13 @@ public class Story extends Project{
             throw new ContentNotFoundException(CRUDErrorMessages.CHAPTER_NOT_FOUND);
         }
 
-        if(!chapterName.isBlank() || !chapterName.isEmpty()){
-            this.chapters.get(chapterNumber).setChapterName(chapterName);
-        }
-
-        if(!text.isBlank() || !text.isEmpty()){
+        this.chapters.get(chapterNumber).setChapterName(chapterName);
+        
+        if(StringCheckerUtil.isNotHollow(text)){
             this.chapters.get(chapterNumber).setText(text);
+        }
+        else{
+            this.chapters.get(chapterNumber).setText(DefaultContents.STORY_CHAPTER_DEFAULT_CONTENT);
         }
     }
 

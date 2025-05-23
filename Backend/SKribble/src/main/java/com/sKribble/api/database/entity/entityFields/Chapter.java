@@ -3,6 +3,7 @@ package com.sKribble.api.database.entity.entityFields;
 import org.springframework.data.annotation.PersistenceCreator;
 
 import com.sKribble.api.database.entity.constants.DefaultContents;
+import com.sKribble.api.utils.StringCheckerUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,6 @@ public class Chapter {
     public Chapter(Integer chapterNumber, String chapterName, String text){
         this.chapterNumber = chapterNumber;
         this.chapterName = chapterName;
-        this.text = (text.isBlank() || text.isEmpty()) ? DefaultContents.STORY_CHAPTER_DEFAULT_CONTENT : text;
+        this.text = StringCheckerUtil.isNotHollow(text) ? text : DefaultContents.STORY_CHAPTER_DEFAULT_CONTENT;
     }
 }
