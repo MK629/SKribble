@@ -74,11 +74,26 @@ public class Story extends Project{
     }
 
     public void addCharacter(StoryCharacter character){
-        if(this.characters.containsKey(character.getName())){
-            throw new DuplicateCharacterException(CRUDErrorMessages.DUPLICATE_CHARACTER);
+        if(this.characters.containsKey(character.getCharacterId())){
+            throw new DuplicateCharacterException(CRUDErrorMessages.DUPLICATE_CHARACTER_ID);
         }
 
-        this.characters.put(character.getName(), character);
+        this.characters.put(character.getCharacterId(), character);
+    }
+
+    public void editCharacter(String characterId, String name, String description){
+        if(!this.characters.containsKey(characterId)){
+            throw new ContentNotFoundException(CRUDErrorMessages.CHARACTER_NOT_FOUND);
+        }
+
+        this.characters.get(characterId).setName(name);
+
+        if(StringCheckerUtil.isNotHollow(description)){
+            this.characters.get(characterId).setDescription(description);
+        }
+        else{
+            this.characters.get(characterId).setDescription(DefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT);
+        }
     }
 
     public List<StoryCharacter> getCharactersForDTO(){

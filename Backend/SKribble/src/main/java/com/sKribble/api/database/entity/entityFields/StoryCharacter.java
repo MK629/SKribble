@@ -11,12 +11,15 @@ import lombok.Setter;
 @Setter
 public class StoryCharacter {
 
+    String characterId;
+
     String name;
 
     String description;
 
     @PersistenceCreator
-    public StoryCharacter(String name, String description){
+    public StoryCharacter(String characterId, String name, String description){
+        this.characterId = characterId;
         this.name = name;
         this.description = StringCheckerUtil.isNotHollow(description) ? description : DefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT;
     }

@@ -2,15 +2,29 @@ input StoryTitleInput{
     title: String
 }
 
-input AddOrEditChapterForm{
+input AddChapterForm{
     storyId: String
     chapterNumber: Int
     chapterName: String
     text: String
 }
 
-input AddOrEditCharacterForm{
+input EditChapterForm{
     storyId: String
+    chapterNumber: Int
+    chapterName: String
+    text: String
+}
+
+input AddCharacterForm{
+    storyId: String
+    name: String
+    description: String
+}
+
+input EditCharacterForm{
+    storyId: String
+    characterId: String
     name: String
     description: String
 }

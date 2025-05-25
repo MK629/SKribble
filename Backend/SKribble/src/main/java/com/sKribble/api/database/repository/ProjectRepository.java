@@ -10,7 +10,6 @@ import com.sKribble.api.database.entity.childEntities.Story;
 
 public interface ProjectRepository extends MongoRepository<Project, String>{
 
-
     //For 'Story' types.
     @Query("{ $and : [ {'_id' : ?0} , {'type' : 'Story'} ] }")
     Story findStoryById(String id);

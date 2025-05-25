@@ -10,6 +10,7 @@ public record EditChapterForm(
     String storyId,
     @NotNull(message = InputErrorMessages.REQUIRES_CHAPTER_NUMBER)
     Integer chapterNumber,
+    @NotBlank(message = InputErrorMessages.REQUIRES_CHAPTER_NAME)
     String chapterName,
     String text
 ) {}

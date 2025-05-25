@@ -1,6 +1,7 @@
 package com.sKribble.api.service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -14,8 +15,10 @@ import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
-import com.sKribble.api.dto.input.AddOrEditChapterForm;
-import com.sKribble.api.dto.input.AddOrEditCharacterForm;
+import com.sKribble.api.dto.input.AddChapterForm;
+import com.sKribble.api.dto.input.AddCharacterForm;
+import com.sKribble.api.dto.input.EditChapterForm;
+import com.sKribble.api.dto.input.EditCharacterForm;
 import com.sKribble.api.dto.input.StoryTitleInput;
 import com.sKribble.api.dto.output.StoryOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
@@ -65,7 +68,7 @@ public class SKribbleStoryService {
 
     //Mutation
     @Transactional
-    public String newChapter(@Valid AddOrEditChapterForm addChapterForm){
+    public String newChapter(@Valid AddChapterForm addChapterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
@@ -85,7 +88,7 @@ public class SKribbleStoryService {
 
     //Mutation
     @Transactional
-    public String editChapter(@Valid AddOrEditChapterForm editChapterForm){
+    public String editChapter(@Valid EditChapterForm editChapterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
@@ -104,7 +107,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String newCharacter(@Valid AddOrEditCharacterForm addCharacterForm){
+    public String newCharacter(@Valid AddCharacterForm addCharacterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
@@ -115,16 +118,35 @@ public class SKribbleStoryService {
 
         OwnershipChecker.checkOwnership(invoker, storyToAddCharacter); //Throws an Exception
 
-        storyToAddCharacter.addCharacter(new StoryCharacter(addCharacterForm.name(), addCharacterForm.description()));
+        storyToAddCharacter.addCharacter(new StoryCharacter(UUID.randomUUID().toString(), addCharacterForm.name(), addCharacterForm.description()));
 
         persistStory(storyToAddCharacter); //Throws an Exception
 
         return CRUDSuccessMessages.CHARACTER_CREATION_SUCCESS;
     }
 
+    @Transactional
+    public String editCharacter(@Valid EditCharacterForm editCharacterForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
+
+        Story storyToEditCharacter = projectRepository.findStoryById(editCharacterForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToEditCharacter); //Throws an Exception
+
+        OwnershipChecker.checkOwnership(invoker, storyToEditCharacter); //Throws an Exception
+
+        storyToEditCharacter.editCharacter(editCharacterForm.characterId(), editCharacterForm.name(), editCharacterForm.description());
+
+        persistStory(storyToEditCharacter); //Throws an Exception
+
+        return CRUDSuccessMessages.CHARACTER_EDIT_SUCCESS;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //Get the User entity of the user who made the request.
+    //Get the User entity of the user who made the request (invoker).
     private User getInvoker(){
         return userRepository.findUserByUsernameOrEmail(CurrentUserInfoUtil.getCurrentUserPrincipalName());
     }

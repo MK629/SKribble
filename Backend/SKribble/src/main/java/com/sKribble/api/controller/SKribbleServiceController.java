@@ -7,8 +7,10 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.sKribble.api.dto.input.AddOrEditChapterForm;
-import com.sKribble.api.dto.input.AddOrEditCharacterForm;
+import com.sKribble.api.dto.input.EditChapterForm;
+import com.sKribble.api.dto.input.EditCharacterForm;
+import com.sKribble.api.dto.input.AddChapterForm;
+import com.sKribble.api.dto.input.AddCharacterForm;
 import com.sKribble.api.dto.input.StoryTitleInput;
 import com.sKribble.api.dto.output.StoryOutput;
 import com.sKribble.api.service.SKribbleStoryService;
@@ -33,17 +35,22 @@ public class SKribbleServiceController {
     }
 
     @MutationMapping
-    public String newChapter(@Argument("addChapterForm") @Valid AddOrEditChapterForm addChapterForm){
+    public String newChapter(@Argument("addChapterForm") @Valid AddChapterForm addChapterForm){
         return sKribbleStoryService.newChapter(addChapterForm);
     }
 
     @MutationMapping
-    public String editChapter(@Argument("editChapterForm") @Valid AddOrEditChapterForm editChapterForm){
+    public String editChapter(@Argument("editChapterForm") @Valid EditChapterForm editChapterForm){
         return sKribbleStoryService.editChapter(editChapterForm);
     }
 
     @MutationMapping
-    public String newCharacter(@Argument("addCharacterForm") @Valid AddOrEditCharacterForm addCharacterForm){
+    public String newCharacter(@Argument("addCharacterForm") @Valid AddCharacterForm addCharacterForm){
         return sKribbleStoryService.newCharacter(addCharacterForm);
+    }
+
+    @MutationMapping
+    public String editCharacter(@Argument("editCharacterForm") @Valid EditCharacterForm editCharacterForm){
+        return sKribbleStoryService.editCharacter(editCharacterForm);
     }
 }

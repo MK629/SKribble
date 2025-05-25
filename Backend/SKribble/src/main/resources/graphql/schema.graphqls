@@ -4,7 +4,8 @@ type Query{
 
 type Mutation{
 	newStory(storyTitleInput: StoryTitleInput!) : String
-	newChapter(addChapterForm: AddOrEditChapterForm!) : String
-	editChapter(editChapterForm: AddOrEditChapterForm!) : String
-	newCharacter(addCharacterForm: AddOrEditCharacterForm!) : String
+	newChapter(addChapterForm: AddChapterForm!) : String
+	editChapter(editChapterForm: EditChapterForm!) : String
+	newCharacter(addCharacterForm: AddCharacterForm!) : String
+	editCharacter(editCharacterForm: EditCharacterForm!) : String
 }
