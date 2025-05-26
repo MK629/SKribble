@@ -27,7 +27,7 @@ import lombok.Setter;
 @TypeAlias("Story")
 public class Story extends Project{
 
-    private final String title;
+    private String title;
 
     private final ProjectTypes type;
 

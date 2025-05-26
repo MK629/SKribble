@@ -13,4 +13,6 @@ public class CRUDSuccessMessages {
 	public static final String CHARACTER_CREATION_SUCCESS = "A new character has been successfully created.";
 
 	public static final String CHARACTER_EDIT_SUCCESS = "This character has been edited successfully.";
+
+	public static final String STORY_TITLE_CHANGE_SUCCESS = "Story title has been successfully changed.";
 }

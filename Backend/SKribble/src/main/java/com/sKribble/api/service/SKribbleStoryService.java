@@ -17,6 +17,7 @@ import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.AddChapterForm;
 import com.sKribble.api.dto.input.AddCharacterForm;
+import com.sKribble.api.dto.input.ChangeStoryTitleForm;
 import com.sKribble.api.dto.input.EditChapterForm;
 import com.sKribble.api.dto.input.EditCharacterForm;
 import com.sKribble.api.dto.input.StoryTitleInput;
@@ -64,6 +65,26 @@ public class SKribbleStoryService {
         persistStory(newStory); //Throws an exception.
 
         return CRUDSuccessMessages.STORY_CREATION_SUCCESS;
+    }
+
+    //Mutation
+    @Transactional
+    public String changeStoryTitle(@Valid ChangeStoryTitleForm changeStoryTitleForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker); //Throws an exception. 
+
+        Story storyToChangeTitle = projectRepository.findStoryById(changeStoryTitleForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToChangeTitle); //Throws an exception.
+
+        OwnershipChecker.checkOwnership(invoker, storyToChangeTitle); //Throws an exception.
+
+        storyToChangeTitle.setTitle(changeStoryTitleForm.newTitle());
+
+        persistStory(storyToChangeTitle); //Throws an exception.
+
+        return CRUDSuccessMessages.STORY_TITLE_CHANGE_SUCCESS;
     }
 
     //Mutation

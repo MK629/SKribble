@@ -2,6 +2,11 @@ input StoryTitleInput{
     title: String
 }
 
+input ChangeStoryTitleForm{
+    storyId: String
+    newTitle: String
+}
+
 input AddChapterForm{
     storyId: String
     chapterNumber: Int

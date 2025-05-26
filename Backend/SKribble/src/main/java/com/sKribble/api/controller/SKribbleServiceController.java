@@ -11,6 +11,7 @@ import com.sKribble.api.dto.input.EditChapterForm;
 import com.sKribble.api.dto.input.EditCharacterForm;
 import com.sKribble.api.dto.input.AddChapterForm;
 import com.sKribble.api.dto.input.AddCharacterForm;
+import com.sKribble.api.dto.input.ChangeStoryTitleForm;
 import com.sKribble.api.dto.input.StoryTitleInput;
 import com.sKribble.api.dto.output.StoryOutput;
 import com.sKribble.api.service.SKribbleStoryService;
@@ -32,6 +33,11 @@ public class SKribbleServiceController {
     @MutationMapping
     public String newStory(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
         return sKribbleStoryService.newStory(storyTitleInput);
+    }
+
+    @MutationMapping
+    public String changeStoryTitle(@Argument("changeStoryTitleForm") @Valid ChangeStoryTitleForm changeStoryTitleForm){
+        return sKribbleStoryService.changeStoryTitle(changeStoryTitleForm);
     }
 
     @MutationMapping
