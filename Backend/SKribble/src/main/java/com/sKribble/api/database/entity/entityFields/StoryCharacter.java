@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 public class StoryCharacter {
 
-    String characterId;
+    private String characterId;
 
-    String name;
+    private String name;
 
-    String description;
+    private String description;
 
     @PersistenceCreator
     public StoryCharacter(String characterId, String name, String description){

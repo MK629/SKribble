@@ -80,7 +80,7 @@ public class SKribbleStoryService {
 
         OwnershipChecker.checkOwnership(invoker, storyToChangeTitle); //Throws an exception.
 
-        storyToChangeTitle.setTitle(changeStoryTitleForm.newTitle());
+        storyToChangeTitle.changeTitle(changeStoryTitleForm.newTitle());
 
         persistStory(storyToChangeTitle); //Throws an exception.
 

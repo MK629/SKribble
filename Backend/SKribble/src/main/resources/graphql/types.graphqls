@@ -2,6 +2,7 @@ type Chapter{
     chapterNumber: Int
     chapterName: String
     text: String
+    mentionedCharacters: [StoryCharacter]
 }
 
 type StoryCharacter{

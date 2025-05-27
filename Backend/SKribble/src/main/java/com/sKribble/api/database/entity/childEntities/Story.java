@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
@@ -44,6 +45,10 @@ public class Story extends Project{
         this.characters = (characters == null) ? new HashMap<String, StoryCharacter>() : characters;
     }
 
+    public void changeTitle(String newTitle){
+        this.title = newTitle;
+    }
+
     public void addChapter(Chapter chapter){
         if(this.chapters.containsKey(chapter.getChapterNumber())){
             throw new DuplicateChapterException(CRUDErrorMessages.DUPLICATE_CHAPTER);
@@ -68,8 +73,13 @@ public class Story extends Project{
     }
 
     public List<Chapter> getChaptersForDTO(){
-        List<Chapter> chaptersForDTO = new ArrayList<>(this.chapters.values());
+        List<Chapter> chaptersForDTO = new ArrayList<Chapter>(this.chapters.values()).stream().map((chapter) -> {
+            chapter.listMentionedCharacters(getCharactersForDTO());
+            return chapter;
+        }).collect(Collectors.toList());;
+
         chaptersForDTO.sort((chap1, chap2) -> {return Integer.compare(chap1.getChapterNumber(), chap2.getChapterNumber());});
+
         return chaptersForDTO;
     }
 
