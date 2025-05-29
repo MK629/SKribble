@@ -1,4 +1,4 @@
-package com.sKribble.api.database.entity.constants;
+package com.sKribble.api.database.entity.defaults;
 
 public class DefaultContents {
 

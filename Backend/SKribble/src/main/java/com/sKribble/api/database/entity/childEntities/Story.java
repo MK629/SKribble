@@ -10,7 +10,7 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
 
 import com.sKribble.api.database.entity.Project;
-import com.sKribble.api.database.entity.constants.DefaultContents;
+import com.sKribble.api.database.entity.defaults.DefaultContents;
 import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.entityFields.Chapter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;

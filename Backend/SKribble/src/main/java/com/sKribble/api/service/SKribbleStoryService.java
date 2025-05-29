@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sKribble.api.database.entity.User;
 import com.sKribble.api.database.entity.childEntities.Story;
-import com.sKribble.api.database.entity.constants.DefaultContents;
+import com.sKribble.api.database.entity.defaults.DefaultContents;
 import com.sKribble.api.database.entity.entityFields.Chapter;
 import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;

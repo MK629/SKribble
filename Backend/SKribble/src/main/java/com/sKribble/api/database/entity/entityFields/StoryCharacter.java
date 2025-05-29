@@ -1,7 +1,7 @@
 package com.sKribble.api.database.entity.entityFields;
 import org.springframework.data.annotation.PersistenceCreator;
 
-import com.sKribble.api.database.entity.constants.DefaultContents;
+import com.sKribble.api.database.entity.defaults.DefaultContents;
 import com.sKribble.api.utils.StringCheckerUtil;
 
 import lombok.Getter;
