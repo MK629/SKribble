@@ -40,13 +40,12 @@ public class Chapter {
             this.mentionedCharacters = new ArrayList<>();
         }
 
-        //Track if a character is already added by a full name mention
+        //Track if a character is already added via a full name mention.
         Map<String, Boolean> inconclusivityTracker = new HashMap<>();
 
         String chapterContent = this.text.toLowerCase();
 
         for(StoryCharacter character: allCharacters){
-            
             String firstName = character.getName().split(" ")[0].toLowerCase();
             String fullName = character.getName().toLowerCase();
 
@@ -54,9 +53,9 @@ public class Chapter {
             if(chapterContent.contains(fullName)){
                 mentionedCharacters.removeIf((c) -> c.getName().split(" ")[0].equalsIgnoreCase(firstName));
 
-                inconclusivityTracker.put(firstName, false);
-
                 this.mentionedCharacters.add(character);
+
+                inconclusivityTracker.put(firstName, false);
             } 
             //Fallback if only first names were used. 
             else if(chapterContent.contains(firstName)){
