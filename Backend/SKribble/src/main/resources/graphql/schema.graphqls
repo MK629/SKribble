@@ -9,4 +9,5 @@ type Mutation{
 	editChapter(editChapterForm: EditChapterForm!) : String
 	newCharacter(addCharacterForm: AddCharacterForm!) : String
 	editCharacter(editCharacterForm: EditCharacterForm!) : String
+	changeCharacterImage(changeCharacterImageForm: ChangeCharacterImageForm!) : String
 }

@@ -30,6 +30,8 @@ public class GraphQlErrorUtil {
         return buildGraphQLError(e, ErrorType.INTERNAL_ERROR);
     }
 
+//==========================================[ Here lies the line for local abstractions ]=====================================================//
+
     private static GraphQLError buildGraphQLError(Throwable e, ErrorType errorType){
         String cause = "";
 

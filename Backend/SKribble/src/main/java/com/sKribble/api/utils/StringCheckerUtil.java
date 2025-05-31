@@ -11,7 +11,7 @@ public class StringCheckerUtil {
         }
     }
 
-    //Ha ha :^)
+    //Ha ha :^). I don't really know why I wrote this...
     public static Boolean isNotNull(String string){
         if(string == null){
             return false;

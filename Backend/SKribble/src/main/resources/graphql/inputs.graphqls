@@ -25,6 +25,7 @@ input AddCharacterForm{
     storyId: String
     characterName: String
     description: String
+    imageUrl: String
 }
 
 input EditCharacterForm{
@@ -32,4 +33,10 @@ input EditCharacterForm{
     characterId: String
     characterName: String
     description: String
+}
+
+input ChangeCharacterImageForm{
+    storyId: String
+    characterId: String
+    newImageUrl: String
 }

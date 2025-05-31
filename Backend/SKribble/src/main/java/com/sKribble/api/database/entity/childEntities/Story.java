@@ -10,7 +10,7 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
 
 import com.sKribble.api.database.entity.Project;
-import com.sKribble.api.database.entity.defaults.DefaultContents;
+import com.sKribble.api.database.entity.defaults.StoryDefaultContents;
 import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.entityFields.Chapter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
@@ -68,7 +68,7 @@ public class Story extends Project{
             this.chapters.get(chapterNumber).setText(text);
         }
         else{
-            this.chapters.get(chapterNumber).setText(DefaultContents.STORY_CHAPTER_DEFAULT_CONTENT);
+            this.chapters.get(chapterNumber).setText(StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT);
         }
     }
 
@@ -102,8 +102,16 @@ public class Story extends Project{
             this.characters.get(characterId).setDescription(description);
         }
         else{
-            this.characters.get(characterId).setDescription(DefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT);
+            this.characters.get(characterId).setDescription(StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT);
         }
+    }
+
+    public void changeCharacterImage(String characterId, String newImageUrl){
+        if(!this.characters.containsKey(characterId)){
+            throw new ContentNotFoundException(CRUDErrorMessages.CHARACTER_NOT_FOUND);
+        }
+
+        this.characters.get(characterId).setImageUrl(newImageUrl);
     }
 
     public List<StoryCharacter> getCharactersForDTO(){

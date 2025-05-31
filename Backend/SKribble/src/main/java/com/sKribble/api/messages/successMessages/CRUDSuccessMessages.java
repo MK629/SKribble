@@ -6,6 +6,8 @@ public class CRUDSuccessMessages {
 
 	public static final String STORY_CREATION_SUCCESS = "A new story project has been successfully created.";
 
+	public static final String STORY_TITLE_CHANGE_SUCCESS = "Story title has been successfully changed.";
+
 	public static final String CHAPTER_ADD_SUCCESS = "A new chapter has been successfully added to the story.";
 
 	public static final String CHAPTER_EDIT_SUCCESS = "This chapter has been edited successfully.";
@@ -14,5 +16,5 @@ public class CRUDSuccessMessages {
 
 	public static final String CHARACTER_EDIT_SUCCESS = "This character has been edited successfully.";
 
-	public static final String STORY_TITLE_CHANGE_SUCCESS = "Story title has been successfully changed.";
+	public static final String CHARACTER_IMAGE_UPLOAD_SUCCESS = "Character image has been uploaded successfully.";
 }

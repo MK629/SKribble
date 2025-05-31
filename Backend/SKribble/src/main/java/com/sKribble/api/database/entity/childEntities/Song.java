@@ -4,8 +4,10 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
 
 import com.sKribble.api.database.entity.Project;
+import com.sKribble.api.database.entity.defaults.SongDefaultContents;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.entity.enums.SongGenres;
+import com.sKribble.api.utils.StringCheckerUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,11 +26,11 @@ public class Song extends Project{
     private String lyrics;
 
     @PersistenceCreator
-    public Song(String name, ProjectTypes type, SongGenres genre, String lyrics, String author){
-        super(author);
+    public Song(String name, ProjectTypes type, SongGenres genre, String lyrics, String ownerId){
+        super(ownerId);
         this.name = name;
         this.type = type;
         this.genre = genre;
-        this.lyrics = lyrics;
+        this.lyrics = StringCheckerUtil.isNotHollow(lyrics) ? lyrics : SongDefaultContents.SONG_DEFAULT_CONTENT;
     }
 }

@@ -48,7 +48,7 @@ public class ResponseEntityUtil {
 	}
 	
 	
-	//Centralized functions
+//==========================================[ Here lies the line for local abstractions ]=====================================================//
 	
 	//Success
 	private static ResponseEntity<String> buildSuccessResponseEntity(String message, HttpStatus httpStatus){

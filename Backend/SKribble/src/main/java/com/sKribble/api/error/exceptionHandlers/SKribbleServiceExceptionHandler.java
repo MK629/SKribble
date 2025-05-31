@@ -17,8 +17,8 @@ import graphql.GraphQLError;
 import graphql.schema.DataFetchingEnvironment;
 import jakarta.validation.ConstraintViolationException;
 
-//Can't use @ControllerAdvice for graphQl related stuff.
-@Component //Define it as a bean. (Fucking hell.)
+//Can't use @ControllerAdvice for graphQl related stuff. Learned that the hard way. Trust me.
+@Component
 public class SKribbleServiceExceptionHandler extends DataFetcherExceptionResolverAdapter{
 
     @Override

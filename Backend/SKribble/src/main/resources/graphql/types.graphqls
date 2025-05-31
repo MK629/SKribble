@@ -9,6 +9,7 @@ type StoryCharacter{
     characterId: String
     characterName: String
     description: String
+    imageUrl: String
 }
 
 type StoryOutput{

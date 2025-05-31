@@ -1,7 +1,7 @@
 package com.sKribble.api.database.entity.entityFields;
 import org.springframework.data.annotation.PersistenceCreator;
 
-import com.sKribble.api.database.entity.defaults.DefaultContents;
+import com.sKribble.api.database.entity.defaults.StoryDefaultContents;
 import com.sKribble.api.utils.StringCheckerUtil;
 
 import lombok.Getter;
@@ -17,10 +17,13 @@ public class StoryCharacter {
 
     private String description;
 
+    private String imageUrl;
+
     @PersistenceCreator
-    public StoryCharacter(String characterId, String characterName, String description){
+    public StoryCharacter(String characterId, String characterName, String description, String imageUrl){
         this.characterId = characterId;
         this.characterName = characterName;
-        this.description = StringCheckerUtil.isNotHollow(description) ? description : DefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT;
+        this.description = StringCheckerUtil.isNotHollow(description) ? description : StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT;
+        this.imageUrl = StringCheckerUtil.isNotHollow(imageUrl) ? imageUrl : StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT;
     }
 }

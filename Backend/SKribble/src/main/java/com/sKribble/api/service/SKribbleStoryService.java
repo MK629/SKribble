@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sKribble.api.database.entity.User;
 import com.sKribble.api.database.entity.childEntities.Story;
-import com.sKribble.api.database.entity.defaults.DefaultContents;
+import com.sKribble.api.database.entity.defaults.ProjectDefaultContents;
 import com.sKribble.api.database.entity.entityFields.Chapter;
 import com.sKribble.api.database.entity.entityFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
@@ -17,6 +17,7 @@ import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.AddChapterForm;
 import com.sKribble.api.dto.input.AddCharacterForm;
+import com.sKribble.api.dto.input.ChangeCharacterImageForm;
 import com.sKribble.api.dto.input.ChangeStoryTitleForm;
 import com.sKribble.api.dto.input.EditChapterForm;
 import com.sKribble.api.dto.input.EditCharacterForm;
@@ -48,7 +49,7 @@ public class SKribbleStoryService {
         .stream()
         .map((story) -> {
             User owner = userRepository.findByIdentification(story.getOwnerId());
-            return DTOConverter.getStoryOutput(story, owner != null ? owner.getUsername() : DefaultContents.DELETED_USER);
+            return DTOConverter.getStoryOutput(story, owner != null ? owner.getUsername() : ProjectDefaultContents.DELETED_USER);
         })
         .collect(Collectors.toList());
     }
@@ -58,11 +59,11 @@ public class SKribbleStoryService {
     public String newStory(@Valid StoryTitleInput storyTitleInput){
         User invoker = getInvoker();
 
-        CurrentUserInfoUtil.checkExistence(invoker); //Throws an exception.
+        CurrentUserInfoUtil.checkExistence(invoker);
 
         Story newStory = new Story(storyTitleInput.title(), ProjectTypes.Story, null, null, invoker.getId());
 
-        persistStory(newStory); //Throws an exception.
+        persistStory(newStory);
 
         return CRUDSuccessMessages.STORY_CREATION_SUCCESS;
     }
@@ -92,17 +93,17 @@ public class SKribbleStoryService {
     public String newChapter(@Valid AddChapterForm addChapterForm){
         User invoker = getInvoker();
 
-        CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
+        CurrentUserInfoUtil.checkExistence(invoker); 
 
         Story storyToAddChapter = projectRepository.findStoryById(addChapterForm.storyId());
 
-        ProjectEntityUtil.checkExistence(storyToAddChapter); //Throws an Exception
+        ProjectEntityUtil.checkExistence(storyToAddChapter);
 
-        OwnershipChecker.checkOwnership(invoker, storyToAddChapter); //Throws an exception.
+        OwnershipChecker.checkOwnership(invoker, storyToAddChapter);
 
-        storyToAddChapter.addChapter(new Chapter(addChapterForm.chapterNumber(), addChapterForm.chapterName(), addChapterForm.text())); //Throws an exception
+        storyToAddChapter.addChapter(new Chapter(addChapterForm.chapterNumber(), addChapterForm.chapterName(), addChapterForm.text()));
 
-        persistStory(storyToAddChapter); //Throws an exception.
+        persistStory(storyToAddChapter); 
 
         return CRUDSuccessMessages.CHAPTER_ADD_SUCCESS;
     }
@@ -112,17 +113,17 @@ public class SKribbleStoryService {
     public String editChapter(@Valid EditChapterForm editChapterForm){
         User invoker = getInvoker();
 
-        CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
+        CurrentUserInfoUtil.checkExistence(invoker);
 
         Story storyToEditChapter = projectRepository.findStoryById(editChapterForm.storyId());
 
-        ProjectEntityUtil.checkExistence(storyToEditChapter); //Throws an Exception
+        ProjectEntityUtil.checkExistence(storyToEditChapter);
 
-        OwnershipChecker.checkOwnership(invoker, storyToEditChapter); //Throws an Exception
+        OwnershipChecker.checkOwnership(invoker, storyToEditChapter);
 
         storyToEditChapter.editChapter(editChapterForm.chapterNumber(), editChapterForm.chapterName(), editChapterForm.text());
 
-        persistStory(storyToEditChapter); //Throws an exception.
+        persistStory(storyToEditChapter);
 
         return CRUDSuccessMessages.CHAPTER_EDIT_SUCCESS;
     }
@@ -131,17 +132,17 @@ public class SKribbleStoryService {
     public String newCharacter(@Valid AddCharacterForm addCharacterForm){
         User invoker = getInvoker();
 
-        CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
+        CurrentUserInfoUtil.checkExistence(invoker);
 
         Story storyToAddCharacter = projectRepository.findStoryById(addCharacterForm.storyId());
 
-        ProjectEntityUtil.checkExistence(storyToAddCharacter); //Throws an Exception
+        ProjectEntityUtil.checkExistence(storyToAddCharacter);
 
-        OwnershipChecker.checkOwnership(invoker, storyToAddCharacter); //Throws an Exception
+        OwnershipChecker.checkOwnership(invoker, storyToAddCharacter);
 
-        storyToAddCharacter.addCharacter(new StoryCharacter(UUID.randomUUID().toString(), addCharacterForm.characterName(), addCharacterForm.description()));
+        storyToAddCharacter.addCharacter(new StoryCharacter(UUID.randomUUID().toString(), addCharacterForm.characterName(), addCharacterForm.description(), addCharacterForm.imageUrl()));
 
-        persistStory(storyToAddCharacter); //Throws an Exception
+        persistStory(storyToAddCharacter);
 
         return CRUDSuccessMessages.CHARACTER_CREATION_SUCCESS;
     }
@@ -150,22 +151,41 @@ public class SKribbleStoryService {
     public String editCharacter(@Valid EditCharacterForm editCharacterForm){
         User invoker = getInvoker();
 
-        CurrentUserInfoUtil.checkExistence(invoker); //Throws an Exception
+        CurrentUserInfoUtil.checkExistence(invoker);
 
         Story storyToEditCharacter = projectRepository.findStoryById(editCharacterForm.storyId());
 
-        ProjectEntityUtil.checkExistence(storyToEditCharacter); //Throws an Exception
+        ProjectEntityUtil.checkExistence(storyToEditCharacter);
 
-        OwnershipChecker.checkOwnership(invoker, storyToEditCharacter); //Throws an Exception
+        OwnershipChecker.checkOwnership(invoker, storyToEditCharacter);
 
         storyToEditCharacter.editCharacter(editCharacterForm.characterId(), editCharacterForm.characterName(), editCharacterForm.description());
 
-        persistStory(storyToEditCharacter); //Throws an Exception
+        persistStory(storyToEditCharacter);
 
         return CRUDSuccessMessages.CHARACTER_EDIT_SUCCESS;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Transactional
+    public String changeCharacterImage(@Valid ChangeCharacterImageForm changeCharacterImageForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Story storyToChangeCharacterImageUrl = projectRepository.findStoryById(changeCharacterImageForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToChangeCharacterImageUrl);
+
+        OwnershipChecker.checkOwnership(invoker, storyToChangeCharacterImageUrl);
+
+        storyToChangeCharacterImageUrl.changeCharacterImage(changeCharacterImageForm.characterId(), changeCharacterImageForm.newImageUrl());
+
+        persistStory(storyToChangeCharacterImageUrl);
+
+        return CRUDSuccessMessages.CHARACTER_IMAGE_UPLOAD_SUCCESS;
+    }
+
+//==========================================[ Here lies the line for local abstractions ]================================================//
 
     //Get the User entity of the user who made the request (invoker).
     private User getInvoker(){

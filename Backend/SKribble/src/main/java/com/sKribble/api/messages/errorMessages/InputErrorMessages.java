@@ -21,6 +21,8 @@ public class InputErrorMessages {
 	public static final String REQUIRES_CHARACTER_ID = "Character id is empty. Unable to proceed";
 
 	public static final String REQUIRES_CHARACTER_NAME = "PLease define a name for your character.";
+
+	public static final String REQURIRES_CHARACTER_IMAGE_URL = "The character's image URL cannot be empty.";
 	
 	public static final String WRONG_EMAIL_FORMAT = "E-Mail format is incorrect.";
 	

@@ -9,5 +9,6 @@ public record AddCharacterForm (
     String storyId,
     @NotBlank(message = InputErrorMessages.REQUIRES_CHARACTER_NAME)
     String characterName,
-    String description
+    String description,
+    String imageUrl
 ) {}

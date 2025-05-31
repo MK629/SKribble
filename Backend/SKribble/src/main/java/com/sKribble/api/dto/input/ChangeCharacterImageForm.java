@@ -4,10 +4,11 @@ import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record AddStoryCharacterForm (
+public record ChangeCharacterImageForm (
     @NotBlank(message = InputErrorMessages.REQUIRES_STORY_ID)
     String storyId,
-    @NotBlank(message = InputErrorMessages.REQUIRES_CHARACTER_NAME)
-    String name,
-    String description
+    @NotBlank(message = InputErrorMessages.REQUIRES_CHARACTER_ID)
+    String characterId,
+    @NotBlank(message = InputErrorMessages.REQURIRES_CHARACTER_IMAGE_URL)
+    String newImageUrl
 ) {}
