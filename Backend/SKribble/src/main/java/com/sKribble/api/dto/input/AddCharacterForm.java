@@ -8,6 +8,6 @@ public record AddCharacterForm (
     @NotBlank(message = InputErrorMessages.REQUIRES_STORY_ID)
     String storyId,
     @NotBlank(message = InputErrorMessages.REQUIRES_CHARACTER_NAME)
-    String name,
+    String characterName,
     String description
 ) {}

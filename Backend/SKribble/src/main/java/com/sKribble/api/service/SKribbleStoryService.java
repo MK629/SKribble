@@ -139,7 +139,7 @@ public class SKribbleStoryService {
 
         OwnershipChecker.checkOwnership(invoker, storyToAddCharacter); //Throws an Exception
 
-        storyToAddCharacter.addCharacter(new StoryCharacter(UUID.randomUUID().toString(), addCharacterForm.name(), addCharacterForm.description()));
+        storyToAddCharacter.addCharacter(new StoryCharacter(UUID.randomUUID().toString(), addCharacterForm.characterName(), addCharacterForm.description()));
 
         persistStory(storyToAddCharacter); //Throws an Exception
 
@@ -158,7 +158,7 @@ public class SKribbleStoryService {
 
         OwnershipChecker.checkOwnership(invoker, storyToEditCharacter); //Throws an Exception
 
-        storyToEditCharacter.editCharacter(editCharacterForm.characterId(), editCharacterForm.name(), editCharacterForm.description());
+        storyToEditCharacter.editCharacter(editCharacterForm.characterId(), editCharacterForm.characterName(), editCharacterForm.description());
 
         persistStory(storyToEditCharacter); //Throws an Exception
 

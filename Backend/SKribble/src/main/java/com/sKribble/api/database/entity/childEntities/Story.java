@@ -96,7 +96,7 @@ public class Story extends Project{
             throw new ContentNotFoundException(CRUDErrorMessages.CHARACTER_NOT_FOUND);
         }
 
-        this.characters.get(characterId).setName(name);
+        this.characters.get(characterId).setCharacterName(name);
 
         if(StringCheckerUtil.isNotHollow(description)){
             this.characters.get(characterId).setDescription(description);

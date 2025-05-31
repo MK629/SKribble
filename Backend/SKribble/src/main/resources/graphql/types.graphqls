@@ -7,7 +7,7 @@ type Chapter{
 
 type StoryCharacter{
     characterId: String
-    name: String
+    characterName: String
     description: String
 }
 

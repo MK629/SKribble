@@ -13,14 +13,14 @@ public class StoryCharacter {
 
     private String characterId;
 
-    private String name;
+    private String characterName;
 
     private String description;
 
     @PersistenceCreator
-    public StoryCharacter(String characterId, String name, String description){
+    public StoryCharacter(String characterId, String characterName, String description){
         this.characterId = characterId;
-        this.name = name;
+        this.characterName = characterName;
         this.description = StringCheckerUtil.isNotHollow(description) ? description : DefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT;
     }
 }

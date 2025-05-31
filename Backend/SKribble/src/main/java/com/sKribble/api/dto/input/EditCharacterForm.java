@@ -10,6 +10,6 @@ public record EditCharacterForm (
     @NotBlank(message = InputErrorMessages.REQUIRES_CHARACTER_ID)
     String characterId,
     @NotBlank(message = InputErrorMessages.REQUIRES_CHARACTER_NAME)
-    String name,
+    String characterName,
     String description
 ){}

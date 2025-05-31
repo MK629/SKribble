@@ -34,7 +34,7 @@ public class Chapter {
         this.text = StringCheckerUtil.isNotHollow(text) ? text : DefaultContents.STORY_CHAPTER_DEFAULT_CONTENT;
     }
 
-    //My masterstroke function
+    //Very cool function.
     public void listMentionedCharacters(List<StoryCharacter> allCharacters){
         if(this.mentionedCharacters == null){
             this.mentionedCharacters = new ArrayList<>();
@@ -46,12 +46,12 @@ public class Chapter {
         String chapterContent = this.text.toLowerCase();
 
         for(StoryCharacter character: allCharacters){
-            String firstName = character.getName().split(" ")[0].toLowerCase();
-            String fullName = character.getName().toLowerCase();
+            String firstName = character.getCharacterName().split(" ")[0].toLowerCase();
+            String fullName = character.getCharacterName().toLowerCase();
 
             //If a character is mentioned by a full name...
             if(chapterContent.contains(fullName)){
-                mentionedCharacters.removeIf((c) -> c.getName().split(" ")[0].equalsIgnoreCase(firstName));
+                mentionedCharacters.removeIf((c) -> !c.getCharacterName().equalsIgnoreCase(fullName) && c.getCharacterName().split(" ")[0].equalsIgnoreCase(firstName));
 
                 this.mentionedCharacters.add(character);
 

@@ -23,13 +23,13 @@ input EditChapterForm{
 
 input AddCharacterForm{
     storyId: String
-    name: String
+    characterName: String
     description: String
 }
 
 input EditCharacterForm{
     storyId: String
     characterId: String
-    name: String
+    characterName: String
     description: String
 }
