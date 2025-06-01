@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class StoryCharacter {
 
-    private String characterId;
+    private final String characterId;
 
     private String characterName;
 

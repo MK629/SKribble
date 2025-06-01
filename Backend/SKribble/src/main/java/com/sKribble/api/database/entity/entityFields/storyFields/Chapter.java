@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class Chapter {
 
-    private Integer chapterNumber;
+    private final Integer chapterNumber;
 
     private String chapterName;
 

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class Landmark {
 
-    private String landmarkId;
+    private final String landmarkId;
 
     private String landmarkName;
 
