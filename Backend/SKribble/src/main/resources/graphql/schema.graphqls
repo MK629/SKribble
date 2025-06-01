@@ -10,4 +10,7 @@ type Mutation{
 	newCharacter(addCharacterForm: AddCharacterForm!) : String
 	editCharacter(editCharacterForm: EditCharacterForm!) : String
 	changeCharacterImage(changeCharacterImageForm: ChangeCharacterImageForm!) : String
+	newLandmark(addLandmarkForm: AddLandmarkForm!) : String
+	editLandmark(editLandmarkForm: EditLandmarkForm!) : String
+	changeLandmarkImage(changeLandmarkImageForm: ChangeCharacterImageForm!) : String
 }

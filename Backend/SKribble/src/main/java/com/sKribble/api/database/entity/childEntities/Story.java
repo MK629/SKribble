@@ -11,12 +11,14 @@ import org.springframework.data.annotation.TypeAlias;
 
 import com.sKribble.api.database.entity.Project;
 import com.sKribble.api.database.entity.defaults.StoryDefaultContents;
-import com.sKribble.api.database.entity.entityFields.StoryCharacter;
-import com.sKribble.api.database.entity.entityFields.Chapter;
+import com.sKribble.api.database.entity.entityFields.storyFields.Chapter;
+import com.sKribble.api.database.entity.entityFields.storyFields.Landmark;
+import com.sKribble.api.database.entity.entityFields.storyFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ContentNotFoundException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateChapterException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateCharacterException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateLandmarkException;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.utils.StringCheckerUtil;
 
@@ -36,25 +38,30 @@ public class Story extends Project{
 
     private Map<String, StoryCharacter> characters;
 
+    private Map<String, Landmark> landmarks;
+
     @PersistenceCreator
-    public Story(String title, ProjectTypes type, Map<Integer, Chapter> chapters, Map<String, StoryCharacter> characters, String ownerId) {
+    public Story(String title, ProjectTypes type, Map<Integer, Chapter> chapters, Map<String, StoryCharacter> characters, Map<String, Landmark> landmarks,String ownerId) {
         super(ownerId);
         this.title = title;
         this.type = type;
         this.chapters = (chapters == null) ? new HashMap<Integer, Chapter>() : chapters;
         this.characters = (characters == null) ? new HashMap<String, StoryCharacter>() : characters;
+        this.landmarks = (landmarks == null) ? new HashMap<String, Landmark>() : landmarks;
     }
 
     public void changeTitle(String newTitle){
         this.title = newTitle;
     }
 
-    public void addChapter(Chapter chapter){
-        if(this.chapters.containsKey(chapter.getChapterNumber())){
+//========================================================[ Chapter functions ]================================================================//
+
+    public void addChapter(Chapter newChapter){
+        if(this.chapters.containsKey(newChapter.getChapterNumber())){
             throw new DuplicateChapterException(CRUDErrorMessages.DUPLICATE_CHAPTER);
         }
 
-        this.chapters.put(chapter.getChapterNumber(), chapter);
+        this.chapters.put(newChapter.getChapterNumber(), newChapter);
     }
 
     public void editChapter(Integer chapterNumber, String chapterName, String text){
@@ -72,9 +79,14 @@ public class Story extends Project{
         }
     }
 
-    public List<Chapter> getChaptersForDTO(){
+    public List<Chapter> getChaptersAsList(){
+        List<StoryCharacter> charactersList = getCharactersAsList();
+
+        List<Landmark> landmarksList = getLandmarksAsList();
+
         List<Chapter> chaptersForDTO = new ArrayList<Chapter>(this.chapters.values()).stream().map((chapter) -> {
-            chapter.listMentionedCharacters(getCharactersForDTO());
+            chapter.listMentionedCharacters(charactersList);
+            chapter.listMentionedLandmarks(landmarksList);
             return chapter;
         }).collect(Collectors.toList());;
 
@@ -83,12 +95,14 @@ public class Story extends Project{
         return chaptersForDTO;
     }
 
-    public void addCharacter(StoryCharacter character){
-        if(this.characters.containsKey(character.getCharacterId())){
+//========================================================[ Character functions ]================================================================//
+
+    public void addCharacter(StoryCharacter newCharacter){
+        if(this.characters.containsKey(newCharacter.getCharacterId())){
             throw new DuplicateCharacterException(CRUDErrorMessages.DUPLICATE_CHARACTER_ID);
         }
 
-        this.characters.put(character.getCharacterId(), character);
+        this.characters.put(newCharacter.getCharacterId(), newCharacter);
     }
 
     public void editCharacter(String characterId, String name, String description){
@@ -114,7 +128,44 @@ public class Story extends Project{
         this.characters.get(characterId).setImageUrl(newImageUrl);
     }
 
-    public List<StoryCharacter> getCharactersForDTO(){
+    public List<StoryCharacter> getCharactersAsList(){
         return new ArrayList<>(this.characters.values());
+    }
+
+//========================================================[ Landmark functions ]================================================================//
+
+    public void addLandmark(Landmark newLandmark){
+        if(this.landmarks.containsKey(newLandmark.getLandmarkId())){
+            throw new DuplicateLandmarkException(CRUDErrorMessages.DUPLICATE_LANDMARK_ID);
+        }
+
+        this.landmarks.put(newLandmark.getLandmarkId(), newLandmark);
+    }
+
+    public void editLandmark(String landmarkId, String landmarkName, String description){
+        if(!this.landmarks.containsKey(landmarkId)){
+            throw new ContentNotFoundException(CRUDErrorMessages.LANDMARK_NOT_FOUND);
+        }
+
+        this.landmarks.get(landmarkId).setLandmarkName(landmarkName);
+
+        if(StringCheckerUtil.isNotHollow(description)){
+            this.landmarks.get(landmarkId).setDescription(description);
+        }
+        else{
+            this.landmarks.get(landmarkId).setDescription(StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT);;
+        }
+    }
+
+    public void changeLandmarkImage(String landmarkId, String newImageUrl){
+        if(!this.landmarks.containsKey(landmarkId)){
+            throw new ContentNotFoundException(CRUDErrorMessages.LANDMARK_NOT_FOUND);
+        }
+
+        this.landmarks.get(landmarkId).setImageUrl(newImageUrl);
+    }
+
+    public List<Landmark> getLandmarksAsList(){
+        return new ArrayList<>(this.landmarks.values());
     }
 }

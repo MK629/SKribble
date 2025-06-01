@@ -3,11 +3,19 @@ type Chapter{
     chapterName: String
     text: String
     mentionedCharacters: [StoryCharacter]
+    mentionedLandmarks: [Landmark]
 }
 
 type StoryCharacter{
     characterId: String
     characterName: String
+    description: String
+    imageUrl: String
+}
+
+type Landmark{
+    landmarkId: String
+    landmarkName: String
     description: String
     imageUrl: String
 }
@@ -18,5 +26,6 @@ type StoryOutput{
     type: ProjectTypes
     chapters: [Chapter]
     characters: [StoryCharacter]
+    landmarks: [Landmark]
     owner: String
 }

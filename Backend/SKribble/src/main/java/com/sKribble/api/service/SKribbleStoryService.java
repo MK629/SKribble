@@ -10,19 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sKribble.api.database.entity.User;
 import com.sKribble.api.database.entity.childEntities.Story;
 import com.sKribble.api.database.entity.defaults.ProjectDefaultContents;
-import com.sKribble.api.database.entity.entityFields.Chapter;
-import com.sKribble.api.database.entity.entityFields.StoryCharacter;
+import com.sKribble.api.database.entity.entityFields.storyFields.Chapter;
+import com.sKribble.api.database.entity.entityFields.storyFields.Landmark;
+import com.sKribble.api.database.entity.entityFields.storyFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
-import com.sKribble.api.dto.input.AddChapterForm;
-import com.sKribble.api.dto.input.AddCharacterForm;
-import com.sKribble.api.dto.input.ChangeCharacterImageForm;
-import com.sKribble.api.dto.input.ChangeStoryTitleForm;
-import com.sKribble.api.dto.input.EditChapterForm;
-import com.sKribble.api.dto.input.EditCharacterForm;
-import com.sKribble.api.dto.input.StoryTitleInput;
-import com.sKribble.api.dto.output.StoryOutput;
+import com.sKribble.api.dto.input.story.AddChapterForm;
+import com.sKribble.api.dto.input.story.AddCharacterForm;
+import com.sKribble.api.dto.input.story.AddLandmarkForm;
+import com.sKribble.api.dto.input.story.ChangeCharacterImageForm;
+import com.sKribble.api.dto.input.story.ChangeLandmarkImageForm;
+import com.sKribble.api.dto.input.story.ChangeStoryTitleForm;
+import com.sKribble.api.dto.input.story.EditChapterForm;
+import com.sKribble.api.dto.input.story.EditCharacterForm;
+import com.sKribble.api.dto.input.story.EditLandmarkForm;
+import com.sKribble.api.dto.input.story.StoryTitleInput;
+import com.sKribble.api.dto.output.story.StoryOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
@@ -61,7 +65,7 @@ public class SKribbleStoryService {
 
         CurrentUserInfoUtil.checkExistence(invoker);
 
-        Story newStory = new Story(storyTitleInput.title(), ProjectTypes.Story, null, null, invoker.getId());
+        Story newStory = new Story(storyTitleInput.title(), ProjectTypes.Story, null, null, null, invoker.getId());
 
         persistStory(newStory);
 
@@ -87,6 +91,8 @@ public class SKribbleStoryService {
 
         return CRUDSuccessMessages.STORY_TITLE_CHANGE_SUCCESS;
     }
+
+//========================================================[ Chapter functions ]================================================================//
 
     //Mutation
     @Transactional
@@ -127,6 +133,8 @@ public class SKribbleStoryService {
 
         return CRUDSuccessMessages.CHAPTER_EDIT_SUCCESS;
     }
+
+//========================================================[ Character functions ]================================================================//
 
     @Transactional
     public String newCharacter(@Valid AddCharacterForm addCharacterForm){
@@ -183,6 +191,65 @@ public class SKribbleStoryService {
         persistStory(storyToChangeCharacterImageUrl);
 
         return CRUDSuccessMessages.CHARACTER_IMAGE_UPLOAD_SUCCESS;
+    }
+
+//========================================================[ Landmark functions ]================================================================//
+
+    @Transactional
+    public String newLandmark(@Valid AddLandmarkForm addLandmarkForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Story storyToAddLandmark = projectRepository.findStoryById(addLandmarkForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToAddLandmark);
+
+        OwnershipChecker.checkOwnership(invoker, storyToAddLandmark);
+
+        storyToAddLandmark.addLandmark(new Landmark(UUID.randomUUID().toString(), addLandmarkForm.landmarkName(), addLandmarkForm.description(), addLandmarkForm.imageUrl()));
+
+        persistStory(storyToAddLandmark);
+
+        return CRUDSuccessMessages.LANDMARK_CREATION_SUCCESS;
+    }
+
+    @Transactional
+    public String editLandmark(@Valid EditLandmarkForm editLandmarkForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Story storyToEditLandmark = projectRepository.findStoryById(editLandmarkForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToEditLandmark);
+
+        OwnershipChecker.checkOwnership(invoker, storyToEditLandmark);
+
+        storyToEditLandmark.editLandmark(editLandmarkForm.landmarkId(), editLandmarkForm.landmarkName(), editLandmarkForm.description());
+
+        persistStory(storyToEditLandmark);
+
+        return CRUDSuccessMessages.LANDMARK_EDIT_SUCCESS;
+    }
+
+    @Transactional
+    public String changeLandmarkImage(@Valid ChangeLandmarkImageForm changeLandmarkImageForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Story storyToChangeLandmarkImage = projectRepository.findStoryById(changeLandmarkImageForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToChangeLandmarkImage);
+
+        OwnershipChecker.checkOwnership(invoker, storyToChangeLandmarkImage);
+
+        storyToChangeLandmarkImage.changeLandmarkImage(changeLandmarkImageForm.landmarkId(), changeLandmarkImageForm.newImageUrl());
+
+        persistStory(storyToChangeLandmarkImage);
+
+        return CRUDSuccessMessages.LANDMARK_IMAGE_UPLOAD_SUCCESS;
     }
 
 //==========================================[ Here lies the line for local abstractions ]================================================//

@@ -40,3 +40,23 @@ input ChangeCharacterImageForm{
     characterId: String
     newImageUrl: String
 }
+
+input AddLandmarkForm{
+    storyId: String
+    landmarkName: String
+    description: String
+    imageUrl: String
+}
+
+input EditLandmarkForm{
+    storyId: String
+    landmarkId: String
+    landmarkName: String
+    description: String
+}
+
+input ChangeLandmarkImageForm{
+    storyId: String
+    landmarkId: String
+    newImageUrl: String
+}

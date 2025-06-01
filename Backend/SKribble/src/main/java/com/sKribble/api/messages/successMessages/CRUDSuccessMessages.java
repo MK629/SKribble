@@ -17,4 +17,10 @@ public class CRUDSuccessMessages {
 	public static final String CHARACTER_EDIT_SUCCESS = "This character has been edited successfully.";
 
 	public static final String CHARACTER_IMAGE_UPLOAD_SUCCESS = "Character image has been uploaded successfully.";
+
+	public static final String LANDMARK_CREATION_SUCCESS = "A new landmark has been successfully created.";
+
+	public static final String LANDMARK_EDIT_SUCCESS = "This landmark has been edited successfully.";
+
+	public static final String LANDMARK_IMAGE_UPLOAD_SUCCESS = "Landmark image has been uploaded successfully.";
 }

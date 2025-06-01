@@ -1,4 +1,5 @@
-package com.sKribble.api.database.entity.entityFields;
+package com.sKribble.api.database.entity.entityFields.storyFields;
+
 import org.springframework.data.annotation.PersistenceCreator;
 
 import com.sKribble.api.database.entity.defaults.StoryDefaultContents;

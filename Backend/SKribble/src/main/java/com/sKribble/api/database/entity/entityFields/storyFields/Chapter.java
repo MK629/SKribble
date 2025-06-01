@@ -1,4 +1,4 @@
-package com.sKribble.api.database.entity.entityFields;
+package com.sKribble.api.database.entity.entityFields.storyFields;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +27,9 @@ public class Chapter {
 
     @Transient
     private List<StoryCharacter> mentionedCharacters;
+
+    @Transient
+    private List<Landmark> mentionedLandmarks;
 
     @PersistenceCreator
     public Chapter(Integer chapterNumber, String chapterName, String text){
@@ -77,6 +80,24 @@ public class Chapter {
                     this.mentionedCharacters.add(character);
                     inconclusivityTracker.put(firstName, true);
                 }
+            }
+        }
+    }
+
+    public void listMentionedLandmarks(List<Landmark> allLandmarks){
+        if(this.mentionedLandmarks == null){
+            this.mentionedLandmarks = new ArrayList<>();
+        }
+
+        String chapterContent = this.text.toLowerCase();
+
+        for(Landmark landmark : allLandmarks){
+            String landmarkName = landmark.getLandmarkName().toLowerCase();
+
+            Pattern landmarkNamePatern = Pattern.compile("\\b" + Pattern.quote(landmarkName) + "\\b", Pattern.CASE_INSENSITIVE);
+
+            if(landmarkNamePatern.matcher(chapterContent).find()){
+                this.mentionedLandmarks.add(landmark);
             }
         }
     }
