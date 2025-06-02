@@ -16,9 +16,9 @@ import com.sKribble.api.database.entity.entityFields.storyFields.Landmark;
 import com.sKribble.api.database.entity.entityFields.storyFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ContentNotFoundException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateChapterException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateCharacterException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateLandmarkException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateChapterException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateCharacterException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateLandmarkException;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.utils.StringCheckerUtil;
 
@@ -79,6 +79,14 @@ public class Story extends Project{
         }
     }
 
+    public void deleteChapter(Integer chapterNumber){
+        if(!this.chapters.containsKey(chapterNumber)){
+            throw new ContentNotFoundException(CRUDErrorMessages.CHAPTER_NOT_FOUND);
+        }
+
+        this.chapters.remove(chapterNumber);
+    }
+
     public List<Chapter> getChaptersAsList(){
         List<StoryCharacter> charactersList = getCharactersAsList();
 
@@ -120,6 +128,14 @@ public class Story extends Project{
         }
     }
 
+    public void deleteCharacter(String characterId){
+        if(!this.characters.containsKey(characterId)){
+            throw new ContentNotFoundException(CRUDErrorMessages.CHARACTER_NOT_FOUND);
+        }
+
+        this.characters.remove(characterId);
+    }
+
     public void changeCharacterImage(String characterId, String newImageUrl){
         if(!this.characters.containsKey(characterId)){
             throw new ContentNotFoundException(CRUDErrorMessages.CHARACTER_NOT_FOUND);
@@ -155,6 +171,14 @@ public class Story extends Project{
         else{
             this.landmarks.get(landmarkId).setDescription(StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT);;
         }
+    }
+
+    public void deleteLandmark(String landmarkId){
+        if(!this.landmarks.containsKey(landmarkId)){
+            throw new ContentNotFoundException(CRUDErrorMessages.LANDMARK_NOT_FOUND);
+        }
+
+        this.landmarks.remove(landmarkId);
     }
 
     public void changeLandmarkImage(String landmarkId, String newImageUrl){

@@ -7,10 +7,13 @@ type Mutation{
 	changeStoryTitle(changeStoryTitleForm: ChangeStoryTitleForm!) : String
 	newChapter(addChapterForm: AddChapterForm!) : String
 	editChapter(editChapterForm: EditChapterForm!) : String
+	deleteChapter(deleteChapterForm: DeleteChapterForm!) : String
 	newCharacter(addCharacterForm: AddCharacterForm!) : String
 	editCharacter(editCharacterForm: EditCharacterForm!) : String
+	deleteCharacter(deleteCharacterForm: DeleteCharacterForm!) : String
 	changeCharacterImage(changeCharacterImageForm: ChangeCharacterImageForm!) : String
 	newLandmark(addLandmarkForm: AddLandmarkForm!) : String
 	editLandmark(editLandmarkForm: EditLandmarkForm!) : String
+	deleteLandmark(deleteLandmarkForm: DeleteLandmarkForm!) : String
 	changeLandmarkImage(changeLandmarkImageForm: ChangeCharacterImageForm!) : String
 }

@@ -35,5 +35,4 @@ public class InputErrorMessages {
 	public static final String DUPLICATE_USERNAME = "This username already exists.";
 	
 	public static final String DUPLICATE_EMAIL = "This E-Mail is already registered to another user.";
-
 }

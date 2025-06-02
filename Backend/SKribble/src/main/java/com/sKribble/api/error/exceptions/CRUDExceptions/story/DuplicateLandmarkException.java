@@ -1,4 +1,4 @@
-package com.sKribble.api.error.exceptions.CRUDExceptions;
+package com.sKribble.api.error.exceptions.CRUDExceptions.story;
 
 public class DuplicateLandmarkException extends RuntimeException{
 

@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 
 import com.sKribble.api.error.exceptions.CRUDExceptions.AssetNotOwnedException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ContentNotFoundException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateChapterException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateCharacterException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.DuplicateLandmarkException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllegalInputException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ProjectNotFoundException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateChapterException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateCharacterException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateLandmarkException;
 import com.sKribble.api.utils.GraphQlErrorUtil;
 
 import graphql.GraphQLError;

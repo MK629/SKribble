@@ -21,6 +21,11 @@ input EditChapterForm{
     text: String
 }
 
+input DeleteChapterForm{
+    storyId: String
+    chapterNumber: Int
+}
+
 input AddCharacterForm{
     storyId: String
     characterName: String
@@ -33,6 +38,11 @@ input EditCharacterForm{
     characterId: String
     characterName: String
     description: String
+}
+
+input DeleteCharacterForm{
+    storyId: String
+    characterId: String
 }
 
 input ChangeCharacterImageForm{
@@ -53,6 +63,11 @@ input EditLandmarkForm{
     landmarkId: String
     landmarkName: String
     description: String
+}
+
+input DeleteLandmarkForm{
+    storyId: String
+    landmarkId: String
 }
 
 input ChangeLandmarkImageForm{

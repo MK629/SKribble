@@ -13,6 +13,9 @@ import com.sKribble.api.dto.input.story.AddLandmarkForm;
 import com.sKribble.api.dto.input.story.ChangeCharacterImageForm;
 import com.sKribble.api.dto.input.story.ChangeLandmarkImageForm;
 import com.sKribble.api.dto.input.story.ChangeStoryTitleForm;
+import com.sKribble.api.dto.input.story.DeleteChapterForm;
+import com.sKribble.api.dto.input.story.DeleteCharacterForm;
+import com.sKribble.api.dto.input.story.DeleteLandmarkForm;
 import com.sKribble.api.dto.input.story.EditChapterForm;
 import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
@@ -55,6 +58,11 @@ public class SKribbleServiceController {
     }
 
     @MutationMapping
+    public String deleteChapter(@Argument("deleteChapterForm") @Valid DeleteChapterForm deleteChapterForm){
+        return sKribbleStoryService.deleteChapter(deleteChapterForm);
+    }
+
+    @MutationMapping
     public String newCharacter(@Argument("addCharacterForm") @Valid AddCharacterForm addCharacterForm){
         return sKribbleStoryService.newCharacter(addCharacterForm);
     }
@@ -62,6 +70,11 @@ public class SKribbleServiceController {
     @MutationMapping
     public String editCharacter(@Argument("editCharacterForm") @Valid EditCharacterForm editCharacterForm){
         return sKribbleStoryService.editCharacter(editCharacterForm);
+    }
+
+    @MutationMapping
+    public String deleteCharacter(@Argument("deleteCharacterForm") @Valid DeleteCharacterForm deleteCharacterForm){
+        return sKribbleStoryService.deleteCharacter(deleteCharacterForm);
     }
 
     @MutationMapping
@@ -77,6 +90,11 @@ public class SKribbleServiceController {
     @MutationMapping
     public String editLandmark(@Argument("editLandmarkForm") @Valid EditLandmarkForm editLandmarkForm){
         return sKribbleStoryService.editLandmark(editLandmarkForm);
+    }
+
+    @MutationMapping
+    public String deleteLandmark(@Argument("deleteLandmarkForm") @Valid DeleteLandmarkForm deleteLandmarkForm){
+        return sKribbleStoryService.deleteLandmark(deleteLandmarkForm);
     }
 
     @MutationMapping

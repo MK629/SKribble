@@ -22,6 +22,9 @@ import com.sKribble.api.dto.input.story.AddLandmarkForm;
 import com.sKribble.api.dto.input.story.ChangeCharacterImageForm;
 import com.sKribble.api.dto.input.story.ChangeLandmarkImageForm;
 import com.sKribble.api.dto.input.story.ChangeStoryTitleForm;
+import com.sKribble.api.dto.input.story.DeleteChapterForm;
+import com.sKribble.api.dto.input.story.DeleteCharacterForm;
+import com.sKribble.api.dto.input.story.DeleteLandmarkForm;
 import com.sKribble.api.dto.input.story.EditChapterForm;
 import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
@@ -47,7 +50,6 @@ public class SKribbleStoryService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
-    //Query
     public List<StoryOutput> findStoriesByTitle(@Valid StoryTitleInput storyTitleInput){
         return projectRepository.findStoriesByTitle(storyTitleInput.title())
         .stream()
@@ -57,8 +59,6 @@ public class SKribbleStoryService {
         })
         .collect(Collectors.toList());
     }
-
-    //Mutation
     @Transactional
     public String newStory(@Valid StoryTitleInput storyTitleInput){
         User invoker = getInvoker();
@@ -72,7 +72,6 @@ public class SKribbleStoryService {
         return CRUDSuccessMessages.STORY_CREATION_SUCCESS;
     }
 
-    //Mutation
     @Transactional
     public String changeStoryTitle(@Valid ChangeStoryTitleForm changeStoryTitleForm){
         User invoker = getInvoker();
@@ -94,7 +93,6 @@ public class SKribbleStoryService {
 
 //========================================================[ Chapter functions ]================================================================//
 
-    //Mutation
     @Transactional
     public String newChapter(@Valid AddChapterForm addChapterForm){
         User invoker = getInvoker();
@@ -114,7 +112,6 @@ public class SKribbleStoryService {
         return CRUDSuccessMessages.CHAPTER_ADD_SUCCESS;
     }
 
-    //Mutation
     @Transactional
     public String editChapter(@Valid EditChapterForm editChapterForm){
         User invoker = getInvoker();
@@ -132,6 +129,25 @@ public class SKribbleStoryService {
         persistStory(storyToEditChapter);
 
         return CRUDSuccessMessages.CHAPTER_EDIT_SUCCESS;
+    }
+
+    @Transactional
+    public String deleteChapter(@Valid DeleteChapterForm deleteChapterForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Story storyToDeleteChapter = projectRepository.findStoryById(deleteChapterForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToDeleteChapter);
+
+        OwnershipChecker.checkOwnership(invoker, storyToDeleteChapter);
+
+        storyToDeleteChapter.deleteChapter(deleteChapterForm.chapterNumber());
+
+        persistStory(storyToDeleteChapter);
+
+        return CRUDSuccessMessages.CHAPTER_DELETE_SUCCESS;
     }
 
 //========================================================[ Character functions ]================================================================//
@@ -172,6 +188,25 @@ public class SKribbleStoryService {
         persistStory(storyToEditCharacter);
 
         return CRUDSuccessMessages.CHARACTER_EDIT_SUCCESS;
+    }
+
+    @Transactional
+    public String deleteCharacter(@Valid DeleteCharacterForm deleteCharacterForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Story storyToDeleteCharacter = projectRepository.findStoryById(deleteCharacterForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToDeleteCharacter);
+
+        OwnershipChecker.checkOwnership(invoker, storyToDeleteCharacter);
+
+        storyToDeleteCharacter.deleteCharacter(deleteCharacterForm.characterId());
+
+        persistStory(storyToDeleteCharacter);
+
+        return CRUDSuccessMessages.CHARACTER_DELETE_SUCCESS;
     }
 
     @Transactional
@@ -231,6 +266,25 @@ public class SKribbleStoryService {
         persistStory(storyToEditLandmark);
 
         return CRUDSuccessMessages.LANDMARK_EDIT_SUCCESS;
+    }
+
+    @Transactional
+    public String deleteLandmark(@Valid DeleteLandmarkForm deleteLandmarkForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Story storyToDeleteLandmark = projectRepository.findStoryById(deleteLandmarkForm.storyId());
+
+        ProjectEntityUtil.checkExistence(storyToDeleteLandmark);
+
+        OwnershipChecker.checkOwnership(invoker, storyToDeleteLandmark);
+
+        storyToDeleteLandmark.deleteLandmark(deleteLandmarkForm.landmarkId());
+
+        persistStory(storyToDeleteLandmark);
+
+        return CRUDSuccessMessages.LANDMARK_DELETE_SUCCESS;
     }
 
     @Transactional
