@@ -21,6 +21,7 @@ import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.output.story.StoryOutput;
+import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.service.SKribbleStoryService;
 
 import jakarta.validation.Valid;
@@ -31,7 +32,12 @@ import lombok.RequiredArgsConstructor;
 public class SKribbleServiceController {
 
     private final SKribbleStoryService sKribbleStoryService;
+    private final SKribbleSongService sKribbleSongService;
+
+//=======================================================[ Common ]======================================================= 
 	
+
+//=======================================================[ Story ]=======================================================    
     @QueryMapping
     public List<StoryOutput> findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
         return sKribbleStoryService.findStoriesByTitle(storyTitleInput);
@@ -101,4 +107,6 @@ public class SKribbleServiceController {
     public String changeLandmarkImage(@Argument("changeLandmarkImageForm") @Valid ChangeLandmarkImageForm changeLandmarkImageForm){
         return sKribbleStoryService.changeLandmarkImage(changeLandmarkImageForm);
     }
+
+    //=======================================================[ Song ]======================================================= 
 }
