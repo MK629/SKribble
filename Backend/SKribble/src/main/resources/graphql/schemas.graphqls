@@ -3,8 +3,11 @@ type Query{
 }
 
 type Mutation{
-	#Story
-	newStory(storyTitleInput: StoryTitleInput!) : String
+	#============================[ Common ]============================
+	deleteProject(deleteProjectForm: DeleteProjectForm!) : String
+
+	#============================[ Story ]=============================
+	newStory(newStoryForm: NewStoryForm!) : String
 	changeStoryTitle(changeStoryTitleForm: ChangeStoryTitleForm!) : String
 	
 	newChapter(addChapterForm: AddChapterForm!) : String
@@ -21,5 +24,6 @@ type Mutation{
 	deleteLandmark(deleteLandmarkForm: DeleteLandmarkForm!) : String
 	changeLandmarkImage(changeLandmarkImageForm: ChangeCharacterImageForm!) : String
 
-	#Song
-}
+	#============================[ Song ]=============================
+	newSong(newSongForm: NewSongForm!) : String
+} 

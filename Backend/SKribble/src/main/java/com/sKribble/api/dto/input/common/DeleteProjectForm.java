@@ -1,12 +1,10 @@
-package com.sKribble.api.dto.input.story;
+package com.sKribble.api.dto.input.common;
 
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record DeleteCharacterForm(
+public record DeleteProjectForm(
     @NotBlank(message = InputErrorMessages.REQUIRES_PROJECT_ID)
-    String storyId,
-    @NotBlank(message = InputErrorMessages.REQUIRES_CHARACTER_ID)
-    String characterId
+    String projectId
 ) {}

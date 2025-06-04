@@ -28,6 +28,7 @@ import com.sKribble.api.dto.input.story.DeleteLandmarkForm;
 import com.sKribble.api.dto.input.story.EditChapterForm;
 import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
+import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.output.story.StoryOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
@@ -59,13 +60,14 @@ public class SKribbleStoryService {
         })
         .collect(Collectors.toList());
     }
+
     @Transactional
-    public String newStory(@Valid StoryTitleInput storyTitleInput){
+    public String newStory(@Valid NewStoryForm newStoryForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
 
-        Story newStory = new Story(storyTitleInput.title(), ProjectTypes.Story, null, null, null, invoker.getId());
+        Story newStory = new Story(newStoryForm.title(), ProjectTypes.Story, null, null, null, invoker.getId());
 
         persistStory(newStory);
 

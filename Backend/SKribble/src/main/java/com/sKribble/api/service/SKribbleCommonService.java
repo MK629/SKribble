@@ -3,38 +3,41 @@ package com.sKribble.api.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sKribble.api.database.entity.Project;
 import com.sKribble.api.database.entity.User;
-import com.sKribble.api.database.entity.childEntities.Song;
-import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
-import com.sKribble.api.dto.input.song.NewSongForm;
-import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
-import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
+import com.sKribble.api.dto.input.common.DeleteProjectForm;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
+import com.sKribble.api.utils.OwnershipChecker;
+import com.sKribble.api.utils.ProjectEntityUtil;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SKribbleSongService {
+public class SKribbleCommonService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
     @Transactional
-    public String newSong(@Valid NewSongForm newSongForm){
+    public String deleteProject(@Valid DeleteProjectForm deleteProjectForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
 
-        Song newSong = new Song(newSongForm.title(), ProjectTypes.Song, newSongForm.genre(), newSongForm.lyrics(), newSongForm.sheetMusicImageUrl(), invoker.getId());
+        Project projectToDelete = projectRepository.findById(deleteProjectForm.projectId()).orElse(null);
 
-        persistSong(newSong);
-        
-        return CRUDSuccessMessages.SONG_CREATION_SUCCESS;
+        ProjectEntityUtil.checkExistence(projectToDelete);
+
+        OwnershipChecker.checkOwnership(invoker, projectToDelete);
+
+        projectRepository.deleteById(deleteProjectForm.projectId());
+
+        return CRUDSuccessMessages.PROJECT_DELETION_SUCCESS;
     }
 
 //==========================================[ Here lies the line for local abstractions ]================================================//
@@ -42,15 +45,5 @@ public class SKribbleSongService {
     //Get the User entity of the user who made the request (invoker).
     private User getInvoker(){
         return userRepository.findUserByUsernameOrEmail(CurrentUserInfoUtil.getCurrentUserPrincipalName());
-    }
-
-    //Create new or persist changes.
-    private void persistSong(Song song){
-        try{
-            projectRepository.save(song);
-        }
-        catch(Exception e){
-            throw new PersistenceErrorException(CRUDErrorMessages.PERSISTENCE_FAILED, e);
-        }
     }
 }

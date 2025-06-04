@@ -1,0 +1,6 @@
+input NewSongForm{
+    title: String
+    genre: SongGenres
+    lyrics: String
+    sheetMusicImageUrl: String
+}

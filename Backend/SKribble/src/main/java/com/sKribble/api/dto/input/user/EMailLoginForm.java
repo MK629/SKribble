@@ -1,4 +1,4 @@
-package com.sKribble.api.dto.input;
+package com.sKribble.api.dto.input.user;
 
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 

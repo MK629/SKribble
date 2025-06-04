@@ -6,3 +6,14 @@ enum ProjectTypes {
     Thesis
     Song
 }
+
+enum SongGenres {
+    Pop
+    Rock
+    Metal
+    Country
+    Jazz
+    Funk
+    Folk
+    EDM
+}

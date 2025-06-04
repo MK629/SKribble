@@ -29,4 +29,8 @@ public class CRUDSuccessMessages {
 	public static final String LANDMARK_DELETE_SUCCESS = "Landmark deleted successfully.";
 
 	public static final String LANDMARK_IMAGE_UPLOAD_SUCCESS = "Landmark image has been uploaded successfully.";
+
+	public static final String SONG_CREATION_SUCCESS = "A new song project has been successfully created.";
+
+	public static final String PROJECT_DELETION_SUCCESS = "Project has been successfully deleted.";
 }

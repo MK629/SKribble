@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record AddChapterForm(
-    @NotBlank(message = InputErrorMessages.REQUIRES_STORY_ID)
+    @NotBlank(message = InputErrorMessages.REQUIRES_PROJECT_ID)
     String storyId,
     @NotNull(message = InputErrorMessages.REQUIRES_CHAPTER_NUMBER)
     Integer chapterNumber,

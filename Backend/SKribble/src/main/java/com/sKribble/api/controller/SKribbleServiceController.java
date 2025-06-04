@@ -7,6 +7,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.sKribble.api.dto.input.common.DeleteProjectForm;
+import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.story.AddChapterForm;
 import com.sKribble.api.dto.input.story.AddCharacterForm;
 import com.sKribble.api.dto.input.story.AddLandmarkForm;
@@ -19,8 +21,10 @@ import com.sKribble.api.dto.input.story.DeleteLandmarkForm;
 import com.sKribble.api.dto.input.story.EditChapterForm;
 import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
+import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.output.story.StoryOutput;
+import com.sKribble.api.service.SKribbleCommonService;
 import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.service.SKribbleStoryService;
 
@@ -31,11 +35,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SKribbleServiceController {
 
+    private final SKribbleCommonService sKribbleCommonService;
     private final SKribbleStoryService sKribbleStoryService;
     private final SKribbleSongService sKribbleSongService;
 
 //=======================================================[ Common ]======================================================= 
 	
+    @MutationMapping
+    public String deleteProject(@Argument("deleteProjectForm") @Valid DeleteProjectForm deleteProjectForm){
+        return sKribbleCommonService.deleteProject(deleteProjectForm);
+    }
 
 //=======================================================[ Story ]=======================================================    
     @QueryMapping
@@ -44,8 +53,8 @@ public class SKribbleServiceController {
     }
 
     @MutationMapping
-    public String newStory(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
-        return sKribbleStoryService.newStory(storyTitleInput);
+    public String newStory(@Argument("newStoryForm") @Valid NewStoryForm newStoryForm){
+        return sKribbleStoryService.newStory(newStoryForm);
     }
 
     @MutationMapping
@@ -109,4 +118,9 @@ public class SKribbleServiceController {
     }
 
     //=======================================================[ Song ]======================================================= 
+
+    @MutationMapping
+    public String newSong(@Argument("newSongForm") @Valid NewSongForm newSongForm){
+        return sKribbleSongService.newSong(newSongForm);
+    }
 }
