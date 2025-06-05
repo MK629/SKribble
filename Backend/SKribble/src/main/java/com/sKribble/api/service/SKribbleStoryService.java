@@ -56,7 +56,7 @@ public class SKribbleStoryService {
         .stream()
         .map((story) -> {
             User owner = userRepository.findByIdentification(story.getOwnerId());
-            return DTOConverter.getStoryOutput(story, owner != null ? owner.getUsername() : ProjectDefaultContents.DELETED_USER);
+            return DTOConverter.getStoryOutput(story, (owner == null) ? ProjectDefaultContents.DELETED_USER : owner.getUsername());
         })
         .collect(Collectors.toList());
     }

@@ -16,7 +16,7 @@ import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.user.EMailLoginForm;
 import com.sKribble.api.dto.input.user.UserRegisterForm;
 import com.sKribble.api.dto.input.user.UsernameLoginForm;
-import com.sKribble.api.dto.output.TokenCarrier;
+import com.sKribble.api.dto.output.user.TokenCarrier;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.credentialsExceptions.LoginErrorException;

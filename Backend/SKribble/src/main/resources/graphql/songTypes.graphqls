@@ -1,10 +1,8 @@
-input SongTitleInput{
+type SongOutput{
     title: String
-}
-
-input NewSongForm{
-    title: String
+    type: ProjectTypes
     genre: SongGenres
     lyrics: String
     sheetMusicImageUrl: String
+    owner: String
 }

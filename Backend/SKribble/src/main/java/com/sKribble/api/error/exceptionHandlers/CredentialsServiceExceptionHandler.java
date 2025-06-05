@@ -14,6 +14,7 @@ import com.sKribble.api.utils.ResponseEntityUtil;
 @RestControllerAdvice(assignableTypes =  CredentialsServiceController.class)
 public class CredentialsServiceExceptionHandler {
 	
+	@SuppressWarnings("null")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<String> handleInputExceptions(MethodArgumentNotValidException e){
 		return ResponseEntityUtil.return400(new RuntimeException(e.getBindingResult().getFieldError().getDefaultMessage()));

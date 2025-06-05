@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
+import com.sKribble.api.dto.input.song.SongTitleInput;
 import com.sKribble.api.dto.input.story.AddChapterForm;
 import com.sKribble.api.dto.input.story.AddCharacterForm;
 import com.sKribble.api.dto.input.story.AddLandmarkForm;
@@ -23,6 +24,7 @@ import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
 import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
+import com.sKribble.api.dto.output.song.SongOutput;
 import com.sKribble.api.dto.output.story.StoryOutput;
 import com.sKribble.api.service.SKribbleCommonService;
 import com.sKribble.api.service.SKribbleSongService;
@@ -46,7 +48,8 @@ public class SKribbleServiceController {
         return sKribbleCommonService.deleteProject(deleteProjectForm);
     }
 
-//=======================================================[ Story ]=======================================================    
+//=======================================================[ Story ]=======================================================
+    
     @QueryMapping
     public List<StoryOutput> findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
         return sKribbleStoryService.findStoriesByTitle(storyTitleInput);
@@ -118,6 +121,11 @@ public class SKribbleServiceController {
     }
 
     //=======================================================[ Song ]======================================================= 
+
+    @QueryMapping
+    public List<SongOutput> findSongsByTitle(@Argument("songTitleInput") @Valid SongTitleInput songTitleInput){
+        return sKribbleSongService.findSongsByTitle(songTitleInput);
+    }
 
     @MutationMapping
     public String newSong(@Argument("newSongForm") @Valid NewSongForm newSongForm){
