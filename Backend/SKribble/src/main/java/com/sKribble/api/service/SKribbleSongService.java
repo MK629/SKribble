@@ -12,6 +12,8 @@ import com.sKribble.api.database.entity.defaults.ProjectDefaultContents;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
+import com.sKribble.api.dto.input.song.ChangeSongGenreForm;
+import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
 import com.sKribble.api.dto.output.song.SongOutput;
@@ -20,6 +22,8 @@ import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
 import com.sKribble.api.utils.DTOConverter;
+import com.sKribble.api.utils.OwnershipChecker;
+import com.sKribble.api.utils.ProjectEntityUtil;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +54,44 @@ public class SKribbleSongService {
         persistSong(newSong);
         
         return CRUDSuccessMessages.SONG_CREATION_SUCCESS;
+    }
+
+    @Transactional
+    public String editSong(@Valid EditSongForm editSongForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Song songToEdit = projectRepository.findSongById(editSongForm.songId());
+
+        ProjectEntityUtil.checkExistence(songToEdit);
+
+        OwnershipChecker.checkOwnership(invoker, songToEdit);
+
+        songToEdit.editSong(editSongForm.title(), editSongForm.lyrics(), editSongForm.sheetMusicImageUrl());
+
+        persistSong(songToEdit);
+
+        return CRUDSuccessMessages.SONG_EDIT_SUCCESS;
+    }
+
+    @Transactional
+    public String changeSongGenre(@Valid ChangeSongGenreForm changeSongGenreForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Song songToChangeGenre = projectRepository.findSongById(changeSongGenreForm.songId());
+
+        ProjectEntityUtil.checkExistence(songToChangeGenre);
+
+        OwnershipChecker.checkOwnership(invoker, songToChangeGenre);
+
+        songToChangeGenre.changeGenre(changeSongGenreForm.newGenre());
+
+        persistSong(songToChangeGenre);
+
+        return CRUDSuccessMessages.SONG_GENRE_CHANGE_SUCCESS;
     }
 
 //==========================================[ Here lies the line for local abstractions ]================================================//

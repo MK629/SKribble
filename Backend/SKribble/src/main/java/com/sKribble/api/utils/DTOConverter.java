@@ -13,7 +13,7 @@ public class DTOConverter {
     }
 
     public static SongOutput getSongOutput(Song song, String owner){
-        return new SongOutput(song.getTitle(), song.getType(), song.getGenre(), song.getLyrics(), song.getSheetMusicImageUrl(), owner);
+        return new SongOutput(song.getId(), song.getTitle(), song.getType(), song.getGenre(), song.getLyrics(), song.getSheetMusicImageUrl(), owner);
     }
 
     public static TokenCarrier makeTokenCarrier(String message, String token){

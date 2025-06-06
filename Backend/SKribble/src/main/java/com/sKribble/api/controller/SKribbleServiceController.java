@@ -8,6 +8,8 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
+import com.sKribble.api.dto.input.song.ChangeSongGenreForm;
+import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
 import com.sKribble.api.dto.input.story.AddChapterForm;
@@ -130,5 +132,15 @@ public class SKribbleServiceController {
     @MutationMapping
     public String newSong(@Argument("newSongForm") @Valid NewSongForm newSongForm){
         return sKribbleSongService.newSong(newSongForm);
+    }
+
+    @MutationMapping
+    public String editSong(@Argument("editSongForm") @Valid EditSongForm editSongForm){
+        return sKribbleSongService.editSong(editSongForm);
+    }
+
+    @MutationMapping
+    public String changeSongGenre(@Argument("changeSongGenreForm") @Valid ChangeSongGenreForm changeSongGenreForm){
+        return sKribbleSongService.changeSongGenre(changeSongGenreForm);
     }
 }

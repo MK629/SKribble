@@ -1,4 +1,5 @@
 type SongOutput{
+    id: String
     title: String
     type: ProjectTypes
     genre: SongGenres

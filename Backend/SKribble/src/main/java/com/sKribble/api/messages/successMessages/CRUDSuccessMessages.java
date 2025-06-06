@@ -32,5 +32,9 @@ public class CRUDSuccessMessages {
 
 	public static final String SONG_CREATION_SUCCESS = "A new song project has been successfully created.";
 
+	public static final String SONG_EDIT_SUCCESS = "This song has been successfully edited.";
+
+	public static final String SONG_GENRE_CHANGE_SUCCESS = "This song's genre has been changed.";
+
 	public static final String PROJECT_DELETION_SUCCESS = "Project has been successfully deleted.";
 }

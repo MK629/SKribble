@@ -36,4 +36,14 @@ public class Song extends Project{
         this.lyrics = StringCheckerUtil.isNotHollow(lyrics) ? lyrics : SongDefaultContents.SONG_DEFAULT_CONTENT;
         this.sheetMusicImageUrl = StringCheckerUtil.isNotHollow(sheetMusicImageUrl) ? sheetMusicImageUrl : SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT;
     }
+
+    public void editSong(String title, String lyrics, String sheetMusicImageUrl){
+        this.title = title;
+        this.lyrics = StringCheckerUtil.isNotHollow(lyrics) ? lyrics : SongDefaultContents.SONG_DEFAULT_CONTENT;
+        this.sheetMusicImageUrl = StringCheckerUtil.isNotHollow(sheetMusicImageUrl) ? sheetMusicImageUrl : SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT;
+    }
+
+    public void changeGenre(SongGenres newGenre){
+        this.genre = newGenre;
+    }
 }

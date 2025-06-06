@@ -8,3 +8,15 @@ input NewSongForm{
     lyrics: String
     sheetMusicImageUrl: String
 }
+
+input EditSongForm{
+    songId: String
+    title: String
+    lyrics: String
+    sheetMusicImageUrl: String
+}
+
+input ChangeSongGenreForm{
+    songId: String
+    newGenre: SongGenres
+}
