@@ -44,7 +44,7 @@ public class CredentialsService {
 	private final AuthenticationManager authenticationManager;
 	private final JwtUtil jwtUtil;
 	
-	//Register a new user.
+
 	@Transactional
 	public ResponseEntity<String> register(@Valid UserRegisterForm userRegisterForm) {
 		User user = new User(userRegisterForm.username(), userRegisterForm.email(), passwordEncoder.encode(userRegisterForm.password()));
@@ -78,7 +78,6 @@ public class CredentialsService {
 		return ResponseEntityUtil.return201(CRUDSuccessMessages.REGISTER_SUCCESS);
 	}
 	
-	//User name login
 	public ResponseEntity<TokenCarrier> usernameLogin(@Valid UsernameLoginForm usernameLoginForm){
 		try {
 			Authentication authenticationStatus = authenticationManager
@@ -101,7 +100,6 @@ public class CredentialsService {
 		}
 	}
 	
-	//E-Mail login
 	public ResponseEntity<TokenCarrier> emailLogin(@Valid EMailLoginForm eMailLoginForm){
 		try {
 			Authentication authenticationStatus = authenticationManager
@@ -123,4 +121,6 @@ public class CredentialsService {
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
 		}
 	}
+
+	
 }
