@@ -37,7 +37,7 @@ public class UserCRUDTests {
     @Autowired
     private UserRepository userRepository;
 
-    //Can't autowire due to @DataMongoTest
+    //Can't autowire due to @DataMongoTest limiting beans
     private PasswordEncoder passwordEncoder;
 
     @BeforeAll

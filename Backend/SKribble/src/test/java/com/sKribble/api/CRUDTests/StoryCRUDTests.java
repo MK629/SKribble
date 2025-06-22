@@ -40,7 +40,7 @@ public class StoryCRUDTests {
 
     @BeforeAll
     void setUp(){
-
+        //nani mo shi nai...
     }
 
     @AfterEach
@@ -241,6 +241,18 @@ public class StoryCRUDTests {
         Story fetchedStory2 = projectRepository.findStoryById(fetchedStory.getId());
 
         assertNull(fetchedStory2.getLandmarks().get(StoryCRUDTestConstants.STORY_TEST_LANDMARK_ID_1));
+    }
+
+    @Test
+    @Order(7)
+    void storyDeletionTest(){
+        Story testStory = testStoryInstance();
+        
+        projectRepository.save(testStory);
+        assertNotNull(projectRepository.findStoryById(testStory.getId()));
+
+        projectRepository.deleteById(testStory.getId());
+        assertNull(projectRepository.findStoryById(testStory.getId()));
     }
 
     @AfterAll

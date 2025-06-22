@@ -7,6 +7,8 @@ import com.sKribble.api.database.entity.Project;
 import com.sKribble.api.database.entity.defaults.SongDefaultContents;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.entity.enums.SongGenres;
+import com.sKribble.api.error.exceptions.CRUDExceptions.IllegalInputException;
+import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 import com.sKribble.api.utils.StringCheckerUtil;
 
 import lombok.Getter;
