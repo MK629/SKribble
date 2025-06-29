@@ -40,7 +40,7 @@ public class StoryCRUDTests {
 
     @BeforeAll
     void setUp(){
-        //nani mo shi nai...
+        
     }
 
     @AfterEach
