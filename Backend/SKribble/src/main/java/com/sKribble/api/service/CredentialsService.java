@@ -43,7 +43,6 @@ public class CredentialsService {
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 	private final JwtUtil jwtUtil;
-	
 
 	@Transactional
 	public ResponseEntity<String> register(@Valid UserRegisterForm userRegisterForm) {
@@ -121,6 +120,4 @@ public class CredentialsService {
 			throw new LoginErrorException(AuthenticationErrorMessages.LOGIN_FAILED + " " + AuthenticationErrorMessages.UNKNOWN_ERROR, e);
 		}
 	}
-
-	
 }

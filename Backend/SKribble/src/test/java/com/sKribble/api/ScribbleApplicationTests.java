@@ -20,7 +20,6 @@ import com.sKribble.api.service.SKribbleCommonService;
 import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.service.SKribbleStoryService;
 
-
 @SpringBootTest
 @ActiveProfiles("test")
 class ScribbleApplicationTests {

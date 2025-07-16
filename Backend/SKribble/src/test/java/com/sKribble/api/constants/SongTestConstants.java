@@ -2,7 +2,7 @@ package com.sKribble.api.constants;
 
 import com.sKribble.api.database.entity.enums.SongGenres;
 
-public class SongCRUDTestConstants {
+public class SongTestConstants {
 
     public static final String SONG_TEST_TITLE_ROCK = "rockSong";
 

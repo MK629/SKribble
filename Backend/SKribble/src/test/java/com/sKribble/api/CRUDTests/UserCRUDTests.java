@@ -24,8 +24,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 
-import com.sKribble.api.constants.UserCRUDTestConstants;
+import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.database.entity.User;
+import com.sKribble.api.database.entity.enums.UserRoles;
 import com.sKribble.api.database.repository.UserRepository;
 
 @DataMongoTest
@@ -61,8 +62,8 @@ public class UserCRUDTests {
     @Order(2)
     void duplicateNotAllowedTest(){
         User testUser = testUserInstance();
-        User testUserSameUsername = new User(UserCRUDTestConstants.TEST_USERNAME, UserCRUDTestConstants.TEST_DIFFERENT_EMAIL, passwordEncoder.encode(UserCRUDTestConstants.TEST_DEFAULT_PASSWORD));
-        User testUserSameEmail = new User(UserCRUDTestConstants.TEST_DIFFERENT_USERNAME, UserCRUDTestConstants.TEST_EMAIL, passwordEncoder.encode(UserCRUDTestConstants.TEST_DEFAULT_PASSWORD));
+        User testUserSameUsername = new User(UserTestConstants.TEST_USERNAME, UserTestConstants.TEST_DIFFERENT_EMAIL, passwordEncoder.encode(UserTestConstants.TEST_DEFAULT_PASSWORD));
+        User testUserSameEmail = new User(UserTestConstants.TEST_DIFFERENT_USERNAME, UserTestConstants.TEST_EMAIL, passwordEncoder.encode(UserTestConstants.TEST_DEFAULT_PASSWORD));
 
         userRepository.save(testUser);
         assertNotNull(userRepository.findByIdentification(testUser.getId()));
@@ -80,8 +81,8 @@ public class UserCRUDTests {
 
         assertAll(() -> {
             assertNotNull(userRepository.findByIdentification(testUser.getId()));
-            assertNotNull(userRepository.findUserByUsernameOrEmail(UserCRUDTestConstants.TEST_USERNAME));
-            assertNotNull(userRepository.findUserByUsernameOrEmail(UserCRUDTestConstants.TEST_EMAIL));
+            assertNotNull(userRepository.findUserByUsernameOrEmail(UserTestConstants.TEST_USERNAME));
+            assertNotNull(userRepository.findUserByUsernameOrEmail(UserTestConstants.TEST_EMAIL));
         });
     }
 
@@ -89,15 +90,17 @@ public class UserCRUDTests {
     @Order(4)
     void userExpectedValuesTest(){
         User testUser = testUserInstance();
+        testUser.assignRole(UserRoles.User);
 
         userRepository.save(testUser);
 
         User fetchedTestUser = userRepository.findByIdentification(testUser.getId());
 
         assertAll(() -> {
-            assertEquals(UserCRUDTestConstants.TEST_USERNAME, fetchedTestUser.getUsername());
-            assertEquals(UserCRUDTestConstants.TEST_EMAIL, fetchedTestUser.getEmail());
-            assertTrue(passwordEncoder.matches(UserCRUDTestConstants.TEST_DEFAULT_PASSWORD, fetchedTestUser.getPassword()));
+            assertEquals(UserTestConstants.TEST_USERNAME, fetchedTestUser.getUsername());
+            assertEquals(UserTestConstants.TEST_EMAIL, fetchedTestUser.getEmail());
+            assertTrue(passwordEncoder.matches(UserTestConstants.TEST_DEFAULT_PASSWORD, fetchedTestUser.getPassword()));
+            assertTrue(fetchedTestUser.getRoles().contains(UserTestConstants.USER_ROLE));
         });
     }
 
@@ -119,6 +122,6 @@ public class UserCRUDTests {
     }
 
     private User testUserInstance(){
-        return new User(UserCRUDTestConstants.TEST_USERNAME, UserCRUDTestConstants.TEST_EMAIL, passwordEncoder.encode(UserCRUDTestConstants.TEST_DEFAULT_PASSWORD));
+        return new User(UserTestConstants.TEST_USERNAME, UserTestConstants.TEST_EMAIL, passwordEncoder.encode(UserTestConstants.TEST_DEFAULT_PASSWORD));
     }
 }

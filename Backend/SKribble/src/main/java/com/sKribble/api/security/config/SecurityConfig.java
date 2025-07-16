@@ -22,7 +22,7 @@ public class SecurityConfig {
 	
 	private final JwtFilter jwtFilter;
 	
-	@Value("${spring.graphql.path}")
+	@Value("${spring.graphql.http.path}")
 	private String graphqlPath;
 	
 	@Value("${SKribble.auth.path}")

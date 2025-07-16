@@ -1,6 +1,6 @@
 package com.sKribble.api.constants;
 
-public class StoryCRUDTestConstants {
+public class StoryTestConstants {
 
     public static final String STORY_TEST_TITLE = "testStory";
 
