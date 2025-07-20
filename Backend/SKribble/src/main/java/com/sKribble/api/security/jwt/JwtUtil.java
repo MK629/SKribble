@@ -61,7 +61,7 @@ public class JwtUtil {
 		return Jwts.builder().content(signedToken).encryptWith(getEncryptionKey(), Jwts.ENC.A256GCM).compact(); //Encrypt the signed token.
 	}
 	
-	public String extractUsername(String token) {
+	public String extractSubject(String token) {
 		return Jwts.parser()
 				.verifyWith(getSigningKey())
 				.build()

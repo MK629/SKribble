@@ -13,4 +13,10 @@ public class UserTestConstants {
     public static final String TEST_DIFFERENT_EMAIL = "different@gmail.com";
 
     public static final String USER_ROLE = "ROLE_USER";
+
+    public static final String TEST_NULL_STRING = null;
+
+    public static final String TEST_EMPTY_STRING = " ";
+
+    public static final String TEST_BLANK_STRING = "";
 }

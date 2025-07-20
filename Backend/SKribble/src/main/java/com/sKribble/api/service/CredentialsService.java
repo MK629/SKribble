@@ -30,7 +30,6 @@ import com.sKribble.api.security.jwt.JwtUtil;
 import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.ResponseEntityUtil;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -45,7 +44,7 @@ public class CredentialsService {
 	private final JwtUtil jwtUtil;
 
 	@Transactional
-	public ResponseEntity<String> register(@Valid UserRegisterForm userRegisterForm) {
+	public ResponseEntity<String> register(UserRegisterForm userRegisterForm) {
 		User user = new User(userRegisterForm.username(), userRegisterForm.email(), passwordEncoder.encode(userRegisterForm.password()));
 		user.assignRole(UserRoles.User);
 		
@@ -77,7 +76,7 @@ public class CredentialsService {
 		return ResponseEntityUtil.return201(CRUDSuccessMessages.REGISTER_SUCCESS);
 	}
 	
-	public ResponseEntity<TokenCarrier> usernameLogin(@Valid UsernameLoginForm usernameLoginForm){
+	public ResponseEntity<TokenCarrier> usernameLogin(UsernameLoginForm usernameLoginForm){
 		try {
 			Authentication authenticationStatus = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(usernameLoginForm.username(), usernameLoginForm.password()));
@@ -87,7 +86,7 @@ public class CredentialsService {
 				return ResponseEntityUtil.returnToken(DTOConverter.makeTokenCarrier(AuthenticationSuccessMessages.USERNAME_LOGIN_SUCCESS, token));
 			}
 			else {
-				throw new LoginErrorException( AuthenticationErrorMessages.UNKNOWN_ERROR + " " + AuthenticationErrorMessages.TRY_AGAIN);
+				throw new LoginErrorException(AuthenticationErrorMessages.UNKNOWN_ERROR + " " + AuthenticationErrorMessages.TRY_AGAIN);
 			}
 		}
 		catch (BadCredentialsException e) {
@@ -99,7 +98,7 @@ public class CredentialsService {
 		}
 	}
 	
-	public ResponseEntity<TokenCarrier> emailLogin(@Valid EMailLoginForm eMailLoginForm){
+	public ResponseEntity<TokenCarrier> emailLogin(EMailLoginForm eMailLoginForm){
 		try {
 			Authentication authenticationStatus = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(eMailLoginForm.email(), eMailLoginForm.password()));

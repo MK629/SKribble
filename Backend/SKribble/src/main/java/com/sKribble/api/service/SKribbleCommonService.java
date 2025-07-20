@@ -13,7 +13,6 @@ import com.sKribble.api.utils.CurrentUserInfoUtil;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,7 +23,7 @@ public class SKribbleCommonService {
     private final UserRepository userRepository;
 
     @Transactional
-    public String deleteProject(@Valid DeleteProjectForm deleteProjectForm){
+    public String deleteProject(DeleteProjectForm deleteProjectForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
