@@ -12,11 +12,21 @@ import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 public class CurrentUserInfoUtil {
 
     public static String getCurrentUserPrincipalName(){
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        if(SecurityContextHolder.getContext().getAuthentication() != null){
+            return SecurityContextHolder.getContext().getAuthentication().getName();
+        }
+        else{
+            throw new IllogicalNullException(CRUDErrorMessages.ILLOGICAL_NULL_ERROR);
+        }
     }
 
     public static Collection<? extends GrantedAuthority> getCurrentUserAuthorities(){
-        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        if(SecurityContextHolder.getContext().getAuthentication() != null){
+            return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        }
+        else{
+            throw new IllogicalNullException(CRUDErrorMessages.ILLOGICAL_NULL_ERROR);
+        }
     }
 
     public static void checkExistence(User user){
