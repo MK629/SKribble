@@ -75,33 +75,33 @@ public class SongCRUDTests {
         Song fetchedFolkSong = projectRepository.findSongById(folkSong.getId());
 
         assertAll(() -> {
-            assertEquals(fetchedRockSong.getTitle(), SongTestConstants.SONG_TEST_TITLE_ROCK);
-            assertEquals(fetchedRockSong.getType(), ProjectTypes.Song);
-            assertEquals(fetchedRockSong.getGenre(), SongTestConstants.SONG_TEST_GENRE_ROCK);
-            assertEquals(fetchedRockSong.getLyrics(), SongTestConstants.SONG_TEST_FULL_STRING);
-            assertEquals(fetchedRockSong.getSheetMusicImageUrl(), SongTestConstants.SONG_TEST_FULL_STRING);
-            assertEquals(fetchedRockSong.getOwnerId(), SongTestConstants.SONG_TEST_OWNER_ID);
+            assertEquals(SongTestConstants.SONG_TEST_TITLE_ROCK, fetchedRockSong.getTitle());
+            assertEquals(ProjectTypes.Song, fetchedRockSong.getType());
+            assertEquals(SongTestConstants.SONG_TEST_GENRE_ROCK, fetchedRockSong.getGenre());
+            assertEquals(SongTestConstants.SONG_TEST_FULL_STRING, fetchedRockSong.getLyrics());
+            assertEquals(SongTestConstants.SONG_TEST_FULL_STRING, fetchedRockSong.getSheetMusicImageUrl());
+            assertEquals(SongTestConstants.SONG_TEST_OWNER_ID, fetchedRockSong.getOwnerId());
 
-            assertEquals(fetchedCountrySong.getTitle(), SongTestConstants.SONG_TEST_TITLE_COUNTRY);
-            assertEquals(fetchedCountrySong.getType(), ProjectTypes.Song);
-            assertEquals(fetchedCountrySong.getGenre(), SongTestConstants.SONG_TEST_GENRE_COUNTRY);
-            assertEquals(fetchedCountrySong.getLyrics(), SongDefaultContents.SONG_DEFAULT_CONTENT);
-            assertEquals(fetchedCountrySong.getSheetMusicImageUrl(), SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT);
-            assertEquals(fetchedCountrySong.getOwnerId(), SongTestConstants.SONG_TEST_OWNER_ID);
+            assertEquals(SongTestConstants.SONG_TEST_TITLE_COUNTRY, fetchedCountrySong.getTitle());
+            assertEquals(ProjectTypes.Song, fetchedCountrySong.getType());
+            assertEquals(SongTestConstants.SONG_TEST_GENRE_COUNTRY, fetchedCountrySong.getGenre());
+            assertEquals(SongDefaultContents.SONG_DEFAULT_CONTENT, fetchedCountrySong.getLyrics());
+            assertEquals(SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT, fetchedCountrySong.getSheetMusicImageUrl());
+            assertEquals(SongTestConstants.SONG_TEST_OWNER_ID, fetchedCountrySong.getOwnerId());
 
-            assertEquals(fetchedJazzSong.getTitle(), SongTestConstants.SONG_TEST_TITLE_JAZZ);
-            assertEquals(fetchedJazzSong.getType(), ProjectTypes.Song);
-            assertEquals(fetchedJazzSong.getGenre(), SongTestConstants.SONG_TEST_GENRE_JAZZ);
-            assertEquals(fetchedJazzSong.getLyrics(), SongDefaultContents.SONG_DEFAULT_CONTENT);
-            assertEquals(fetchedJazzSong.getSheetMusicImageUrl(), SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT);
-            assertEquals(fetchedJazzSong.getOwnerId(), SongTestConstants.SONG_TEST_OWNER_ID);
+            assertEquals(SongTestConstants.SONG_TEST_TITLE_JAZZ, fetchedJazzSong.getTitle());
+            assertEquals(ProjectTypes.Song, fetchedJazzSong.getType());
+            assertEquals(SongTestConstants.SONG_TEST_GENRE_JAZZ, fetchedJazzSong.getGenre());
+            assertEquals(SongDefaultContents.SONG_DEFAULT_CONTENT, fetchedJazzSong.getLyrics());
+            assertEquals(SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT, fetchedJazzSong.getSheetMusicImageUrl());
+            assertEquals(SongTestConstants.SONG_TEST_OWNER_ID, fetchedJazzSong.getOwnerId());
 
-            assertEquals(fetchedFolkSong.getTitle(), SongTestConstants.SONG_TEST_TITLE_FOLK);
-            assertEquals(fetchedFolkSong.getType(), ProjectTypes.Song);
-            assertEquals(fetchedFolkSong.getGenre(), SongTestConstants.SONG_TEST_GENRE_FOLK);
-            assertEquals(fetchedFolkSong.getLyrics(), SongDefaultContents.SONG_DEFAULT_CONTENT);
-            assertEquals(fetchedFolkSong.getSheetMusicImageUrl(), SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT);
-            assertEquals(fetchedFolkSong.getOwnerId(), SongTestConstants.SONG_TEST_OWNER_ID);
+            assertEquals(SongTestConstants.SONG_TEST_TITLE_FOLK, fetchedFolkSong.getTitle());
+            assertEquals(ProjectTypes.Song, fetchedFolkSong.getType());
+            assertEquals(SongTestConstants.SONG_TEST_GENRE_FOLK, fetchedFolkSong.getGenre());
+            assertEquals(SongDefaultContents.SONG_DEFAULT_CONTENT, fetchedFolkSong.getLyrics());
+            assertEquals(SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT, fetchedFolkSong.getSheetMusicImageUrl());
+            assertEquals(SongTestConstants.SONG_TEST_OWNER_ID, fetchedFolkSong.getOwnerId());
         });
     }    
 

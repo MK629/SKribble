@@ -141,7 +141,12 @@ public class Story extends Project{
             throw new ContentNotFoundException(CRUDErrorMessages.CHARACTER_NOT_FOUND);
         }
 
-        this.characters.get(characterId).setImageUrl(newImageUrl);
+        if(StringCheckerUtil.isNotHollow(newImageUrl)){
+            this.characters.get(characterId).setImageUrl(newImageUrl);
+        }
+        else{
+            this.characters.get(characterId).setImageUrl(StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT);
+        }
     }
 
     public List<StoryCharacter> getCharactersAsList(){
@@ -186,7 +191,12 @@ public class Story extends Project{
             throw new ContentNotFoundException(CRUDErrorMessages.LANDMARK_NOT_FOUND);
         }
 
-        this.landmarks.get(landmarkId).setImageUrl(newImageUrl);
+        if(StringCheckerUtil.isNotHollow(newImageUrl)){
+            this.landmarks.get(landmarkId).setImageUrl(newImageUrl);
+        }
+        else{
+            this.landmarks.get(landmarkId).setImageUrl(StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT);
+        }
     }
 
     public List<Landmark> getLandmarksAsList(){

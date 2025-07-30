@@ -100,25 +100,26 @@ public class StoryCRUDTests {
 
         assertAll(() -> {
             assertNotNull(testChapterOne);
-            assertEquals(testChapterOne.getChapterNumber(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1);
-            assertEquals(testChapterOne.getChapterName(), StoryTestConstants.STORY_TEST_CHAPTER_NAME_1);
-            assertEquals(testChapterOne.getText(), StoryTestConstants.STORY_TEST_FULL_STRING);
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1, testChapterOne.getChapterNumber());
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NAME_1, testChapterOne.getChapterName());
+            assertEquals(StoryTestConstants.STORY_TEST_FULL_STRING, testChapterOne.getText());
 
             assertNotNull(testChapterTwo);
-            assertEquals(testChapterTwo.getChapterNumber(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_2);
-            assertEquals(testChapterTwo.getChapterName(), StoryTestConstants.STORY_TEST_CHAPTER_NAME_2);
-            assertEquals(testChapterTwo.getText(), StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_2, testChapterTwo.getChapterNumber());
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NAME_2, testChapterTwo.getChapterName());
+            assertEquals(StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT, testChapterTwo.getText());
 
             assertNotNull(testChapterThree);
-            assertEquals(testChapterThree.getChapterNumber(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_3);
-            assertEquals(testChapterThree.getChapterName(), StoryTestConstants.STORY_TEST_CHAPTER_NAME_3);
-            assertEquals(testChapterThree.getText(), StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_3, testChapterThree.getChapterNumber());
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NAME_3, testChapterThree.getChapterName());
+            assertEquals(StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT, testChapterThree.getText());
 
             assertNotNull(testChapterFour);
-            assertEquals(testChapterFour.getChapterNumber(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_4);
-            assertEquals(testChapterFour.getChapterName(), StoryTestConstants.STORY_TEST_CHAPTER_NAME_4);
-            assertEquals(testChapterFour.getText(), StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_4, testChapterFour.getChapterNumber());
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NAME_4, testChapterFour.getChapterName());
+            assertEquals(StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT, testChapterFour.getText());
         });
+
 
         fetchedStory.deleteChapter(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1);
 
@@ -133,7 +134,7 @@ public class StoryCRUDTests {
     @Order(5)
     void storyCharacterOperationsTest(){
         Story testStory = testStoryInstance();
-
+        
         testStory.addCharacter(new StoryCharacter(StoryTestConstants.STORY_TEST_CHARACTER_ID_1, StoryTestConstants.STORY_TEST_CHARACTER_NAME_1, StoryTestConstants.STORY_TEST_FULL_STRING, StoryTestConstants.STORY_TEST_FULL_STRING));
         testStory.addCharacter(new StoryCharacter(StoryTestConstants.STORY_TEST_CHARACTER_ID_2, StoryTestConstants.STORY_TEST_CHARACTER_NAME_2, StoryTestConstants.STORY_TEST_NULL_STRING, StoryTestConstants.STORY_TEST_NULL_STRING));
         testStory.addCharacter(new StoryCharacter(StoryTestConstants.STORY_TEST_CHARACTER_ID_3, StoryTestConstants.STORY_TEST_CHARACTER_NAME_3, StoryTestConstants.STORY_TEST_EMPTY_STRING, StoryTestConstants.STORY_TEST_EMPTY_STRING));
@@ -150,28 +151,39 @@ public class StoryCRUDTests {
 
         assertAll(() -> {
             assertNotNull(testCharacterOne);
-            assertEquals(testCharacterOne.getCharacterId(), StoryTestConstants.STORY_TEST_CHARACTER_ID_1);
-            assertEquals(testCharacterOne.getCharacterName(), StoryTestConstants.STORY_TEST_CHARACTER_NAME_1);
-            assertEquals(testCharacterOne.getDescription(), StoryTestConstants.STORY_TEST_FULL_STRING);
-            assertEquals(testCharacterOne.getImageUrl(), StoryTestConstants.STORY_TEST_FULL_STRING);
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_ID_1, testCharacterOne.getCharacterId());
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_NAME_1, testCharacterOne.getCharacterName());
+            assertEquals(StoryTestConstants.STORY_TEST_FULL_STRING, testCharacterOne.getDescription());
+            assertEquals(StoryTestConstants.STORY_TEST_FULL_STRING, testCharacterOne.getImageUrl());
 
             assertNotNull(testCharacterTwo);
-            assertEquals(testCharacterTwo.getCharacterId(), StoryTestConstants.STORY_TEST_CHARACTER_ID_2);
-            assertEquals(testCharacterTwo.getCharacterName(), StoryTestConstants.STORY_TEST_CHARACTER_NAME_2);
-            assertEquals(testCharacterTwo.getDescription(), StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT);
-            assertEquals(testCharacterTwo.getImageUrl(), StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_ID_2, testCharacterTwo.getCharacterId());
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_NAME_2, testCharacterTwo.getCharacterName());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT, testCharacterTwo.getDescription());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT, testCharacterTwo.getImageUrl());
 
             assertNotNull(testCharacterThree);
-            assertEquals(testCharacterThree.getCharacterId(), StoryTestConstants.STORY_TEST_CHARACTER_ID_3);
-            assertEquals(testCharacterThree.getCharacterName(), StoryTestConstants.STORY_TEST_CHARACTER_NAME_3);
-            assertEquals(testCharacterThree.getDescription(), StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT);
-            assertEquals(testCharacterThree.getImageUrl(), StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_ID_3, testCharacterThree.getCharacterId());
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_NAME_3, testCharacterThree.getCharacterName());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT, testCharacterThree.getDescription());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT, testCharacterThree.getImageUrl());
 
             assertNotNull(testCharacterFour);
-            assertEquals(testCharacterFour.getCharacterId(), StoryTestConstants.STORY_TEST_CHARACTER_ID_4);
-            assertEquals(testCharacterFour.getCharacterName(), StoryTestConstants.STORY_TEST_CHARACTER_NAME_4);
-            assertEquals(testCharacterFour.getDescription(), StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT);
-            assertEquals(testCharacterFour.getImageUrl(), StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_ID_4, testCharacterFour.getCharacterId());
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_NAME_4, testCharacterFour.getCharacterName());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT, testCharacterFour.getDescription());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT, testCharacterFour.getImageUrl());
+        });
+
+        fetchedStory.editCharacter(StoryTestConstants.STORY_TEST_CHARACTER_ID_1, StoryTestConstants.STORY_TEST_CHARACTER_NAME_2, StoryTestConstants.STORY_TEST_NULL_STRING);
+        fetchedStory.changeCharacterImage(StoryTestConstants.STORY_TEST_CHARACTER_ID_1, StoryTestConstants.STORY_TEST_NULL_STRING);
+
+        StoryCharacter testEditedCharacterOne = fetchedStory.getCharacters().get(StoryTestConstants.STORY_TEST_CHARACTER_ID_1);
+        
+        assertAll(() -> {
+            assertEquals(StoryTestConstants.STORY_TEST_CHARACTER_NAME_2, testEditedCharacterOne.getCharacterName());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_DESC_DEFAULT_CONTENT, testEditedCharacterOne.getDescription());
+            assertEquals(StoryDefaultContents.STORY_CHARACTER_IMAGE_URL_DEFAULT_CONTENT, testEditedCharacterOne.getImageUrl());
         });
 
         fetchedStory.deleteCharacter(StoryTestConstants.STORY_TEST_CHARACTER_ID_1);
@@ -204,29 +216,30 @@ public class StoryCRUDTests {
 
         assertAll(() -> {
             assertNotNull(testLandmarkOne);
-            assertEquals(testLandmarkOne.getLandmarkId(), StoryTestConstants.STORY_TEST_LANDMARK_ID_1);
-            assertEquals(testLandmarkOne.getLandmarkName(), StoryTestConstants.STORY_TEST_LANDMARK_NAME_1);
-            assertEquals(testLandmarkOne.getDescription(), StoryTestConstants.STORY_TEST_FULL_STRING);
-            assertEquals(testLandmarkOne.getImageUrl(), StoryTestConstants.STORY_TEST_FULL_STRING);
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_ID_1, testLandmarkOne.getLandmarkId());
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_NAME_1, testLandmarkOne.getLandmarkName());
+            assertEquals(StoryTestConstants.STORY_TEST_FULL_STRING, testLandmarkOne.getDescription());
+            assertEquals(StoryTestConstants.STORY_TEST_FULL_STRING, testLandmarkOne.getImageUrl());
 
             assertNotNull(testLandmarkTwo);
-            assertEquals(testLandmarkTwo.getLandmarkId(), StoryTestConstants.STORY_TEST_LANDMARK_ID_2);
-            assertEquals(testLandmarkTwo.getLandmarkName(), StoryTestConstants.STORY_TEST_LANDMARK_NAME_2);
-            assertEquals(testLandmarkTwo.getDescription(), StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT);
-            assertEquals(testLandmarkTwo.getImageUrl(), StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_ID_2, testLandmarkTwo.getLandmarkId());
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_NAME_2, testLandmarkTwo.getLandmarkName());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT, testLandmarkTwo.getDescription());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT, testLandmarkTwo.getImageUrl());
 
             assertNotNull(testLandmarkThree);
-            assertEquals(testLandmarkThree.getLandmarkId(), StoryTestConstants.STORY_TEST_LANDMARK_ID_3);
-            assertEquals(testLandmarkThree.getLandmarkName(), StoryTestConstants.STORY_TEST_LANDMARK_NAME_3);
-            assertEquals(testLandmarkThree.getDescription(), StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT);
-            assertEquals(testLandmarkThree.getImageUrl(), StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_ID_3, testLandmarkThree.getLandmarkId());
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_NAME_3, testLandmarkThree.getLandmarkName());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT, testLandmarkThree.getDescription());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT, testLandmarkThree.getImageUrl());
 
             assertNotNull(testLandmarkFour);
-            assertEquals(testLandmarkFour.getLandmarkId(), StoryTestConstants.STORY_TEST_LANDMARK_ID_4);
-            assertEquals(testLandmarkFour.getLandmarkName(), StoryTestConstants.STORY_TEST_LANDMARK_NAME_4);
-            assertEquals(testLandmarkFour.getDescription(), StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT);
-            assertEquals(testLandmarkFour.getImageUrl(), StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT);
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_ID_4, testLandmarkFour.getLandmarkId());
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_NAME_4, testLandmarkFour.getLandmarkName());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT, testLandmarkFour.getDescription());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT, testLandmarkFour.getImageUrl());
         });
+
 
         fetchedStory.deleteLandmark(StoryTestConstants.STORY_TEST_LANDMARK_ID_1);
 
