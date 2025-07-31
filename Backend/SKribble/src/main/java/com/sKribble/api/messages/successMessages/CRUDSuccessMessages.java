@@ -34,6 +34,8 @@ public class CRUDSuccessMessages {
 
 	public static final String SONG_EDIT_SUCCESS = "This song has been successfully edited.";
 
+	public static final String SONG_SHEET_MUSIC_IMAGE_UPLOAD_SUCCESS = "This song's sheet music has been uploaded successfully.";
+
 	public static final String SONG_GENRE_CHANGE_SUCCESS = "This song's genre has been changed.";
 
 	public static final String PROJECT_DELETION_SUCCESS = "Project has been successfully deleted.";

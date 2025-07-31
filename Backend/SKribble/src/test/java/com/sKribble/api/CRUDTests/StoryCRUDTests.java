@@ -119,7 +119,15 @@ public class StoryCRUDTests {
             assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NAME_4, testChapterFour.getChapterName());
             assertEquals(StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT, testChapterFour.getText());
         });
+        
+        fetchedStory.editChapter(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1, StoryTestConstants.STORY_TEST_CHAPTER_NAME_2, StoryTestConstants.STORY_TEST_NULL_STRING);
 
+        Chapter testEditedChapterOne = fetchedStory.getChapters().get(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1);
+
+        assertAll(() -> {
+            assertEquals(StoryTestConstants.STORY_TEST_CHAPTER_NAME_2, testEditedChapterOne.getChapterName());
+            assertEquals(StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT, testEditedChapterOne.getText());
+        });
 
         fetchedStory.deleteChapter(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1);
 
@@ -240,6 +248,16 @@ public class StoryCRUDTests {
             assertEquals(StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT, testLandmarkFour.getImageUrl());
         });
 
+        fetchedStory.editLandmark(StoryTestConstants.STORY_TEST_LANDMARK_ID_1, StoryTestConstants.STORY_TEST_LANDMARK_NAME_2, StoryTestConstants.STORY_TEST_NULL_STRING);
+        fetchedStory.changeLandmarkImage(StoryTestConstants.STORY_TEST_LANDMARK_ID_1, StoryTestConstants.STORY_TEST_NULL_STRING);
+
+        Landmark testEditedLandmarkOne = fetchedStory.getLandmarks().get(StoryTestConstants.STORY_TEST_LANDMARK_ID_1);
+
+        assertAll(() -> {
+            assertEquals(StoryTestConstants.STORY_TEST_LANDMARK_NAME_2, testEditedLandmarkOne.getLandmarkName());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_DESC_DEFAULT_CONTENT, testEditedLandmarkOne.getDescription());
+            assertEquals(StoryDefaultContents.STORY_LANDMARK_IMAGE_URL_DEFAULT_CONTENT, testEditedLandmarkOne.getImageUrl());
+        });
 
         fetchedStory.deleteLandmark(StoryTestConstants.STORY_TEST_LANDMARK_ID_1);
 

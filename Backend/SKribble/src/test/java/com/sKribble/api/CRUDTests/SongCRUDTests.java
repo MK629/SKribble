@@ -103,10 +103,29 @@ public class SongCRUDTests {
             assertEquals(SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT, fetchedFolkSong.getSheetMusicImageUrl());
             assertEquals(SongTestConstants.SONG_TEST_OWNER_ID, fetchedFolkSong.getOwnerId());
         });
-    }    
-
+    }
+    
     @Test
     @Order(4)
+    void songEditTest(){
+        Song rockSong = songInstanceRock();
+        projectRepository.save(rockSong);
+
+        Song fetchedRockSong = projectRepository.findSongById(rockSong.getId());
+        fetchedRockSong.editSong(SongTestConstants.SONG_TEST_TITLE_JAZZ, SongTestConstants.SONG_TEST_NULL_STRING);
+        fetchedRockSong.changeSongSheetMusicImage(SongTestConstants.SONG_TEST_NULL_STRING);
+        fetchedRockSong.changeGenre(SongTestConstants.SONG_TEST_GENRE_JAZZ);
+
+        assertAll(() -> {
+            assertEquals(SongTestConstants.SONG_TEST_TITLE_JAZZ, fetchedRockSong.getTitle());
+            assertEquals(SongDefaultContents.SONG_DEFAULT_CONTENT, fetchedRockSong.getLyrics());
+            assertEquals(SongDefaultContents.SONG_SHEET_MUSIC_URL_DEFAULT_CONTENT, fetchedRockSong.getSheetMusicImageUrl());
+            assertEquals(SongTestConstants.SONG_TEST_GENRE_JAZZ, fetchedRockSong.getGenre());
+        });
+    }
+
+    @Test
+    @Order(5)
     void songDeletionTest(){
         Song rockSong = songInstanceRock();
 

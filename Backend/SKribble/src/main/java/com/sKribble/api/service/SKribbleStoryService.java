@@ -39,7 +39,6 @@ import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -51,7 +50,7 @@ public class SKribbleStoryService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
-    public List<StoryOutput> findStoriesByTitle(@Valid StoryTitleInput storyTitleInput){
+    public List<StoryOutput> findStoriesByTitle(StoryTitleInput storyTitleInput){
         return projectRepository.findStoriesByTitle(storyTitleInput.title())
         .stream()
         .map((story) -> {
@@ -62,7 +61,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String newStory(@Valid NewStoryForm newStoryForm){
+    public String newStory(NewStoryForm newStoryForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -75,7 +74,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String changeStoryTitle(@Valid ChangeStoryTitleForm changeStoryTitleForm){
+    public String changeStoryTitle(ChangeStoryTitleForm changeStoryTitleForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker); //Throws an exception. 
@@ -96,7 +95,7 @@ public class SKribbleStoryService {
 //========================================================[ Chapter functions ]================================================================//
 
     @Transactional
-    public String newChapter(@Valid AddChapterForm addChapterForm){
+    public String newChapter(AddChapterForm addChapterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker); 
@@ -115,7 +114,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String editChapter(@Valid EditChapterForm editChapterForm){
+    public String editChapter(EditChapterForm editChapterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -134,7 +133,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String deleteChapter(@Valid DeleteChapterForm deleteChapterForm){
+    public String deleteChapter(DeleteChapterForm deleteChapterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -155,7 +154,7 @@ public class SKribbleStoryService {
 //========================================================[ Character functions ]================================================================//
 
     @Transactional
-    public String newCharacter(@Valid AddCharacterForm addCharacterForm){
+    public String newCharacter(AddCharacterForm addCharacterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -174,7 +173,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String editCharacter(@Valid EditCharacterForm editCharacterForm){
+    public String editCharacter(EditCharacterForm editCharacterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -193,7 +192,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String deleteCharacter(@Valid DeleteCharacterForm deleteCharacterForm){
+    public String deleteCharacter(DeleteCharacterForm deleteCharacterForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -212,7 +211,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String changeCharacterImage(@Valid ChangeCharacterImageForm changeCharacterImageForm){
+    public String changeCharacterImage(ChangeCharacterImageForm changeCharacterImageForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -233,7 +232,7 @@ public class SKribbleStoryService {
 //========================================================[ Landmark functions ]================================================================//
 
     @Transactional
-    public String newLandmark(@Valid AddLandmarkForm addLandmarkForm){
+    public String newLandmark(AddLandmarkForm addLandmarkForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -252,7 +251,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String editLandmark(@Valid EditLandmarkForm editLandmarkForm){
+    public String editLandmark(EditLandmarkForm editLandmarkForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -271,7 +270,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String deleteLandmark(@Valid DeleteLandmarkForm deleteLandmarkForm){
+    public String deleteLandmark(DeleteLandmarkForm deleteLandmarkForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -290,7 +289,7 @@ public class SKribbleStoryService {
     }
 
     @Transactional
-    public String changeLandmarkImage(@Valid ChangeLandmarkImageForm changeLandmarkImageForm){
+    public String changeLandmarkImage(ChangeLandmarkImageForm changeLandmarkImageForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);

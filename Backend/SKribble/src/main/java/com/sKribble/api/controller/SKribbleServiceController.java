@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
 import com.sKribble.api.dto.input.song.ChangeSongGenreForm;
+import com.sKribble.api.dto.input.song.ChangeSongSheetMusicImageForm;
 import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
@@ -137,6 +138,11 @@ public class SKribbleServiceController {
     @MutationMapping
     public String editSong(@Argument("editSongForm") @Valid EditSongForm editSongForm){
         return sKribbleSongService.editSong(editSongForm);
+    }
+
+    @MutationMapping
+    public String changeSongSheetMusicImage(@Argument("changeSongSheetMusicImageForm") @Valid ChangeSongSheetMusicImageForm changeSongSheetMusicImageForm){
+        return sKribbleSongService.changeSongSheetMusicImage(changeSongSheetMusicImageForm);
     }
 
     @MutationMapping

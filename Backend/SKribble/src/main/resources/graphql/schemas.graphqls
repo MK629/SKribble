@@ -28,5 +28,6 @@ type Mutation{
 	#============================[ Song ]=============================
 	newSong(newSongForm: NewSongForm!) : String
 	editSong(editSongForm: EditSongForm!) : String
+	changeSongSheetMusicImage(changeSongSheetMusicImageForm: ChangeSongSheetMusicImageForm!) : String
 	changeSongGenre(changeSongGenreForm: ChangeSongGenreForm!) : String
 }

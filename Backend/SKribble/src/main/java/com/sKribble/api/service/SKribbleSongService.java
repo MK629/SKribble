@@ -13,6 +13,7 @@ import com.sKribble.api.database.entity.enums.ProjectTypes;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.song.ChangeSongGenreForm;
+import com.sKribble.api.dto.input.song.ChangeSongSheetMusicImageForm;
 import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
@@ -25,7 +26,6 @@ import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -35,7 +35,7 @@ public class SKribbleSongService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
-    public List<SongOutput> findSongsByTitle(@Valid SongTitleInput songTitleInput){
+    public List<SongOutput> findSongsByTitle(SongTitleInput songTitleInput){
         return projectRepository.findSongsByTitle(songTitleInput.title()).stream()
         .map((song) -> {
             User owner = userRepository.findByIdentification(song.getOwnerId());
@@ -44,7 +44,7 @@ public class SKribbleSongService {
     }
 
     @Transactional
-    public String newSong(@Valid NewSongForm newSongForm){
+    public String newSong(NewSongForm newSongForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -57,7 +57,7 @@ public class SKribbleSongService {
     }
 
     @Transactional
-    public String editSong(@Valid EditSongForm editSongForm){
+    public String editSong(EditSongForm editSongForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -68,7 +68,7 @@ public class SKribbleSongService {
 
         OwnershipChecker.checkOwnership(invoker, songToEdit);
 
-        songToEdit.editSong(editSongForm.title(), editSongForm.lyrics(), editSongForm.sheetMusicImageUrl());
+        songToEdit.editSong(editSongForm.title(), editSongForm.lyrics());
 
         persistSong(songToEdit);
 
@@ -76,7 +76,26 @@ public class SKribbleSongService {
     }
 
     @Transactional
-    public String changeSongGenre(@Valid ChangeSongGenreForm changeSongGenreForm){
+    public String changeSongSheetMusicImage(ChangeSongSheetMusicImageForm changeSongSheetMusicImageForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        Song songToChangeSheetMusicImage = projectRepository.findSongById(changeSongSheetMusicImageForm.songId());
+
+        ProjectEntityUtil.checkExistence(songToChangeSheetMusicImage);
+
+        OwnershipChecker.checkOwnership(invoker, songToChangeSheetMusicImage);
+
+        songToChangeSheetMusicImage.changeSongSheetMusicImage(changeSongSheetMusicImageForm.sheetMusicImageUrl());
+
+        persistSong(songToChangeSheetMusicImage);
+
+        return CRUDSuccessMessages.SONG_SHEET_MUSIC_IMAGE_UPLOAD_SUCCESS;
+    }
+
+    @Transactional
+    public String changeSongGenre(ChangeSongGenreForm changeSongGenreForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);

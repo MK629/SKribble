@@ -26,6 +26,7 @@ import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.song.ChangeSongGenreForm;
+import com.sKribble.api.dto.input.song.ChangeSongSheetMusicImageForm;
 import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
@@ -100,17 +101,20 @@ public class SongServiceTests {
 
         assertEquals(UserTestConstants.TEST_USERNAME, songOutput.owner());
 
-        EditSongForm editSongForm = new EditSongForm(songOutput.id(), SongTestConstants.SONG_TEST_TITLE_COUNTRY, SongTestConstants.SONG_TEST_EMPTY_STRING, SongTestConstants.SONG_TEST_BLANK_STRING);
+        EditSongForm editSongForm = new EditSongForm(songOutput.id(), SongTestConstants.SONG_TEST_TITLE_COUNTRY, SongTestConstants.SONG_TEST_EMPTY_STRING);
+        ChangeSongSheetMusicImageForm changeSongSheetMusicImageForm = new ChangeSongSheetMusicImageForm(songOutput.id(), SongTestConstants.SONG_TEST_EMPTY_STRING);
         ChangeSongGenreForm changeSongGenreForm = new ChangeSongGenreForm(songOutput.id(), SongTestConstants.SONG_TEST_GENRE_JAZZ);
 
         //Login with a non-owner and try to edit/change the song data. This must not be allowed. Very bad behaviour.
         mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
         assertThrows(AssetNotOwnedException.class, () -> sKribbleSongService.editSong(editSongForm));
+        assertThrows(AssetNotOwnedException.class, () -> sKribbleSongService.changeSongSheetMusicImage(changeSongSheetMusicImageForm));
         assertThrows(AssetNotOwnedException.class, () -> sKribbleSongService.changeSongGenre(changeSongGenreForm));
 
         //Login with the actual owner of the song to be edited. This is the way. :)
         mockLogin(UserTestConstants.TEST_USERNAME);
         assertEquals(CRUDSuccessMessages.SONG_EDIT_SUCCESS, sKribbleSongService.editSong(editSongForm));
+        assertEquals(CRUDSuccessMessages.SONG_SHEET_MUSIC_IMAGE_UPLOAD_SUCCESS, sKribbleSongService.changeSongSheetMusicImage(changeSongSheetMusicImageForm));
         assertEquals(CRUDSuccessMessages.SONG_GENRE_CHANGE_SUCCESS, sKribbleSongService.changeSongGenre(changeSongGenreForm));
     }
 
