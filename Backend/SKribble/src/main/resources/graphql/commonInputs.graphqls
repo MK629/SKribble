@@ -1,3 +1,0 @@
-input DeleteProjectForm{
-    projectId: String   
-}

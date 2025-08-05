@@ -46,6 +46,12 @@ public class StoryTestConstants {
 
     public static final String STORY_TEST_CHARACTER_NAME_4 = "testCharacter4";
 
+    public static final String JOHN = "John";
+
+    public static final String JOHN_DOE = "John Doe";
+
+    public static final String JOHN_DEAN = "John Dean";
+
     public static final String STORY_TEST_LANDMARK_ID_1 = "1";
 
     public static final String STORY_TEST_LANDMARK_ID_2 = "2";

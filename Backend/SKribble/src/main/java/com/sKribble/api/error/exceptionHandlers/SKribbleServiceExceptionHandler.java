@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import com.sKribble.api.error.exceptions.CRUDExceptions.AssetNotOwnedException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ContentNotFoundException;
-import com.sKribble.api.error.exceptions.CRUDExceptions.IllegalInputException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ProjectNotFoundException;
@@ -25,7 +24,7 @@ public class SKribbleServiceExceptionHandler extends DataFetcherExceptionResolve
     @Override
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
         if(ex instanceof ConstraintViolationException || ex instanceof DuplicateChapterException || ex instanceof DuplicateCharacterException 
-            || ex instanceof DuplicateLandmarkException || ex instanceof IllegalInputException){
+            || ex instanceof DuplicateLandmarkException){
             return GraphQlErrorUtil.return400(ex);
         }
 

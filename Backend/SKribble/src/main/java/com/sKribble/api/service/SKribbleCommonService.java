@@ -1,5 +1,6 @@
 package com.sKribble.api.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
+import com.sKribble.api.utils.ResponseEntityUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +25,7 @@ public class SKribbleCommonService {
     private final UserRepository userRepository;
 
     @Transactional
-    public String deleteProject(DeleteProjectForm deleteProjectForm){
+    public ResponseEntity<String> deleteProject(DeleteProjectForm deleteProjectForm){
         User invoker = getInvoker();
 
         CurrentUserInfoUtil.checkExistence(invoker);
@@ -36,7 +38,7 @@ public class SKribbleCommonService {
 
         projectRepository.deleteById(deleteProjectForm.projectId());
 
-        return CRUDSuccessMessages.PROJECT_DELETION_SUCCESS;
+        return ResponseEntityUtil.return200(CRUDSuccessMessages.PROJECT_DELETION_SUCCESS);
     }
 
 //==========================================[ Here lies the line for local abstractions ]================================================//

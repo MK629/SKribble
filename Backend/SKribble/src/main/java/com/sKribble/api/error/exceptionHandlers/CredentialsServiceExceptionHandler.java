@@ -9,15 +9,16 @@ import com.sKribble.api.controller.CredentialsServiceController;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.credentialsExceptions.LoginErrorException;
+import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 import com.sKribble.api.utils.ResponseEntityUtil;
 
-@RestControllerAdvice(assignableTypes =  CredentialsServiceController.class)
+@RestControllerAdvice(assignableTypes = CredentialsServiceController.class)
 public class CredentialsServiceExceptionHandler {
 	
 	@SuppressWarnings("null")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<String> handleInputExceptions(MethodArgumentNotValidException e){
-		return ResponseEntityUtil.return400(new RuntimeException(e.getBindingResult().getFieldError().getDefaultMessage()));
+		return ResponseEntityUtil.return400(new RuntimeException(e.getBindingResult().getFieldError() != null ? e.getBindingResult().getFieldError().getDefaultMessage() : InputErrorMessages.INVALID_INPUT));
 	}
 	
 	@ExceptionHandler(UserRegstrationErrorException.class)

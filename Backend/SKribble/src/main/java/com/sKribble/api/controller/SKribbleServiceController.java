@@ -7,7 +7,6 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.sKribble.api.dto.input.common.DeleteProjectForm;
 import com.sKribble.api.dto.input.song.ChangeSongGenreForm;
 import com.sKribble.api.dto.input.song.ChangeSongSheetMusicImageForm;
 import com.sKribble.api.dto.input.song.EditSongForm;
@@ -29,7 +28,6 @@ import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.output.song.SongOutput;
 import com.sKribble.api.dto.output.story.StoryOutput;
-import com.sKribble.api.service.SKribbleCommonService;
 import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.service.SKribbleStoryService;
 
@@ -40,16 +38,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SKribbleServiceController {
 
-    private final SKribbleCommonService sKribbleCommonService;
     private final SKribbleStoryService sKribbleStoryService;
     private final SKribbleSongService sKribbleSongService;
-
-//=======================================================[ Common ]======================================================= 
-	
-    @MutationMapping
-    public String deleteProject(@Argument("deleteProjectForm") @Valid DeleteProjectForm deleteProjectForm){
-        return sKribbleCommonService.deleteProject(deleteProjectForm);
-    }
 
 //=======================================================[ Story ]=======================================================
     

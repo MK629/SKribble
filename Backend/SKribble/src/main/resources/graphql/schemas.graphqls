@@ -4,9 +4,6 @@ type Query{
 }
 
 type Mutation{
-	#============================[ Common ]============================
-	deleteProject(deleteProjectForm: DeleteProjectForm!) : String
-
 	#============================[ Story ]=============================
 	newStory(newStoryForm: NewStoryForm!) : String
 	changeStoryTitle(changeStoryTitleForm: ChangeStoryTitleForm!) : String

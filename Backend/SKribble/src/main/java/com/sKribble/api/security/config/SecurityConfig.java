@@ -27,6 +27,9 @@ public class SecurityConfig {
 	
 	@Value("${SKribble.auth.path}")
 	private String authPath;
+
+	@Value("${SKribble.common.service.path}")
+	private String commonServicePath;
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -47,7 +50,7 @@ public class SecurityConfig {
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		http.authorizeHttpRequests(c -> {
-			c.requestMatchers(graphqlPath + "/**").hasAnyRole("USER");
+			c.requestMatchers(graphqlPath + "/**", commonServicePath + "/**").hasAnyRole("USER");
 			c.requestMatchers(authPath + "/**").permitAll();
 		});
 		

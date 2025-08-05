@@ -29,4 +29,8 @@ public class Project {
         this.id = UUID.randomUUID().toString();
         this.ownerId = ownerId;
     }
+
+    public String changeOwnerShip(String newOwnerId){
+        return null;
+    }
 }

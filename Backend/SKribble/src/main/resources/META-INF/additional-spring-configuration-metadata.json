@@ -18,5 +18,10 @@
     "name": "SKribble.jwtEncryptionKey",
     "type": "java.lang.String",
     "description": "Secret key for encryption."
+  },
+  {
+    "name": "SKribble.common.service.path",
+    "type": "java.lang.String",
+    "description": "A description for 'SKribble.common.service.path'"
   }
 ]}

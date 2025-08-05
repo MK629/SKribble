@@ -4,7 +4,7 @@ import com.sKribble.api.database.entity.Project;
 
 public class Thesis extends Project{
 
-    protected Thesis(String ownerId) {
+    public Thesis(String ownerId) {
         super(ownerId);
     }
 }

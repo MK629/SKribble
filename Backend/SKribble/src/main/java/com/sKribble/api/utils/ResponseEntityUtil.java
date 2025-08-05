@@ -47,7 +47,6 @@ public class ResponseEntityUtil {
 		return buildErrorResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	
 //==========================================[ Here lies the line for local abstractions ]=====================================================//
 	
 	//Success
