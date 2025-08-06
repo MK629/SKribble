@@ -6,6 +6,9 @@ import com.sKribble.api.dto.output.song.SongOutput;
 import com.sKribble.api.dto.output.story.StoryOutput;
 import com.sKribble.api.dto.output.user.TokenCarrier;
 
+/**
+ * A util class that takes data from the entites extracted from the DAOs and converts them into DTOs.
+ */
 public class DTOConverter {
 
     public static StoryOutput getStoryOutput(Story story, String owner){

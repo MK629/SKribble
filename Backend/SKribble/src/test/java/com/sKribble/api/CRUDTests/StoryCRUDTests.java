@@ -6,17 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.test.context.ActiveProfiles;
+
 
 import com.sKribble.api.constants.StoryTestConstants;
 import com.sKribble.api.database.entity.childEntities.Story;
@@ -25,22 +17,10 @@ import com.sKribble.api.database.entity.entityFields.storyFields.Chapter;
 import com.sKribble.api.database.entity.entityFields.storyFields.Landmark;
 import com.sKribble.api.database.entity.entityFields.storyFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
-import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateChapterException;
+import com.sKribble.api.templates.SKribbleCRUDTestTemplate;
 
-@DataMongoTest
-@ActiveProfiles("test")
-@TestInstance(Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class StoryCRUDTests {
-
-    @Autowired
-    private ProjectRepository projectRepository;
-
-    @AfterEach
-    void clean(){
-        projectRepository.deleteAll();
-    }
+public class StoryCRUDTests extends SKribbleCRUDTestTemplate {
 
     @Test
     @Order(1)
@@ -278,11 +258,6 @@ public class StoryCRUDTests {
 
         projectRepository.deleteById(testStory.getId());
         assertNull(projectRepository.findStoryById(testStory.getId()));
-    }
-
-    @AfterAll
-    void cleanup(){
-        projectRepository.deleteAll();
     }
 
     private Story testStoryInstance(){

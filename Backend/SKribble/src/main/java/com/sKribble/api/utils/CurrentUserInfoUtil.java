@@ -9,6 +9,9 @@ import com.sKribble.api.database.entity.User;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 
+/**
+ * <h4>A util class to get various info from the currently authenticated user.</h4>
+ */
 public class CurrentUserInfoUtil {
 
     public static String getCurrentUserPrincipalName(){

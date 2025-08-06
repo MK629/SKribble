@@ -5,37 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.test.context.ActiveProfiles;
-
 import com.sKribble.api.constants.SongTestConstants;
 import com.sKribble.api.database.entity.childEntities.Song;
 import com.sKribble.api.database.entity.defaults.SongDefaultContents;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
-import com.sKribble.api.database.repository.ProjectRepository;
+import com.sKribble.api.templates.SKribbleCRUDTestTemplate;
 
-@DataMongoTest
-@ActiveProfiles("test")
-@TestInstance(Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class SongCRUDTests {
-
-    @Autowired
-    private ProjectRepository projectRepository;
-
-    @AfterEach
-    void clean(){
-        projectRepository.deleteAll();
-    }
+public class SongCRUDTests extends SKribbleCRUDTestTemplate {
 
     @Test
     @Order(1)
@@ -134,11 +112,6 @@ public class SongCRUDTests {
 
         projectRepository.deleteById(rockSong.getId());
         assertNull(projectRepository.findSongById(rockSong.getId()));
-    }
-
-    @AfterAll
-    void cleanup(){
-        projectRepository.deleteAll();
     }
 
     private Song songInstanceRock(){

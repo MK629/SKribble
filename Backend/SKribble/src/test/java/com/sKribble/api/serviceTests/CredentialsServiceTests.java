@@ -36,10 +36,10 @@ import com.sKribble.api.service.CredentialsService;
 public class CredentialsServiceTests {
 
     @Autowired
-    CredentialsService credentialsService;
+    private CredentialsService credentialsService;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @AfterEach
     void clean(){

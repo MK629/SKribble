@@ -7,6 +7,9 @@ import com.sKribble.api.dto.output.user.TokenCarrier;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * <h4>A util class that builds various ResponseEntity objects for REST API responses.</h4>
+ */
 @Log4j2
 public class ResponseEntityUtil {
 	
