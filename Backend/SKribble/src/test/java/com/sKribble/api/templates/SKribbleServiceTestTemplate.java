@@ -20,7 +20,6 @@ import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.user.UserRegisterForm;
 import com.sKribble.api.service.CredentialsService;
-import com.sKribble.api.service.SKribbleSongService;
 
 /**
  * <h4>Extend this class to write tests for services implementing business logic for various 'Project' entity types.</h4>
@@ -40,9 +39,6 @@ public class SKribbleServiceTestTemplate {
 
     @Autowired
     protected UserRepository userRepository;
-
-    @Autowired
-    protected SKribbleSongService sKribbleSongService;
 
     @Autowired
     protected CredentialsService credentialsService;

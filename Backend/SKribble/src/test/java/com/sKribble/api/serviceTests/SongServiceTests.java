@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.sKribble.api.constants.SongTestConstants;
 import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.dto.input.song.ChangeSongGenreForm;
@@ -17,9 +19,13 @@ import com.sKribble.api.dto.output.song.SongOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.AssetNotOwnedException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
+import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.templates.SKribbleServiceTestTemplate;
 
 public class SongServiceTests extends SKribbleServiceTestTemplate{
+
+    @Autowired
+    protected SKribbleSongService sKribbleSongService;
 
     @Test
     @Order(1)

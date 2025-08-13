@@ -1,3 +1,3 @@
-59 Days in progress...(Excluding the days I don't code.)
+60 Days in progress...(Excluding the days I don't code.)
 
 Something cool. Hopefully...
