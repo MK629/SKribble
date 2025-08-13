@@ -66,7 +66,7 @@ public class SongServiceTests extends SKribbleServiceTestTemplate{
         assertEquals(CRUDSuccessMessages.SONG_GENRE_CHANGE_SUCCESS, sKribbleSongService.changeSongGenre(changeSongGenreForm));
     }
 
-    SongTitleInput makeSongTitleInput(String title){
+    private SongTitleInput makeSongTitleInput(String title){
         return new SongTitleInput(title);
     }
 }

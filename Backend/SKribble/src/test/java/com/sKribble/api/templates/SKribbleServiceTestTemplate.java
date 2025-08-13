@@ -73,7 +73,7 @@ public class SKribbleServiceTestTemplate {
     /**
      * @param usernameOrEmail
      * 
-     * <h4>This emulates an actual login by pushing an authenticated token into Spring's SecurityContext.</h4>
+     * <h4>This emulates an actual login by pushing an authenticated token into Spring's SecurityContextHolder.</h4>
      */
     protected void mockLogin(String usernameOrEmail){
         UserDetails user = userDetailsService.loadUserByUsername(usernameOrEmail);
