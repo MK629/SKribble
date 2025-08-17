@@ -2,7 +2,11 @@ package com.sKribble.api.messages.successMessages;
 
 public class CRUDSuccessMessages {
 
+	//==============================================[ User ]==============================================
+
 	public static final String REGISTER_SUCCESS = "User registered successfully.";
+
+	//==============================================[ Story ]==============================================
 
 	public static final String STORY_CREATION_SUCCESS = "A new story project has been successfully created.";
 
@@ -30,6 +34,8 @@ public class CRUDSuccessMessages {
 
 	public static final String LANDMARK_IMAGE_UPLOAD_SUCCESS = "Landmark image has been uploaded successfully.";
 
+	//==============================================[ Song ]==============================================
+
 	public static final String SONG_CREATION_SUCCESS = "A new song project has been successfully created.";
 
 	public static final String SONG_EDIT_SUCCESS = "This song has been successfully edited.";
@@ -37,6 +43,8 @@ public class CRUDSuccessMessages {
 	public static final String SONG_SHEET_MUSIC_IMAGE_UPLOAD_SUCCESS = "This song's sheet music has been uploaded successfully.";
 
 	public static final String SONG_GENRE_CHANGE_SUCCESS = "This song's genre has been changed.";
+
+	//==============================================[ Common ]==============================================
 
 	public static final String PROJECT_DELETION_SUCCESS = "Project has been successfully deleted.";
 }

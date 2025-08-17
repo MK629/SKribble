@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.TypeAlias;
@@ -92,11 +91,12 @@ public class Story extends Project{
 
         List<Landmark> landmarksList = getLandmarksAsList();
 
-        List<Chapter> chaptersForDTO = new ArrayList<Chapter>(this.chapters.values()).stream().map((chapter) -> {
+        List<Chapter> chaptersForDTO = new ArrayList<Chapter>(this.chapters.values());
+
+        chaptersForDTO.stream().forEach((chapter) -> {
             chapter.listMentionedCharacters(charactersList);
             chapter.listMentionedLandmarks(landmarksList);
-            return chapter;
-        }).collect(Collectors.toList());;
+        });
 
         chaptersForDTO.sort((chap1, chap2) -> {return Integer.compare(chap1.getChapterNumber(), chap2.getChapterNumber());});
 

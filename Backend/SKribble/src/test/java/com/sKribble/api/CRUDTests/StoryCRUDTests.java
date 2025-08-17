@@ -73,6 +73,8 @@ public class StoryCRUDTests extends SKribbleCRUDTestTemplate {
 
         Story fetchedStory = projectRepository.findStoryById(testStory.getId());
 
+        assertEquals(4, fetchedStory.getChapters().size());
+
         Chapter testChapterOne = fetchedStory.getChapters().get(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1);
         Chapter testChapterTwo = fetchedStory.getChapters().get(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_2);
         Chapter testChapterThree = fetchedStory.getChapters().get(StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_3);
@@ -131,6 +133,8 @@ public class StoryCRUDTests extends SKribbleCRUDTestTemplate {
         projectRepository.save(testStory);
 
         Story fetchedStory = projectRepository.findStoryById(testStory.getId());
+
+        assertEquals(4, fetchedStory.getCharacters().size());
 
         StoryCharacter testCharacterOne = fetchedStory.getCharacters().get(StoryTestConstants.STORY_TEST_CHARACTER_ID_1);
         StoryCharacter testCharacterTwo = fetchedStory.getCharacters().get(StoryTestConstants.STORY_TEST_CHARACTER_ID_2);
@@ -196,6 +200,8 @@ public class StoryCRUDTests extends SKribbleCRUDTestTemplate {
         projectRepository.save(testStory);
 
         Story fetchedStory = projectRepository.findStoryById(testStory.getId());
+
+        assertEquals(4, fetchedStory.getLandmarks().size());
 
         Landmark testLandmarkOne = fetchedStory.getLandmarks().get(StoryTestConstants.STORY_TEST_LANDMARK_ID_1);
         Landmark testLandmarkTwo = fetchedStory.getLandmarks().get(StoryTestConstants.STORY_TEST_LANDMARK_ID_2);
