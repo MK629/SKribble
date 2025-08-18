@@ -4,6 +4,8 @@ public class StoryTestConstants {
 
     public static final String STORY_TEST_TITLE = "testStory";
 
+    public static final String STORY_TEST_TITLE2 = "testStory2";
+
     public static final String STORY_TEST_OWNER_ID = "1";
 
     public static final String STORY_TEST_FULL_STRING = "Here's a string.";
