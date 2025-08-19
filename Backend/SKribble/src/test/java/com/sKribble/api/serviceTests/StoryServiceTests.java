@@ -12,9 +12,16 @@ import com.sKribble.api.constants.StoryTestConstants;
 import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.dto.input.story.AddChapterForm;
 import com.sKribble.api.dto.input.story.AddCharacterForm;
+import com.sKribble.api.dto.input.story.AddLandmarkForm;
+import com.sKribble.api.dto.input.story.ChangeCharacterImageForm;
+import com.sKribble.api.dto.input.story.ChangeLandmarkImageForm;
 import com.sKribble.api.dto.input.story.ChangeStoryTitleForm;
 import com.sKribble.api.dto.input.story.DeleteChapterForm;
+import com.sKribble.api.dto.input.story.DeleteCharacterForm;
+import com.sKribble.api.dto.input.story.DeleteLandmarkForm;
 import com.sKribble.api.dto.input.story.EditChapterForm;
+import com.sKribble.api.dto.input.story.EditCharacterForm;
+import com.sKribble.api.dto.input.story.EditLandmarkForm;
 import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.output.story.StoryOutput;
@@ -103,6 +110,9 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
 
         DeleteChapterForm deleteChapterForm = new DeleteChapterForm(storyOutput.id(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1);
         assertEquals(CRUDSuccessMessages.CHAPTER_DELETE_SUCCESS, sKribbleStoryService.deleteChapter(deleteChapterForm));
+
+        DeleteChapterForm badDeleteChapterForm = new DeleteChapterForm(storyOutput.id(), 69);
+        assertThrows(ContentNotFoundException.class, () -> sKribbleStoryService.deleteChapter(badDeleteChapterForm));
     }
 
     @Test
@@ -124,18 +134,81 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         mockLogin(UserTestConstants.TEST_USERNAME);
         assertThrows(ProjectNotFoundException.class, () -> sKribbleStoryService.newCharacter(badAddCharacterForm));
         assertEquals(CRUDSuccessMessages.CHARACTER_CREATION_SUCCESS, sKribbleStoryService.newCharacter(addCharacterForm));
+
+        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+
+        assertFalse(storyOutput2.characters().isEmpty());
+
+        EditCharacterForm editCharacterForm = new EditCharacterForm(storyOutput2.id(), storyOutput2.characters().get(0).getCharacterId(), StoryTestConstants.STORY_TEST_CHARACTER_NAME_2, StoryTestConstants.STORY_TEST_NULL_STRING);
+        assertEquals(CRUDSuccessMessages.CHARACTER_EDIT_SUCCESS, sKribbleStoryService.editCharacter(editCharacterForm));
+
+        EditCharacterForm badEditCharacterForm = new EditCharacterForm(storyOutput2.id(), "fklsjclkascnadjskj", StoryTestConstants.STORY_TEST_CHARACTER_NAME_2, StoryTestConstants.STORY_TEST_NULL_STRING);
+        assertThrows(ContentNotFoundException.class, () -> sKribbleStoryService.editCharacter(badEditCharacterForm));
+
+        ChangeCharacterImageForm changeCharacterImageForm = new ChangeCharacterImageForm(storyOutput2.id(), storyOutput2.characters().get(0).getCharacterId(), StoryTestConstants.STORY_TEST_FULL_STRING);
+        assertEquals(CRUDSuccessMessages.CHARACTER_IMAGE_UPLOAD_SUCCESS, sKribbleStoryService.changeCharacterImage(changeCharacterImageForm));
+
+        ChangeCharacterImageForm badChangeCharacterImageForm = new ChangeCharacterImageForm(storyOutput2.id(), "LKHdIGSbcNCNdkaslkjdask", StoryTestConstants.STORY_TEST_NULL_STRING);
+        assertThrows(ContentNotFoundException.class, () -> sKribbleStoryService.changeCharacterImage(badChangeCharacterImageForm));
+
+        DeleteCharacterForm deleteCharacterForm = new DeleteCharacterForm(storyOutput2.id(), storyOutput2.characters().get(0).getCharacterId());
+        assertEquals(CRUDSuccessMessages.CHARACTER_DELETE_SUCCESS, sKribbleStoryService.deleteCharacter(deleteCharacterForm));
+
+        DeleteCharacterForm badDeleteCharacterForm = new DeleteCharacterForm(storyOutput2.id(), "XbkkjHJEGRFvcKSDjhas");
+        assertThrows(ContentNotFoundException.class, () -> sKribbleStoryService.deleteCharacter(badDeleteCharacterForm));
     }
 
     @Test
     @Order(5)
     void StoryLandmarkOperationsTest(){
+        mockLogin(UserTestConstants.TEST_USERNAME);
 
+        NewStoryForm newStoryForm = new NewStoryForm(StoryTestConstants.STORY_TEST_TITLE);
+        sKribbleStoryService.newStory(newStoryForm);
+
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+
+        AddLandmarkForm addLandmarkForm = new AddLandmarkForm(storyOutput.id(), StoryTestConstants.STORY_TEST_LANDMARK_NAME_1, StoryTestConstants.STORY_TEST_FULL_STRING, StoryTestConstants.STORY_TEST_NULL_STRING);
+        AddLandmarkForm badAddLandmarkForm = new AddLandmarkForm("dkasjflkcajsfaslcksamclkjfoipew", StoryTestConstants.STORY_TEST_LANDMARK_NAME_2, StoryTestConstants.STORY_TEST_FULL_STRING, StoryTestConstants.STORY_TEST_NULL_STRING);
+
+        mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
+        assertThrows(AssetNotOwnedException.class, () -> sKribbleStoryService.newLandmark(addLandmarkForm));
+
+        mockLogin(UserTestConstants.TEST_USERNAME);
+        assertThrows(ProjectNotFoundException.class, () -> sKribbleStoryService.newLandmark(badAddLandmarkForm));
+        assertEquals(CRUDSuccessMessages.LANDMARK_CREATION_SUCCESS, sKribbleStoryService.newLandmark(addLandmarkForm));
+
+        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+
+        assertFalse(storyOutput2.landmarks().isEmpty());
+
+        EditLandmarkForm editLandmarkForm = new EditLandmarkForm(storyOutput2.id(), storyOutput2.landmarks().get(0).getLandmarkId(), StoryTestConstants.STORY_TEST_LANDMARK_NAME_2, StoryTestConstants.STORY_TEST_FULL_STRING);
+        assertEquals(CRUDSuccessMessages.LANDMARK_EDIT_SUCCESS, sKribbleStoryService.editLandmark(editLandmarkForm));
+
+        EditLandmarkForm badEditLandmarkForm = new EditLandmarkForm(storyOutput2.id(), "fsalkdjcacavghdfehgjf", StoryTestConstants.STORY_TEST_LANDMARK_NAME_2, StoryTestConstants.STORY_TEST_FULL_STRING);
+        assertThrows(ContentNotFoundException.class, () -> sKribbleStoryService.editLandmark(badEditLandmarkForm));
+
+        ChangeLandmarkImageForm changeLandmarkImageForm = new ChangeLandmarkImageForm(storyOutput2.id(), storyOutput2.landmarks().get(0).getLandmarkId(), StoryTestConstants.STORY_TEST_FULL_STRING);
+        assertEquals(CRUDSuccessMessages.LANDMARK_IMAGE_UPLOAD_SUCCESS, sKribbleStoryService.changeLandmarkImage(changeLandmarkImageForm));
+
+        ChangeLandmarkImageForm badChangeLandmarkImageForm = new ChangeLandmarkImageForm(storyOutput2.id(), "khsdjkhchkjbaskcjqiuh", StoryTestConstants.STORY_TEST_FULL_STRING);
+        assertThrows(ContentNotFoundException.class, () -> sKribbleStoryService.changeLandmarkImage(badChangeLandmarkImageForm));
+
+        DeleteLandmarkForm deleteLandmarkForm = new DeleteLandmarkForm(storyOutput2.id(), storyOutput2.landmarks().get(0).getLandmarkId());
+        assertEquals(CRUDSuccessMessages.LANDMARK_DELETE_SUCCESS, sKribbleStoryService.deleteLandmark(deleteLandmarkForm));
+
+        DeleteLandmarkForm badDeleteLandmarkForm = new DeleteLandmarkForm(storyOutput2.id(), "mklqsjcsancbaseghkbkhiu");
+        assertThrows(ContentNotFoundException.class, () -> sKribbleStoryService.deleteLandmark(badDeleteLandmarkForm));
     }
 
+    /**
+     * Very important test.
+     * Like, super-duper important.
+     */
     @Test
     @Order(6)
     void mentionedContentInsideChaptersTest(){
-
+        
     }
 
     private StoryTitleInput makeStoryTitleInput(String storyTitle){
