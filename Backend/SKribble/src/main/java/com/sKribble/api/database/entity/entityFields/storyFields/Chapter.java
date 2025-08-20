@@ -38,7 +38,7 @@ public class Chapter {
         this.text = StringCheckerUtil.isNotHollow(text) ? text : StoryDefaultContents.STORY_CHAPTER_DEFAULT_CONTENT;
     }
 
-    //Very cool function. A custom algorithm, kind of... Not very efficient tho..
+    //Very cool function. A custom algorithm, kind of... Not very efficient tho.. Will need to optimise later.
     public void listMentionedCharacters(List<StoryCharacter> allCharacters){
         if(this.mentionedCharacters == null){
             this.mentionedCharacters = new ArrayList<>();

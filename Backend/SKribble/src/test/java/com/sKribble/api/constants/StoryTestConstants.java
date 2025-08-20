@@ -48,12 +48,6 @@ public class StoryTestConstants {
 
     public static final String STORY_TEST_CHARACTER_NAME_4 = "testCharacter4";
 
-    public static final String JOHN = "John";
-
-    public static final String JOHN_DOE = "John Doe";
-
-    public static final String JOHN_DEAN = "John Dean";
-
     public static final String STORY_TEST_LANDMARK_ID_1 = "1";
 
     public static final String STORY_TEST_LANDMARK_ID_2 = "2";
@@ -69,4 +63,22 @@ public class StoryTestConstants {
     public static final String STORY_TEST_LANDMARK_NAME_3 = "testLandmark3";
 
     public static final String STORY_TEST_LANDMARK_NAME_4 = "testLandmark4";
+
+    public static final String JOHN = "John";
+
+    public static final String JOHN_DOE = "John Doe";
+
+    public static final String JOHN_DEAN = "John Dean";
+
+    public static final String CORNWOOD = "Cornwood";
+
+    public static final String BLACKBARROW = "Blackbarrow";
+
+    public static final String JOHN_DOE_AT_HOME = "John Doe at home";
+
+    public static final String JOHN_DEAN_AT_HOME = "John Dean at home";
+
+    public static final String BOTH_JOHNS_AT_HOME = "Both Johns at home";
+
+    public static final String A_JOHN_DOING_SOMETHING = "One of the Johns doing something";
 }

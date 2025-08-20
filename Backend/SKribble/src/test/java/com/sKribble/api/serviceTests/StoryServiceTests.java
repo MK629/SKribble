@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sKribble.api.constants.StoryTestConstants;
 import com.sKribble.api.constants.UserTestConstants;
+import com.sKribble.api.database.entity.entityFields.storyFields.Chapter;
 import com.sKribble.api.dto.input.story.AddChapterForm;
 import com.sKribble.api.dto.input.story.AddCharacterForm;
 import com.sKribble.api.dto.input.story.AddLandmarkForm;
@@ -208,7 +209,46 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
     @Test
     @Order(6)
     void mentionedContentInsideChaptersTest(){
+        mockLogin(UserTestConstants.TEST_USERNAME);
+
+        NewStoryForm newStoryForm = new NewStoryForm(StoryTestConstants.STORY_TEST_TITLE);
+        sKribbleStoryService.newStory(newStoryForm);
+
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+
+        AddCharacterForm John_Doe = new AddCharacterForm(storyOutput.id(), StoryTestConstants.JOHN_DOE, null, null);
+        AddCharacterForm John_Dean = new AddCharacterForm(storyOutput.id(), StoryTestConstants.JOHN_DEAN, null, null);
+
+        sKribbleStoryService.newCharacter(John_Doe);
+        sKribbleStoryService.newCharacter(John_Dean);
         
+        AddLandmarkForm Cornwood = new AddLandmarkForm(storyOutput.id(), StoryTestConstants.CORNWOOD, null, null);
+        AddLandmarkForm Blackbarrow = new AddLandmarkForm(storyOutput.id(), StoryTestConstants.BLACKBARROW, null, null);
+
+        sKribbleStoryService.newLandmark(Cornwood);
+        sKribbleStoryService.newLandmark(Blackbarrow);
+
+        String John_Doe_at_home_text = StoryTestConstants.JOHN_DOE + " lived in " + StoryTestConstants.CORNWOOD + ". " + StoryTestConstants.JOHN + " loved to eat apple pie.";
+        String John_Dean_at_home_text = StoryTestConstants.JOHN_DEAN + " lived in " + StoryTestConstants.BLACKBARROW + ". " + StoryTestConstants.JOHN + " loved to eat pizza.";;
+        String Both_Johns_at_home_text = StoryTestConstants.JOHN_DOE + " went back to " + StoryTestConstants.CORNWOOD + ", while " + StoryTestConstants.JOHN_DEAN + " went back to " + StoryTestConstants.BLACKBARROW + ".";
+        String A_John_Doing_Something_text = StoryTestConstants.JOHN + " walks into a bar.";
+
+        AddChapterForm John_Doe_at_home = new AddChapterForm(storyOutput.id(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1, StoryTestConstants.JOHN_DOE_AT_HOME, John_Doe_at_home_text);
+        AddChapterForm John_Dean_at_home = new AddChapterForm(storyOutput.id(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_2, StoryTestConstants.JOHN_DEAN_AT_HOME, John_Dean_at_home_text);
+        AddChapterForm Both_Johns_at_home = new AddChapterForm(storyOutput.id(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_3, StoryTestConstants.BOTH_JOHNS_AT_HOME, Both_Johns_at_home_text);
+        AddChapterForm A_John_Doing_Something = new AddChapterForm(storyOutput.id(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_4, StoryTestConstants.A_JOHN_DOING_SOMETHING, A_John_Doing_Something_text); 
+
+        sKribbleStoryService.newChapter(John_Doe_at_home);
+        sKribbleStoryService.newChapter(John_Dean_at_home);
+        sKribbleStoryService.newChapter(Both_Johns_at_home);
+        sKribbleStoryService.newChapter(A_John_Doing_Something);
+
+        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+
+        Chapter John_Doe_at_home_chapter = storyOutput2.chapters().get(0);
+        Chapter John_Dean_at_home_chapter = storyOutput2.chapters().get(1);
+        Chapter Both_Johns_at_home_chapter = storyOutput2.chapters().get(2);
+        Chapter A_John_Doing_Something_chapter = storyOutput2.chapters().get(3);
     }
 
     private StoryTitleInput makeStoryTitleInput(String storyTitle){
