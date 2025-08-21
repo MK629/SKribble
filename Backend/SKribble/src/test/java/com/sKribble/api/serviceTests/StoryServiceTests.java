@@ -1,8 +1,10 @@
 package com.sKribble.api.serviceTests;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sKribble.api.constants.StoryTestConstants;
 import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.database.entity.entityFields.storyFields.Chapter;
+import com.sKribble.api.database.entity.entityFields.storyFields.Landmark;
+import com.sKribble.api.database.entity.entityFields.storyFields.StoryCharacter;
 import com.sKribble.api.dto.input.story.AddChapterForm;
 import com.sKribble.api.dto.input.story.AddCharacterForm;
 import com.sKribble.api.dto.input.story.AddLandmarkForm;
@@ -245,10 +249,44 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
 
         StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
 
+        StoryCharacter John_Doe_character = storyOutput2.characters().get(0);
+        StoryCharacter John_Dean_character = storyOutput2.characters().get(1);
+
+        Landmark Cornwood_landmark = storyOutput2.landmarks().get(0);
+        Landmark Blackbarrow_landmark = storyOutput2.landmarks().get(1);
+
+        //Make sure correct indexes are used when getting characters and landmarks
+        assertAll(() -> {
+            assertEquals(StoryTestConstants.JOHN_DOE, John_Doe_character.getCharacterName());
+            assertEquals(StoryTestConstants.JOHN_DEAN, John_Dean_character.getCharacterName());
+            assertEquals(StoryTestConstants.CORNWOOD, Cornwood_landmark.getLandmarkName());
+            assertEquals(StoryTestConstants.BLACKBARROW, Blackbarrow_landmark.getLandmarkName());
+        });
+
         Chapter John_Doe_at_home_chapter = storyOutput2.chapters().get(0);
         Chapter John_Dean_at_home_chapter = storyOutput2.chapters().get(1);
         Chapter Both_Johns_at_home_chapter = storyOutput2.chapters().get(2);
         Chapter A_John_Doing_Something_chapter = storyOutput2.chapters().get(3);
+
+        assertAll(() -> {
+            assertTrue(John_Doe_at_home_chapter.getMentionedCharacters().contains(John_Doe_character));
+            assertFalse(John_Doe_at_home_chapter.getMentionedCharacters().contains(John_Dean_character));
+            assertTrue(John_Doe_at_home_chapter.getMentionedLandmarks().contains(Cornwood_landmark));
+            assertFalse(John_Doe_at_home_chapter.getMentionedLandmarks().contains(Blackbarrow_landmark));
+
+            assertTrue(John_Dean_at_home_chapter.getMentionedCharacters().contains(John_Dean_character));
+            assertFalse(John_Dean_at_home_chapter.getMentionedCharacters().contains(John_Doe_character));
+            assertTrue(John_Dean_at_home_chapter.getMentionedLandmarks().contains(Blackbarrow_landmark));
+            assertFalse(John_Dean_at_home_chapter.getMentionedLandmarks().contains(Cornwood_landmark));
+
+            assertTrue(Both_Johns_at_home_chapter.getMentionedCharacters().contains(John_Doe_character));
+            assertTrue(Both_Johns_at_home_chapter.getMentionedCharacters().contains(John_Dean_character));
+            assertTrue(Both_Johns_at_home_chapter.getMentionedLandmarks().contains(Cornwood_landmark));
+            assertTrue(Both_Johns_at_home_chapter.getMentionedLandmarks().contains(Blackbarrow_landmark));
+            
+            assertTrue(A_John_Doing_Something_chapter.getMentionedCharacters().contains(John_Doe_character));
+            assertTrue(A_John_Doing_Something_chapter.getMentionedCharacters().contains(John_Dean_character));
+        });
     }
 
     private StoryTitleInput makeStoryTitleInput(String storyTitle){
