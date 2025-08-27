@@ -10,19 +10,20 @@ import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
+import com.sKribble.api.templates.SKribbleServiceTemplate;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
 import com.sKribble.api.utils.ResponseEntityUtil;
 
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
-public class SKribbleCommonService {
+public class SKribbleCommonService extends SKribbleServiceTemplate{
 
-    private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
+    //@Autowired is omitted because there's only one constructor
+    public SKribbleCommonService(ProjectRepository projectRepository, UserRepository userRepository) {
+        super(projectRepository, userRepository);
+    }
 
     @Transactional
     public ResponseEntity<String> deleteProject(DeleteProjectForm deleteProjectForm){
@@ -39,12 +40,5 @@ public class SKribbleCommonService {
         projectRepository.deleteById(deleteProjectForm.projectId());
 
         return ResponseEntityUtil.return200(CRUDSuccessMessages.PROJECT_DELETION_SUCCESS);
-    }
-
-//==========================================[ Here lies the line for local abstractions ]================================================//
-
-    //Get the User entity of the user who made the request (invoker).
-    private User getInvoker(){
-        return userRepository.findUserByUsernameOrEmail(CurrentUserInfoUtil.getCurrentUserPrincipalName());
     }
 }

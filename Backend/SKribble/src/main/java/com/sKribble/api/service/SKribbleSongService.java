@@ -18,22 +18,21 @@ import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
 import com.sKribble.api.dto.output.song.SongOutput;
-import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
-import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
+import com.sKribble.api.templates.SKribbleServiceTemplate;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
 import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
 
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
-public class SKribbleSongService {
+public class SKribbleSongService extends SKribbleServiceTemplate{
 
-    private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
+    //@Autowired is omitted because there's only one constructor
+    public SKribbleSongService(ProjectRepository projectRepository, UserRepository userRepository) {
+        super(projectRepository, userRepository);
+    }
 
     public List<SongOutput> findSongsByTitle(SongTitleInput songTitleInput){
         return projectRepository.findSongsByTitle(songTitleInput.title()).stream()
@@ -51,7 +50,7 @@ public class SKribbleSongService {
 
         Song newSong = new Song(newSongForm.title(), ProjectTypes.Song, newSongForm.genre(), newSongForm.lyrics(), newSongForm.sheetMusicImageUrl(), invoker.getId());
 
-        persistSong(newSong);
+        persistProject(newSong);
         
         return CRUDSuccessMessages.SONG_CREATION_SUCCESS;
     }
@@ -70,7 +69,7 @@ public class SKribbleSongService {
 
         songToEdit.editSong(editSongForm.title(), editSongForm.lyrics());
 
-        persistSong(songToEdit);
+        persistProject(songToEdit);
 
         return CRUDSuccessMessages.SONG_EDIT_SUCCESS;
     }
@@ -89,7 +88,7 @@ public class SKribbleSongService {
 
         songToChangeSheetMusicImage.changeSongSheetMusicImage(changeSongSheetMusicImageForm.sheetMusicImageUrl());
 
-        persistSong(songToChangeSheetMusicImage);
+        persistProject(songToChangeSheetMusicImage);
 
         return CRUDSuccessMessages.SONG_SHEET_MUSIC_IMAGE_UPLOAD_SUCCESS;
     }
@@ -108,25 +107,8 @@ public class SKribbleSongService {
 
         songToChangeGenre.changeGenre(changeSongGenreForm.newGenre());
 
-        persistSong(songToChangeGenre);
+        persistProject(songToChangeGenre);
 
         return CRUDSuccessMessages.SONG_GENRE_CHANGE_SUCCESS;
-    }
-
-//==========================================[ Here lies the line for local abstractions ]================================================//
-
-    //Get the User entity of the user who made the request (invoker).
-    private User getInvoker(){
-        return userRepository.findUserByUsernameOrEmail(CurrentUserInfoUtil.getCurrentUserPrincipalName());
-    }
-
-    //Create new or persist changes.
-    private void persistSong(Song song){
-        try{
-            projectRepository.save(song);
-        }
-        catch(Exception e){
-            throw new PersistenceErrorException(CRUDErrorMessages.PERSISTENCE_FAILED, e);
-        }
     }
 }

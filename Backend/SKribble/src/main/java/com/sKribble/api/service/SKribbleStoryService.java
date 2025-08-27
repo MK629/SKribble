@@ -31,24 +31,21 @@ import com.sKribble.api.dto.input.story.EditLandmarkForm;
 import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.output.story.StoryOutput;
-import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
-import com.sKribble.api.messages.errorMessages.CRUDErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
+import com.sKribble.api.templates.SKribbleServiceTemplate;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
 import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
-@RequiredArgsConstructor
-@Log4j2
-public class SKribbleStoryService {
+public class SKribbleStoryService extends SKribbleServiceTemplate{
 
-    private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
+    //@Autowired is omitted because there's only one constructor
+    public SKribbleStoryService(ProjectRepository projectRepository, UserRepository userRepository) {
+        super(projectRepository, userRepository);
+    }
 
     public List<StoryOutput> findStoriesByTitle(StoryTitleInput storyTitleInput){
         return projectRepository.findStoriesByTitle(storyTitleInput.title())
@@ -68,7 +65,7 @@ public class SKribbleStoryService {
 
         Story newStory = new Story(newStoryForm.title(), ProjectTypes.Story, null, null, null, invoker.getId());
 
-        persistStory(newStory);
+        persistProject(newStory);
 
         return CRUDSuccessMessages.STORY_CREATION_SUCCESS;
     }
@@ -87,7 +84,7 @@ public class SKribbleStoryService {
 
         storyToChangeTitle.changeTitle(changeStoryTitleForm.newTitle());
 
-        persistStory(storyToChangeTitle); //Throws an exception.
+        persistProject(storyToChangeTitle); //Throws an exception.
 
         return CRUDSuccessMessages.STORY_TITLE_CHANGE_SUCCESS;
     }
@@ -108,7 +105,7 @@ public class SKribbleStoryService {
 
         storyToAddChapter.addChapter(new Chapter(addChapterForm.chapterNumber(), addChapterForm.chapterName(), addChapterForm.text()));
 
-        persistStory(storyToAddChapter); 
+        persistProject(storyToAddChapter); 
 
         return CRUDSuccessMessages.CHAPTER_ADD_SUCCESS;
     }
@@ -127,7 +124,7 @@ public class SKribbleStoryService {
 
         storyToEditChapter.editChapter(editChapterForm.chapterNumber(), editChapterForm.chapterName(), editChapterForm.text());
 
-        persistStory(storyToEditChapter);
+        persistProject(storyToEditChapter);
 
         return CRUDSuccessMessages.CHAPTER_EDIT_SUCCESS;
     }
@@ -146,7 +143,7 @@ public class SKribbleStoryService {
 
         storyToDeleteChapter.deleteChapter(deleteChapterForm.chapterNumber());
 
-        persistStory(storyToDeleteChapter);
+        persistProject(storyToDeleteChapter);
 
         return CRUDSuccessMessages.CHAPTER_DELETE_SUCCESS;
     }
@@ -167,7 +164,7 @@ public class SKribbleStoryService {
 
         storyToAddCharacter.addCharacter(new StoryCharacter(UUID.randomUUID().toString(), addCharacterForm.characterName(), addCharacterForm.description(), addCharacterForm.imageUrl()));
 
-        persistStory(storyToAddCharacter);
+        persistProject(storyToAddCharacter);
 
         return CRUDSuccessMessages.CHARACTER_CREATION_SUCCESS;
     }
@@ -186,7 +183,7 @@ public class SKribbleStoryService {
 
         storyToEditCharacter.editCharacter(editCharacterForm.characterId(), editCharacterForm.characterName(), editCharacterForm.description());
 
-        persistStory(storyToEditCharacter);
+        persistProject(storyToEditCharacter);
 
         return CRUDSuccessMessages.CHARACTER_EDIT_SUCCESS;
     }
@@ -205,7 +202,7 @@ public class SKribbleStoryService {
 
         storyToDeleteCharacter.deleteCharacter(deleteCharacterForm.characterId());
 
-        persistStory(storyToDeleteCharacter);
+        persistProject(storyToDeleteCharacter);
 
         return CRUDSuccessMessages.CHARACTER_DELETE_SUCCESS;
     }
@@ -224,7 +221,7 @@ public class SKribbleStoryService {
 
         storyToChangeCharacterImageUrl.changeCharacterImage(changeCharacterImageForm.characterId(), changeCharacterImageForm.newImageUrl());
 
-        persistStory(storyToChangeCharacterImageUrl);
+        persistProject(storyToChangeCharacterImageUrl);
 
         return CRUDSuccessMessages.CHARACTER_IMAGE_UPLOAD_SUCCESS;
     }
@@ -245,7 +242,7 @@ public class SKribbleStoryService {
 
         storyToAddLandmark.addLandmark(new Landmark(UUID.randomUUID().toString(), addLandmarkForm.landmarkName(), addLandmarkForm.description(), addLandmarkForm.imageUrl()));
 
-        persistStory(storyToAddLandmark);
+        persistProject(storyToAddLandmark);
 
         return CRUDSuccessMessages.LANDMARK_CREATION_SUCCESS;
     }
@@ -264,7 +261,7 @@ public class SKribbleStoryService {
 
         storyToEditLandmark.editLandmark(editLandmarkForm.landmarkId(), editLandmarkForm.landmarkName(), editLandmarkForm.description());
 
-        persistStory(storyToEditLandmark);
+        persistProject(storyToEditLandmark);
 
         return CRUDSuccessMessages.LANDMARK_EDIT_SUCCESS;
     }
@@ -283,7 +280,7 @@ public class SKribbleStoryService {
 
         storyToDeleteLandmark.deleteLandmark(deleteLandmarkForm.landmarkId());
 
-        persistStory(storyToDeleteLandmark);
+        persistProject(storyToDeleteLandmark);
 
         return CRUDSuccessMessages.LANDMARK_DELETE_SUCCESS;
     }
@@ -302,25 +299,8 @@ public class SKribbleStoryService {
 
         storyToChangeLandmarkImage.changeLandmarkImage(changeLandmarkImageForm.landmarkId(), changeLandmarkImageForm.newImageUrl());
 
-        persistStory(storyToChangeLandmarkImage);
+        persistProject(storyToChangeLandmarkImage);
 
         return CRUDSuccessMessages.LANDMARK_IMAGE_UPLOAD_SUCCESS;
-    }
-
-//==========================================[ Here lies the line for local abstractions ]================================================//
-
-    //Get the User entity of the user who made the request (invoker).
-    private User getInvoker(){
-        return userRepository.findUserByUsernameOrEmail(CurrentUserInfoUtil.getCurrentUserPrincipalName());
-    }
-
-    //Create new or persist changes.
-    private void persistStory(Story story){
-        try{
-            projectRepository.save(story);
-        }
-        catch(Exception e){
-            throw new PersistenceErrorException(CRUDErrorMessages.PERSISTENCE_FAILED, e);
-        }
     }
 }
