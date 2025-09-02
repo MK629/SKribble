@@ -48,18 +48,18 @@ public class SKribbleServiceController {
 
     //=======================================================[ User Management ]=======================================================
 
-    @QueryMapping
+    @MutationMapping
     public String changeUserName(@Argument("changeUsernameForm") @Valid ChangeUsernameForm changeUsernameForm){
         return sKribbleUserManagementService.changeUserName(changeUsernameForm);
     }
 
-    @QueryMapping
+    @MutationMapping
     public String changeUserEmail(@Argument("changeUserEmailForm") @Valid ChangeUserEmailForm changeUserEmailForm){
         return sKribbleUserManagementService.changeUserEmail(changeUserEmailForm);
     }
 
     //Later
-    @QueryMapping
+    @MutationMapping
     public String changeUserPassword(@Valid ChangeUserPasswordForm changeUserPasswordForm){
         return null;
     }
