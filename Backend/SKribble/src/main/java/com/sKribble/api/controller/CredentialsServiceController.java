@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sKribble.api.dto.input.user.EMailLoginForm;
-import com.sKribble.api.dto.input.user.UserRegisterForm;
-import com.sKribble.api.dto.input.user.UsernameLoginForm;
-import com.sKribble.api.dto.output.user.TokenCarrier;
+import com.sKribble.api.dto.input.credentials.EMailLoginForm;
+import com.sKribble.api.dto.input.credentials.UserRegisterForm;
+import com.sKribble.api.dto.input.credentials.UsernameLoginForm;
+import com.sKribble.api.dto.output.credentials.TokenCarrier;
 import com.sKribble.api.service.CredentialsService;
 
 import jakarta.validation.Valid;

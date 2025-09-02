@@ -2,9 +2,9 @@ package com.sKribble.api.utils;
 
 import com.sKribble.api.database.entity.childEntities.Song;
 import com.sKribble.api.database.entity.childEntities.Story;
+import com.sKribble.api.dto.output.credentials.TokenCarrier;
 import com.sKribble.api.dto.output.song.SongOutput;
 import com.sKribble.api.dto.output.story.StoryOutput;
-import com.sKribble.api.dto.output.user.TokenCarrier;
 
 /**
  * A util class that takes data from the entites extracted from the DAOs and converts them into DTOs.

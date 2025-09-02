@@ -59,4 +59,16 @@ public class User {
 			default: throw new UnknownEnumException(EnumErrorMessages.UNKNOWN);
 		}
 	}
+
+	public void changeUsername(String newUsername){
+		this.username = newUsername;
+	}
+
+	public void changeEmail(String newEmail){
+		this.email = newEmail;
+	}
+
+	public void changePassword(String newPassword){
+		this.password = newPassword;
+	}
 }

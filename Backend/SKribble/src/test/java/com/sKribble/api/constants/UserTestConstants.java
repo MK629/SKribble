@@ -4,7 +4,11 @@ public class UserTestConstants {
 
     public static final String TEST_USERNAME = "testUser";
 
+    public static final String TEST_USERNAME2 = "testUser2";
+
     public static final String TEST_EMAIL = "testUser@gmail.com";
+
+    public static final String TEST_EMAIL2 = "testUser2@gmail.com";
 
     public static final String TEST_DEFAULT_PASSWORD = "12345";
 

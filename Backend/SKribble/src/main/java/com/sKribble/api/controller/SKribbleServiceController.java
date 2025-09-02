@@ -26,10 +26,14 @@ import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
 import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
+import com.sKribble.api.dto.input.userManagement.ChangeUserEmailForm;
+import com.sKribble.api.dto.input.userManagement.ChangeUserPasswordForm;
+import com.sKribble.api.dto.input.userManagement.ChangeUsernameForm;
 import com.sKribble.api.dto.output.song.SongOutput;
 import com.sKribble.api.dto.output.story.StoryOutput;
 import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.service.SKribbleStoryService;
+import com.sKribble.api.service.SKribbleUserManagementService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +44,28 @@ public class SKribbleServiceController {
 
     private final SKribbleStoryService sKribbleStoryService;
     private final SKribbleSongService sKribbleSongService;
+    private final SKribbleUserManagementService sKribbleUserManagementService;
 
-//=======================================================[ Story ]=======================================================
+    //=======================================================[ User Management ]=======================================================
+
+    @QueryMapping
+    public String changeUserName(@Argument("changeUsernameForm") @Valid ChangeUsernameForm changeUsernameForm){
+        return sKribbleUserManagementService.changeUserName(changeUsernameForm);
+    }
+
+    @QueryMapping
+    public String changeUserEmail(@Argument("changeUserEmailForm") @Valid ChangeUserEmailForm changeUserEmailForm){
+        return sKribbleUserManagementService.changeUserEmail(changeUserEmailForm);
+    }
+
+    //Later
+    @QueryMapping
+    public String changeUserPassword(@Valid ChangeUserPasswordForm changeUserPasswordForm){
+        return null;
+    }
+
+
+    //=======================================================[ Story ]=======================================================
     
     @QueryMapping
     public List<StoryOutput> findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){

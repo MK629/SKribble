@@ -1,4 +1,4 @@
-package com.sKribble.api.dto.output.user;
+package com.sKribble.api.dto.output.credentials;
 
 public record TokenCarrier(
     String message,

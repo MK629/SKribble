@@ -4,6 +4,10 @@ type Query{
 }
 
 type Mutation{
+	#============================[ User Management ]=============================
+	changeUserName(changeUsernameForm: ChangeUsernameForm!) : String
+	changeUserEmail(changeUserEmailForm: ChangeUserEmailForm!) : String
+
 	#============================[ Story ]=============================
 	newStory(newStoryForm: NewStoryForm!) : String
 	changeStoryTitle(changeStoryTitleForm: ChangeStoryTitleForm!) : String

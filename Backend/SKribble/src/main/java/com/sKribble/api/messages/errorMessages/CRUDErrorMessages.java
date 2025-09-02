@@ -4,6 +4,12 @@ public class CRUDErrorMessages {
 	
 	public static final String REGISTER_FAILED = "User registration failed.";
 
+	public static final String USERNAME_CHANGE_FAILED = "Failed to change username.";
+
+	public static final String EMAIL_CHANGE_FAILED = "Failed to change E-Mail.";
+
+	public static final String PASSWORD_CHANGE_FAILED = "Failed to change password.";
+
 	public static final String DUPLICATE_CHAPTER = "This chapter number already exists.";
 
 	public static final String DUPLICATE_CHARACTER_ID = "A duplicate character ID was used. Try again.";

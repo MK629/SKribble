@@ -102,6 +102,19 @@ public class UserCRUDTests {
             assertTrue(passwordEncoder.matches(UserTestConstants.TEST_DEFAULT_PASSWORD, fetchedTestUser.getPassword()));
             assertTrue(fetchedTestUser.getRoles().contains(UserTestConstants.USER_ROLE));
         });
+
+        testUser.changeUsername(UserTestConstants.TEST_DIFFERENT_USERNAME);
+        testUser.changeEmail(UserTestConstants.TEST_DIFFERENT_EMAIL);
+
+        userRepository.save(testUser);
+
+        User fetchedChangedTestUser = userRepository.findByIdentification(testUser.getId());
+
+        assertAll(() -> {
+            assertEquals(UserTestConstants.TEST_DIFFERENT_USERNAME, fetchedChangedTestUser.getUsername());
+            assertEquals(UserTestConstants.TEST_DIFFERENT_EMAIL, fetchedChangedTestUser.getEmail());
+            assertTrue(passwordEncoder.matches(UserTestConstants.TEST_DEFAULT_PASSWORD, fetchedTestUser.getPassword()));
+        });
     }
 
     @Test

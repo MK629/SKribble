@@ -3,7 +3,7 @@ package com.sKribble.api.utils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.sKribble.api.dto.output.user.TokenCarrier;
+import com.sKribble.api.dto.output.credentials.TokenCarrier;
 
 import lombok.extern.log4j.Log4j2;
 

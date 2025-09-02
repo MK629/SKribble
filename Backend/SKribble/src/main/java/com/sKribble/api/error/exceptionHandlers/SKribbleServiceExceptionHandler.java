@@ -11,6 +11,7 @@ import com.sKribble.api.error.exceptions.CRUDExceptions.ProjectNotFoundException
 import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateChapterException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateCharacterException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.story.DuplicateLandmarkException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.userManagement.UserManagementException;
 import com.sKribble.api.utils.GraphQlErrorUtil;
 
 import graphql.GraphQLError;
@@ -23,7 +24,7 @@ public class SKribbleServiceExceptionHandler extends DataFetcherExceptionResolve
 
     @Override
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
-        if(ex instanceof ConstraintViolationException || ex instanceof DuplicateChapterException || ex instanceof DuplicateCharacterException 
+        if(ex instanceof ConstraintViolationException || ex instanceof UserManagementException || ex instanceof DuplicateChapterException || ex instanceof DuplicateCharacterException 
             || ex instanceof DuplicateLandmarkException){
             return GraphQlErrorUtil.return400(ex);
         }

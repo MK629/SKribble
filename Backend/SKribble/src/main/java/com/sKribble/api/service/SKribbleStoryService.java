@@ -42,7 +42,7 @@ import com.sKribble.api.utils.ProjectEntityUtil;
 @Service
 public class SKribbleStoryService extends SKribbleServiceTemplate{
 
-    //@Autowired is omitted because there's only one constructor
+    //@Autowired is omitted because there's only one constructor.
     public SKribbleStoryService(ProjectRepository projectRepository, UserRepository userRepository) {
         super(projectRepository, userRepository);
     }

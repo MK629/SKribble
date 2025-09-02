@@ -18,11 +18,11 @@ import org.springframework.test.context.ActiveProfiles;
 import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
-import com.sKribble.api.dto.input.user.UserRegisterForm;
+import com.sKribble.api.dto.input.credentials.UserRegisterForm;
 import com.sKribble.api.service.CredentialsService;
 
 /**
- * <h4>Extend this class to write tests for services implementing business logic for various 'Project' entity types.</h4>
+ * <h4>Extend this class to write tests for services.</h4>
  * <br/>
  * <ul>
  * <li>Note: DO NOT use this class to test credential services as they are different in logic.</li>

@@ -20,10 +20,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.database.repository.UserRepository;
-import com.sKribble.api.dto.input.user.EMailLoginForm;
-import com.sKribble.api.dto.input.user.UserRegisterForm;
-import com.sKribble.api.dto.input.user.UsernameLoginForm;
-import com.sKribble.api.dto.output.user.TokenCarrier;
+import com.sKribble.api.dto.input.credentials.EMailLoginForm;
+import com.sKribble.api.dto.input.credentials.UserRegisterForm;
+import com.sKribble.api.dto.input.credentials.UsernameLoginForm;
+import com.sKribble.api.dto.output.credentials.TokenCarrier;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserRegstrationErrorException;
 import com.sKribble.api.error.exceptions.credentialsExceptions.LoginErrorException;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;

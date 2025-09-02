@@ -2,9 +2,15 @@ package com.sKribble.api.messages.successMessages;
 
 public class CRUDSuccessMessages {
 
-	//==============================================[ User ]==============================================
+	//==============================================[ User Management ]==============================================
 
 	public static final String REGISTER_SUCCESS = "User registered successfully.";
+
+	public static final String USERNAME_CHANGE_SUCCESS = "Username changed successfully.";
+
+	public static final String EMAIL_CHANGE_SUCCESS = "E-Mail changed successfully.";
+
+	public static final String PASSWORD_CHANGE_SUCCESS = "A new password has been set successfully.";
 
 	//==============================================[ Story ]==============================================
 

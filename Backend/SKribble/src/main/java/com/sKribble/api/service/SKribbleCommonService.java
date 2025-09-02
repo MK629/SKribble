@@ -20,9 +20,14 @@ import com.sKribble.api.utils.ResponseEntityUtil;
 @Service
 public class SKribbleCommonService extends SKribbleServiceTemplate{
 
-    //@Autowired is omitted because there's only one constructor
+    //@Autowired is omitted because there's only one constructor.
     public SKribbleCommonService(ProjectRepository projectRepository, UserRepository userRepository) {
         super(projectRepository, userRepository);
+    }
+
+    @Transactional
+    public ResponseEntity<String> changeOwnership(){
+        return ResponseEntityUtil.return200("");
     }
 
     @Transactional

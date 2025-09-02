@@ -1,5 +1,7 @@
 package com.sKribble.api.security.jwt;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.sKribble.api.error.exceptions.credentialsExceptions.JwtTokenException;
 import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -45,16 +48,16 @@ public class JwtUtil {
 		return new String(jwsBytesFormat); //Had to do this because of a bullshit exception.
 	}
 	
-	public String generateJWE(String reciever) {
+	public String generateJWE(String receiver) {
 		//Build JWS
 		String signedToken = Jwts.builder()
 								.claims()
 									.issuer(issuer)
 									.issuedAt(new Date())
-									.subject(reciever)
-									.expiration(null)
+									.subject(receiver)
+									.expiration(Date.from(Instant.now().plus(30, ChronoUnit.DAYS)))
 									.and()
-								.signWith(getSigningKey()) //Hashing algorithm is applied automatically
+								.signWith(getSigningKey()) //Signature algorithm is applied automatically
 								.compact();
 		
 		//Encrypt to JWE
@@ -76,6 +79,9 @@ public class JwtUtil {
 			.verifyWith(getSigningKey())
 			.build()
 			.parseSignedClaims(decryptToJWS(token));
+		}
+		catch(ExpiredJwtException e){
+			throw new JwtTokenException(AuthenticationErrorMessages.EXPIRED_TOKEN);
 		}
 		catch(JwtException e) {
 			throw new JwtTokenException(AuthenticationErrorMessages.CORRUPTED_TOKEN);
