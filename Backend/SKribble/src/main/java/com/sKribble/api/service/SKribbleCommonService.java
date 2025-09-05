@@ -8,7 +8,10 @@ import com.sKribble.api.database.entity.Project;
 import com.sKribble.api.database.entity.User;
 import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
+import com.sKribble.api.dto.input.common.ChangeOwnershipForm;
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
+import com.sKribble.api.error.exceptions.CRUDExceptions.UserNotFoundException;
+import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.templates.SKribbleServiceTemplate;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
@@ -26,8 +29,28 @@ public class SKribbleCommonService extends SKribbleServiceTemplate{
     }
 
     @Transactional
-    public ResponseEntity<String> changeOwnership(){
-        return ResponseEntityUtil.return200("");
+    public ResponseEntity<String> changeOwnership(ChangeOwnershipForm changeOwnershipForm){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        User newOwner = userRepository.findByIdentification(changeOwnershipForm.newOwnerId());
+
+        if(newOwner == null){
+            throw new UserNotFoundException(AuthenticationErrorMessages.USER_NON_EXISTENT);
+        }
+
+        Project projectToTransferOwnership = projectRepository.findById(changeOwnershipForm.projectId()).orElse(null);
+
+        ProjectEntityUtil.checkExistence(projectToTransferOwnership);
+
+        OwnershipChecker.checkOwnership(invoker, projectToTransferOwnership);
+
+        projectToTransferOwnership.changeOwnerShip(newOwner.getId());
+
+        persistProject(projectToTransferOwnership);
+
+        return ResponseEntityUtil.return200(CRUDSuccessMessages.PROJECT_OWNERSHIP_CHANGE_SUCCESS + newOwner.getUsername());
     }
 
     @Transactional

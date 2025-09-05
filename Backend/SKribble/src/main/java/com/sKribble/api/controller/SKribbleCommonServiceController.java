@@ -3,6 +3,7 @@ package com.sKribble.api.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sKribble.api.dto.input.common.ChangeOwnershipForm;
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
 import com.sKribble.api.service.SKribbleCommonService;
 
@@ -19,6 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class SKribbleCommonServiceController {
 
     private final SKribbleCommonService sKribbleCommonService;
+
+    @PostMapping("/changeOwnership")
+    public ResponseEntity<String> changeOwnership(@RequestBody ChangeOwnershipForm changeOwnershipForm) {
+        return sKribbleCommonService.changeOwnership(changeOwnershipForm);
+    }
+    
 
     @PostMapping("/deleteProject")
     public ResponseEntity<String> deleteProject(@RequestBody DeleteProjectForm deleteProjectForm) {

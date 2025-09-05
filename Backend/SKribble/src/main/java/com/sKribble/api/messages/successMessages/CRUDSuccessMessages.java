@@ -52,5 +52,7 @@ public class CRUDSuccessMessages {
 
 	//==============================================[ Common ]==============================================
 
+	public static final String PROJECT_OWNERSHIP_CHANGE_SUCCESS = "Project ownership has been successfully changed. New owner: ";
+
 	public static final String PROJECT_DELETION_SUCCESS = "Project has been successfully deleted.";
 }

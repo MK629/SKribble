@@ -10,6 +10,7 @@ import com.sKribble.api.error.exceptions.CRUDExceptions.AssetNotOwnedException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ProjectNotFoundException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.UserNotFoundException;
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 import com.sKribble.api.utils.ResponseEntityUtil;
 
@@ -25,6 +26,11 @@ public class SKribbleCommonServiceExceptionHandler {
 	@ExceptionHandler(AssetNotOwnedException.class)
 	public ResponseEntity<String> handleAssetNotOwnedException(AssetNotOwnedException e){
 		return ResponseEntityUtil.return403(e);
+	}
+
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e){
+		return ResponseEntityUtil.return404(e);
 	}
 
 	@ExceptionHandler(ProjectNotFoundException.class)

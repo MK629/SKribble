@@ -45,4 +45,6 @@ public class InputErrorMessages {
 	public static final String REQUIRES_SONG_GENRE = "Song genre is not defined.";
 
 	public static final String INVALID_INPUT = "Input is invalid.";
+
+	public static final String REQUIRES_NEW_OWNER_ID = "A user ID of a new owner is required.";
 }

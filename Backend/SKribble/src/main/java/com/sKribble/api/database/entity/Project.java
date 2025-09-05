@@ -30,7 +30,7 @@ public class Project {
         this.ownerId = ownerId;
     }
 
-    public String changeOwnerShip(String newOwnerId){
-        return null;
+    public void changeOwnerShip(String newOwnerId){
+        this.ownerId = newOwnerId;
     }
 }

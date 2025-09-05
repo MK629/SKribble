@@ -32,7 +32,7 @@ import com.sKribble.api.service.CredentialsService;
 @ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class SKribbleServiceTestTemplate {
+public abstract class SKribbleServiceTestTemplate {
 
     @Autowired
     protected ProjectRepository projectRepository;

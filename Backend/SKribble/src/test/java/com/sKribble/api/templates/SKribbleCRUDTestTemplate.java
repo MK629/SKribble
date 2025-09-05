@@ -23,7 +23,7 @@ import com.sKribble.api.database.repository.ProjectRepository;
 @ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class SKribbleCRUDTestTemplate {
+public abstract class SKribbleCRUDTestTemplate {
 
     @Autowired
     protected ProjectRepository projectRepository;
