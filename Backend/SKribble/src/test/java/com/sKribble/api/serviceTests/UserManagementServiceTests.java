@@ -20,7 +20,7 @@ import com.sKribble.api.templates.SKribbleServiceTestTemplate;
 public class UserManagementServiceTests extends SKribbleServiceTestTemplate{
 
     @Autowired
-    SKribbleUserManagementService sKribbleUserManagementService;
+    private SKribbleUserManagementService sKribbleUserManagementService;
 
     @Test
     @Order(1)

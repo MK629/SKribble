@@ -27,7 +27,7 @@ import com.sKribble.api.templates.SKribbleServiceTestTemplate;
 public class SongServiceTests extends SKribbleServiceTestTemplate{
 
     @Autowired
-    protected SKribbleSongService sKribbleSongService;
+    private SKribbleSongService sKribbleSongService;
 
     @Test
     @Order(1)
