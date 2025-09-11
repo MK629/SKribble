@@ -14,6 +14,7 @@ import com.sKribble.api.constants.SongTestConstants;
 import com.sKribble.api.constants.StoryTestConstants;
 import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.dto.input.common.ChangeOwnershipForm;
+import com.sKribble.api.dto.input.common.DeleteProjectForm;
 import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
@@ -92,6 +93,38 @@ public class CommonServiceTests extends SKribbleServiceTestTemplate{
 
         assertEquals(CRUDSuccessMessages.STORY_TITLE_CHANGE_SUCCESS, sKribbleStoryService.changeStoryTitle(new ChangeStoryTitleForm(storyId, "The Witcher")));
         assertEquals(CRUDSuccessMessages.SONG_EDIT_SUCCESS, sKribbleSongService.editSong(new EditSongForm(songId, "Welcome to the jungle", "Sha-na-na-na-na-na-na-na-na-na-na-na knees")));
+    }
+
+    @Test
+    @Order(2)
+    void deleteProjectTest(){
+        mockLogin(UserTestConstants.TEST_USERNAME);
+
+        makeProjects();
+
+        String storyId = sKribbleStoryService.findStoriesByTitle(new StoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0).id();
+        String songId = sKribbleSongService.findSongsByTitle(new SongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK)).get(0).id();
+
+        //Non-owner tries to delete them.
+        mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
+
+        assertThrows(AssetNotOwnedException.class, () -> sKribbleCommonService.deleteProject(new DeleteProjectForm(storyId)));
+        assertThrows(AssetNotOwnedException.class, () -> sKribbleCommonService.deleteProject(new DeleteProjectForm(songId)));
+
+        //Actual owner deletes them.
+        mockLogin(UserTestConstants.TEST_USERNAME);
+
+        ResponseEntity<String> storyDeleteResponse = sKribbleCommonService.deleteProject(new DeleteProjectForm(storyId));
+        ResponseEntity<String> songDeleteResponse = sKribbleCommonService.deleteProject(new DeleteProjectForm(songId));
+
+        assertAll(() -> {
+            assertEquals(HttpStatus.OK, storyDeleteResponse.getStatusCode());
+            assertEquals(CRUDSuccessMessages.PROJECT_DELETION_SUCCESS, storyDeleteResponse.getBody());
+
+            assertEquals(HttpStatus.OK, songDeleteResponse.getStatusCode());
+            assertEquals(CRUDSuccessMessages.PROJECT_DELETION_SUCCESS, songDeleteResponse.getBody());
+        });
+
     }
 
     private void makeProjects(){
