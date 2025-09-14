@@ -24,8 +24,8 @@ public class SKribbleServiceExceptionHandler extends DataFetcherExceptionResolve
 
     @Override
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
-        if(ex instanceof ConstraintViolationException || ex instanceof UserManagementException || ex instanceof DuplicateChapterException || ex instanceof DuplicateCharacterException 
-            || ex instanceof DuplicateLandmarkException){
+        if(ex instanceof ConstraintViolationException || ex instanceof UserManagementException || ex instanceof DuplicateChapterException 
+        || ex instanceof DuplicateCharacterException || ex instanceof DuplicateLandmarkException){
             return GraphQlErrorUtil.return400(ex);
         }
 

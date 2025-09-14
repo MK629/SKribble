@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.dto.input.userManagement.ChangeUserEmailForm;
+import com.sKribble.api.dto.input.userManagement.ChangeUserPasswordForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUsernameForm;
 import com.sKribble.api.error.exceptions.CRUDExceptions.userManagement.UserManagementException;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
@@ -55,4 +56,18 @@ public class UserManagementServiceTests extends SKribbleServiceTestTemplate{
         assertDoesNotThrow(() -> mockLogin(UserTestConstants.TEST_EMAIL2));
         assertDoesNotThrow(() -> mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME));
     }
+
+    @Test
+    @Order(3)
+    void userPasswordChangeTest(){
+        mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
+
+        ChangeUserPasswordForm changeUserPasswordForm = new ChangeUserPasswordForm(UserTestConstants.TEST_DEFAULT_PASSWORD, UserTestConstants.TEST_OTHER_PASSWORD);
+        ChangeUserPasswordForm wrongChangeUserPasswordForm = new ChangeUserPasswordForm("Oh! Look at me. I'm a dumb user who forgot my password.", UserTestConstants.TEST_OTHER_PASSWORD);
+
+        assertThrows(UserManagementException.class, () -> sKribbleUserManagementService.changeUserPassword(wrongChangeUserPasswordForm));
+        assertEquals(CRUDSuccessMessages.PASSWORD_CHANGE_SUCCESS, sKribbleUserManagementService.changeUserPassword(changeUserPasswordForm));
+        //Need to add more checks. Do later.
+    }
+
 }

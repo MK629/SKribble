@@ -58,12 +58,10 @@ public class SKribbleServiceController {
         return sKribbleUserManagementService.changeUserEmail(changeUserEmailForm);
     }
 
-    //Later
     @MutationMapping
-    public String changeUserPassword(@Valid ChangeUserPasswordForm changeUserPasswordForm){
-        return null;
+    public String changeUserPassword(@Argument("changeUserPasswordForm") @Valid ChangeUserPasswordForm changeUserPasswordForm){
+        return sKribbleUserManagementService.changeUserPassword(changeUserPasswordForm);
     }
-
 
     //=======================================================[ Story ]=======================================================
     

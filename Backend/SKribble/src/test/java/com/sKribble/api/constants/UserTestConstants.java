@@ -12,6 +12,8 @@ public class UserTestConstants {
 
     public static final String TEST_DEFAULT_PASSWORD = "12345";
 
+    public static final String TEST_OTHER_PASSWORD = "123456789";
+
     public static final String TEST_DIFFERENT_USERNAME = "differentTestUser";
 
     public static final String TEST_DIFFERENT_EMAIL = "different@gmail.com";

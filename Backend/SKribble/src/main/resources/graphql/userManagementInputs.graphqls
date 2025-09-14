@@ -5,3 +5,8 @@ input ChangeUsernameForm{
 input ChangeUserEmailForm{
     newUserEmail: String
 }
+
+input ChangeUserPasswordForm{
+    currentPassword: String
+    newPassword: String
+}

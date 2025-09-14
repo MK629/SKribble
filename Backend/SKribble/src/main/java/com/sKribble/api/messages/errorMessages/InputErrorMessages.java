@@ -18,6 +18,8 @@ public class InputErrorMessages {
 	
 	public static final String REQUIRES_PASSWORD = "Please enter your password.";
 
+	public static final String REQUIRES_CURRENT_PASSWORD = "Please enter your current password.";
+
 	public static final String REQUIRES_NEW_PASSWORD = "Please enter your new password.";
 
 	public static final String REQUIRES_PROJECT_ID = "Project ID is empty. Unable to proceed.";

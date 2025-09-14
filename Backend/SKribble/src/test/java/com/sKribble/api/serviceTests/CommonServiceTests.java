@@ -124,7 +124,6 @@ public class CommonServiceTests extends SKribbleServiceTestTemplate{
             assertEquals(HttpStatus.OK, songDeleteResponse.getStatusCode());
             assertEquals(CRUDSuccessMessages.PROJECT_DELETION_SUCCESS, songDeleteResponse.getBody());
         });
-
     }
 
     private void makeProjects(){

@@ -5,6 +5,8 @@ public class AuthenticationErrorMessages {
 	public static final String WRONG_USERNAME = "Incorrect username or password.";
 	
 	public static final String WRONG_EMAIL = "Incorrect E-Mail or password.";
+
+	public static final String WRONG_PASSWORD = "Incorrect password.";
 	
 	public static final String LOGIN_FAILED = "Failed to login.";
 	
