@@ -6,6 +6,7 @@ import com.sKribble.api.database.entity.entityFields.storyFields.Chapter;
 import com.sKribble.api.database.entity.entityFields.storyFields.Landmark;
 import com.sKribble.api.database.entity.entityFields.storyFields.StoryCharacter;
 import com.sKribble.api.database.entity.enums.ProjectTypes;
+import com.sKribble.api.dto.output.common.ProjectOutput;
 
 public record StoryOutput(
     String id,
@@ -15,5 +16,5 @@ public record StoryOutput(
     List<StoryCharacter> characters,
     List<Landmark> landmarks,
     String owner
-) {} 
+) implements ProjectOutput {} 
 

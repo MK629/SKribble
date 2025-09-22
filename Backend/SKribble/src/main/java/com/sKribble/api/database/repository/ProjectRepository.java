@@ -11,6 +11,10 @@ import com.sKribble.api.database.entity.childEntities.Story;
 
 public interface ProjectRepository extends MongoRepository<Project, String>{
 
+    //=================================[ Common ]==================================
+    @Query("{ownerId: ?0}")
+    List<Project> getCurrentUserProjects(String ownerId);
+
     //=================================[ Story ]=================================
 
     @Query("{ $and : [ {'_id' : ?0} , {'type' : 'Story'} ] }")

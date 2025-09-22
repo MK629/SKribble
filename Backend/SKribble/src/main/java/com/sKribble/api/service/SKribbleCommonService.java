@@ -1,5 +1,8 @@
 package com.sKribble.api.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,11 +13,13 @@ import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.common.ChangeOwnershipForm;
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
+import com.sKribble.api.dto.output.common.ProjectOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserNotFoundException;
 import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.templates.SKribbleServiceTemplate;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
+import com.sKribble.api.utils.DTOConverter;
 import com.sKribble.api.utils.OwnershipChecker;
 import com.sKribble.api.utils.ProjectEntityUtil;
 import com.sKribble.api.utils.ResponseEntityUtil;
@@ -26,6 +31,16 @@ public class SKribbleCommonService extends SKribbleServiceTemplate{
     //@Autowired is omitted because there's only one constructor.
     public SKribbleCommonService(ProjectRepository projectRepository, UserRepository userRepository) {
         super(projectRepository, userRepository);
+    }
+
+    public List<ProjectOutput> getCurrentUserProjects(){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        return projectRepository.getCurrentUserProjects(invoker.getId()).stream().map((p) -> {
+            return DTOConverter.getDynamicProjectOutput(p, invoker.getUsername());
+        }).collect(Collectors.toList());
     }
 
     @Transactional
