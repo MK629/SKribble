@@ -2,7 +2,11 @@ package com.sKribble.api.serviceTests;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -21,6 +25,7 @@ import com.sKribble.api.dto.input.song.SongTitleInput;
 import com.sKribble.api.dto.input.story.ChangeStoryTitleForm;
 import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
+import com.sKribble.api.dto.output.common.ProjectOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.AssetNotOwnedException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserNotFoundException;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
@@ -40,9 +45,28 @@ public class CommonServiceTests extends SKribbleServiceTestTemplate{
     @Autowired
     private SKribbleSongService sKribbleSongService;
 
-    
     @Test
     @Order(1)
+    void getCurrentUserProjectsTest(){
+        mockLogin(UserTestConstants.TEST_USERNAME);
+
+        makeProjects();
+
+        List<ProjectOutput> currentUserProjects = sKribbleCommonService.getCurrentUserProjects(1);
+
+        assertFalse(currentUserProjects.isEmpty());
+        assertEquals(2, currentUserProjects.size());
+
+        mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
+
+        List<ProjectOutput> currentUserProjects2 = sKribbleCommonService.getCurrentUserProjects(1);
+
+        assertTrue(currentUserProjects2.isEmpty());
+    }
+
+    
+    @Test
+    @Order(2)
     void changeOwnerShipTest(){
         String DifferenttestUserId = userRepository.findUserByUsernameOrEmail(UserTestConstants.TEST_DIFFERENT_USERNAME).getId();
 
@@ -50,8 +74,8 @@ public class CommonServiceTests extends SKribbleServiceTestTemplate{
 
         makeProjects();
 
-        String storyId = sKribbleStoryService.findStoriesByTitle(new StoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0).id();
-        String songId = sKribbleSongService.findSongsByTitle(new SongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK)).get(0).id();
+        String storyId = sKribbleStoryService.findStoriesByTitle(new StoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0).id();
+        String songId = sKribbleSongService.findSongsByTitle(new SongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).get(0).id();
 
         assertEquals(CRUDSuccessMessages.STORY_TITLE_CHANGE_SUCCESS, sKribbleStoryService.changeStoryTitle(new ChangeStoryTitleForm(storyId, "The Hobbit")));
         assertEquals(CRUDSuccessMessages.SONG_EDIT_SUCCESS, sKribbleSongService.editSong(new EditSongForm(songId, "I wanna rock", "can't remember the lyrics tho..")));
@@ -96,14 +120,14 @@ public class CommonServiceTests extends SKribbleServiceTestTemplate{
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void deleteProjectTest(){
         mockLogin(UserTestConstants.TEST_USERNAME);
 
         makeProjects();
 
-        String storyId = sKribbleStoryService.findStoriesByTitle(new StoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0).id();
-        String songId = sKribbleSongService.findSongsByTitle(new SongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK)).get(0).id();
+        String storyId = sKribbleStoryService.findStoriesByTitle(new StoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0).id();
+        String songId = sKribbleSongService.findSongsByTitle(new SongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).get(0).id();
 
         //Non-owner tries to delete them.
         mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);

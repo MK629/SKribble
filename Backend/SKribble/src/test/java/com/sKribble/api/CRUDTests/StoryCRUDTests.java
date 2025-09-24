@@ -2,13 +2,14 @@ package com.sKribble.api.CRUDTests;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.data.domain.PageRequest;
 
 import com.sKribble.api.constants.StoryTestConstants;
 import com.sKribble.api.database.entity.childEntities.Story;
@@ -35,9 +36,10 @@ public class StoryCRUDTests extends SKribbleCRUDTestTemplate {
         Story testStory = testStoryInstance();
         projectRepository.save(testStory);
 
+
         assertAll(() -> {
             assertNotNull(projectRepository.findStoryById(testStory.getId()));
-            assertNotNull(projectRepository.findStoriesByTitle(StoryTestConstants.STORY_TEST_TITLE));
+            assertFalse(projectRepository.findStoriesByTitle(StoryTestConstants.STORY_TEST_TITLE, PageRequest.of(0, 5)).isEmpty());
         });
     }
 

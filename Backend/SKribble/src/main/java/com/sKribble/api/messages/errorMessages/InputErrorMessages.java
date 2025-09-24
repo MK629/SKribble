@@ -2,6 +2,8 @@ package com.sKribble.api.messages.errorMessages;
 
 public class InputErrorMessages {
 
+	public static final String INVALID_PAGE_INPUT = "Page number input is invalid.";
+
 	public static final String WRONG_EMAIL_FORMAT = "E-Mail format is incorrect.";
 	
 	public static final String DUPLICATE_USERNAME = "This username already exists.";

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.sKribble.api.controller.SKribbleCommonServiceController;
 import com.sKribble.api.error.exceptions.CRUDExceptions.AssetNotOwnedException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
+import com.sKribble.api.error.exceptions.CRUDExceptions.PageNumberException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.ProjectNotFoundException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserNotFoundException;
@@ -21,6 +22,11 @@ public class SKribbleCommonServiceExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<String> handleInputExceptions(MethodArgumentNotValidException e){
 		return ResponseEntityUtil.return400(new RuntimeException(e.getBindingResult().getFieldError() != null ? e.getBindingResult().getFieldError().getDefaultMessage() : InputErrorMessages.INVALID_INPUT));
+	}
+
+	@ExceptionHandler(PageNumberException.class)
+	public ResponseEntity<String> handlePageNumberException(PageNumberException e){
+		return ResponseEntityUtil.return400(e);
 	}
 
 	@ExceptionHandler(AssetNotOwnedException.class)

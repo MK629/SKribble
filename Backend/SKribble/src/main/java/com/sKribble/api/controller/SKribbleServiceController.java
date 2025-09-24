@@ -66,8 +66,8 @@ public class SKribbleServiceController {
     //=======================================================[ Story ]=======================================================
     
     @QueryMapping
-    public List<StoryOutput> findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput){
-        return sKribbleStoryService.findStoriesByTitle(storyTitleInput);
+    public List<StoryOutput> findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput, @Argument("page") Integer page){
+        return sKribbleStoryService.findStoriesByTitle(storyTitleInput, page);
     }
 
     @MutationMapping
@@ -138,8 +138,8 @@ public class SKribbleServiceController {
     //=======================================================[ Song ]======================================================= 
 
     @QueryMapping
-    public List<SongOutput> findSongsByTitle(@Argument("songTitleInput") @Valid SongTitleInput songTitleInput){
-        return sKribbleSongService.findSongsByTitle(songTitleInput);
+    public List<SongOutput> findSongsByTitle(@Argument("songTitleInput") @Valid SongTitleInput songTitleInput, @Argument("page") Integer page){
+        return sKribbleSongService.findSongsByTitle(songTitleInput, page);
     }
 
     @MutationMapping

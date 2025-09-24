@@ -54,9 +54,9 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         mockLogin(UserTestConstants.TEST_USERNAME);
 
         assertEquals(CRUDSuccessMessages.STORY_CREATION_SUCCESS, sKribbleStoryService.newStory(newStoryForm));
-        assertFalse(sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).isEmpty());
+        assertFalse(sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).isEmpty());
 
-        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
         assertEquals(UserTestConstants.TEST_USERNAME, storyOutput.owner());
     }
 
@@ -68,7 +68,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         NewStoryForm newStoryForm = new NewStoryForm(StoryTestConstants.STORY_TEST_TITLE);
         sKribbleStoryService.newStory(newStoryForm);
 
-        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         ChangeStoryTitleForm changeStoryTitleForm = new ChangeStoryTitleForm(storyOutput.id(), StoryTestConstants.STORY_TEST_TITLE2);
         ChangeStoryTitleForm badChangeStoryTitleForm = new ChangeStoryTitleForm("lkqjdksahfkjagsfhj", StoryTestConstants.STORY_TEST_TITLE2);
@@ -82,7 +82,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         assertThrows(ProjectNotFoundException.class, () -> sKribbleStoryService.changeStoryTitle(badChangeStoryTitleForm));
         assertEquals(CRUDSuccessMessages.STORY_TITLE_CHANGE_SUCCESS, sKribbleStoryService.changeStoryTitle(changeStoryTitleForm));
 
-        assertFalse(sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE2)).isEmpty());
+        assertFalse(sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE2), 1).isEmpty());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         NewStoryForm newStoryForm = new NewStoryForm(StoryTestConstants.STORY_TEST_TITLE);
         sKribbleStoryService.newStory(newStoryForm);
 
-        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         AddChapterForm addChapterForm = new AddChapterForm(storyOutput.id(), StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_1, StoryTestConstants.STORY_TEST_CHAPTER_NAME_1, StoryTestConstants.STORY_TEST_NULL_STRING);
         AddChapterForm badAddChapterForm = new AddChapterForm("ajdahjkcbscbashdka", StoryTestConstants.STORY_TEST_CHAPTER_NUMBER_2, StoryTestConstants.STORY_TEST_CHAPTER_NAME_2, StoryTestConstants.STORY_TEST_NULL_STRING);
@@ -128,7 +128,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         NewStoryForm newStoryForm = new NewStoryForm(StoryTestConstants.STORY_TEST_TITLE);
         sKribbleStoryService.newStory(newStoryForm);
 
-        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         AddCharacterForm addCharacterForm = new AddCharacterForm(storyOutput.id(), StoryTestConstants.STORY_TEST_CHARACTER_NAME_1, StoryTestConstants.STORY_TEST_FULL_STRING, StoryTestConstants.STORY_TEST_NULL_STRING);
         AddCharacterForm badAddCharacterForm = new AddCharacterForm("dnwjkerfsbcsan;kh", StoryTestConstants.STORY_TEST_CHARACTER_NAME_2, StoryTestConstants.STORY_TEST_FULL_STRING, StoryTestConstants.STORY_TEST_NULL_STRING);
@@ -140,7 +140,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         assertThrows(ProjectNotFoundException.class, () -> sKribbleStoryService.newCharacter(badAddCharacterForm));
         assertEquals(CRUDSuccessMessages.CHARACTER_CREATION_SUCCESS, sKribbleStoryService.newCharacter(addCharacterForm));
 
-        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         assertFalse(storyOutput2.characters().isEmpty());
 
@@ -171,7 +171,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         NewStoryForm newStoryForm = new NewStoryForm(StoryTestConstants.STORY_TEST_TITLE);
         sKribbleStoryService.newStory(newStoryForm);
 
-        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         AddLandmarkForm addLandmarkForm = new AddLandmarkForm(storyOutput.id(), StoryTestConstants.STORY_TEST_LANDMARK_NAME_1, StoryTestConstants.STORY_TEST_FULL_STRING, StoryTestConstants.STORY_TEST_NULL_STRING);
         AddLandmarkForm badAddLandmarkForm = new AddLandmarkForm("dkasjflkcajsfaslcksamclkjfoipew", StoryTestConstants.STORY_TEST_LANDMARK_NAME_2, StoryTestConstants.STORY_TEST_FULL_STRING, StoryTestConstants.STORY_TEST_NULL_STRING);
@@ -183,7 +183,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         assertThrows(ProjectNotFoundException.class, () -> sKribbleStoryService.newLandmark(badAddLandmarkForm));
         assertEquals(CRUDSuccessMessages.LANDMARK_CREATION_SUCCESS, sKribbleStoryService.newLandmark(addLandmarkForm));
 
-        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         assertFalse(storyOutput2.landmarks().isEmpty());
 
@@ -218,7 +218,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         NewStoryForm newStoryForm = new NewStoryForm(StoryTestConstants.STORY_TEST_TITLE);
         sKribbleStoryService.newStory(newStoryForm);
 
-        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         AddCharacterForm John_Doe = new AddCharacterForm(storyOutput.id(), StoryTestConstants.JOHN_DOE, null, null);
         AddCharacterForm John_Dean = new AddCharacterForm(storyOutput.id(), StoryTestConstants.JOHN_DEAN, null, null);
@@ -247,7 +247,7 @@ public class StoryServiceTests extends SKribbleServiceTestTemplate{
         sKribbleStoryService.newChapter(Both_Johns_at_home);
         sKribbleStoryService.newChapter(A_John_Doing_Something);
 
-        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE)).get(0);
+        StoryOutput storyOutput2 = sKribbleStoryService.findStoriesByTitle(makeStoryTitleInput(StoryTestConstants.STORY_TEST_TITLE), 1).get(0);
 
         StoryCharacter John_Doe_character = storyOutput2.characters().get(0);
         StoryCharacter John_Dean_character = storyOutput2.characters().get(1);

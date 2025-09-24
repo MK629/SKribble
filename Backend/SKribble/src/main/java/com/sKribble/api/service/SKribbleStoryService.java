@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,8 @@ import com.sKribble.api.dto.input.story.EditLandmarkForm;
 import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.output.story.StoryOutput;
+import com.sKribble.api.error.exceptions.CRUDExceptions.PageNumberException;
+import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.templates.SKribbleServiceTemplate;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
@@ -47,8 +50,12 @@ public class SKribbleStoryService extends SKribbleServiceTemplate{
         super(projectRepository, userRepository);
     }
 
-    public List<StoryOutput> findStoriesByTitle(StoryTitleInput storyTitleInput){
-        return projectRepository.findStoriesByTitle(storyTitleInput.title())
+    public List<StoryOutput> findStoriesByTitle(StoryTitleInput storyTitleInput, Integer page){
+        if(page < 1){
+            throw new PageNumberException(InputErrorMessages.INVALID_PAGE_INPUT);
+        }
+
+        return projectRepository.findStoriesByTitle(storyTitleInput.title(), PageRequest.of(page - 1, 5))
         .stream()
         .map((story) -> {
             User owner = userRepository.findByIdentification(story.getOwnerId());

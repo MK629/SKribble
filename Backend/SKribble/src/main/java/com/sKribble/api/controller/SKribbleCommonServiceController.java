@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -25,9 +26,9 @@ public class SKribbleCommonServiceController {
 
     private final SKribbleCommonService sKribbleCommonService;
     
-    @GetMapping("/getCurrentUserProjects")
-    public List<ProjectOutput> getCurrentUserProjects() {
-        return sKribbleCommonService.getCurrentUserProjects();
+    @GetMapping("/getCurrentUserProjects/{page}")
+    public List<ProjectOutput> getCurrentUserProjects(@PathVariable("page") Integer page) {
+        return sKribbleCommonService.getCurrentUserProjects(page);
     }
 
     @PostMapping("/changeOwnership")

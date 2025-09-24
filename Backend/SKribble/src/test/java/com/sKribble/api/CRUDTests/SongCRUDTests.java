@@ -2,11 +2,14 @@ package com.sKribble.api.CRUDTests;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
+
 import com.sKribble.api.constants.SongTestConstants;
 import com.sKribble.api.database.entity.childEntities.Song;
 import com.sKribble.api.database.entity.defaults.SongDefaultContents;
@@ -30,7 +33,7 @@ public class SongCRUDTests extends SKribbleCRUDTestTemplate {
 
         assertAll(() -> {
             assertNotNull(projectRepository.findSongById(rockSong.getId()));
-            assertNotNull(projectRepository.findSongsByTitle(SongTestConstants.SONG_TEST_TITLE_ROCK));
+            assertFalse(projectRepository.findSongsByTitle(SongTestConstants.SONG_TEST_TITLE_ROCK, PageRequest.of(0, 5)).isEmpty());
         });
     }
 

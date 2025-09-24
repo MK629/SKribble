@@ -2,6 +2,7 @@ package com.sKribble.api.database.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -13,7 +14,7 @@ public interface ProjectRepository extends MongoRepository<Project, String>{
 
     //=================================[ Common ]==================================
     @Query("{ownerId: ?0}")
-    List<Project> getCurrentUserProjects(String ownerId);
+    List<Project> getCurrentUserProjects(String ownerId, Pageable pageable);
 
     //=================================[ Story ]=================================
 
@@ -21,7 +22,7 @@ public interface ProjectRepository extends MongoRepository<Project, String>{
     Story findStoryById(String id);
     
     @Query("{ $and : [ {'title' : {$regex: ?0, $options: 'i'}} , {'type' : 'Story'} ] }")
-    List<Story> findStoriesByTitle(String title);
+    List<Story> findStoriesByTitle(String title, Pageable pageable);
 
     //=================================[ Song ]=================================
 
@@ -29,5 +30,5 @@ public interface ProjectRepository extends MongoRepository<Project, String>{
     Song findSongById(String id);
 
     @Query("{ $and: [ {'title' : {$regex: ?0, $options: 'i'}} , {'type' : 'Song'} ] }")
-    List<Song> findSongsByTitle(String title);
+    List<Song> findSongsByTitle(String title, Pageable pageable);
 }
