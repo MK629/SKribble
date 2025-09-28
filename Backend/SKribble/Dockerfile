@@ -23,10 +23,11 @@ FROM openjdk:21
 
 WORKDIR /SKRIBBLE_BACKEND
 
-ARG APP_NAME=SKribble.jar
+ARG APP_NAME=SKribble
+ENV APP_NAME_JAR=${APP_NAME}.jar
 
-COPY /target/*.jar ${APP_NAME}
+COPY target/*.jar ${APP_NAME}.jar
 
 EXPOSE 8080
 
-ENTRYPOINT [ "java", "-jar", ${APP_NAME} ]
+ENTRYPOINT ["sh", "-c", "java -jar ${APP_NAME_JAR}"]
