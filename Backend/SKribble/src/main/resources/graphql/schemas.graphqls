@@ -1,6 +1,6 @@
 type Query{
-	findStoriesByTitle(storyTitleInput: StoryTitleInput!, page: Int!) : [StoryOutput]
-	findSongsByTitle(songTitleInput: SongTitleInput!, page: Int!) : [SongOutput]
+	findStoriesByTitle(storyTitleInput: StoryTitleInput!, page: Int!) : StoryListOutput
+	findSongsByTitle(songTitleInput: SongTitleInput!, page: Int!) : SongListOutput
 }
 
 type Mutation{

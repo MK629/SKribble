@@ -29,3 +29,8 @@ type StoryOutput{
     landmarks: [Landmark]
     owner: String
 }
+
+type StoryListOutput{
+    storyList: [StoryOutput]
+    hasNext: Boolean
+}

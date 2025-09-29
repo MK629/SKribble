@@ -3,6 +3,7 @@ package com.sKribble.api.utils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.sKribble.api.dto.output.common.ProjectListOutput;
 import com.sKribble.api.dto.output.credentials.TokenCarrier;
 
 import lombok.extern.log4j.Log4j2;
@@ -18,6 +19,10 @@ public class ResponseEntityUtil {
 	//Success responses
 	public static ResponseEntity<String> return200(String message){
 		return buildSuccessResponseEntity(message, HttpStatus.OK);
+	}
+
+	public static ResponseEntity<ProjectListOutput> returnObject(ProjectListOutput projectListOutput){
+		return new ResponseEntity<ProjectListOutput>(projectListOutput, HttpStatus.OK);
 	}
 	
 	public static ResponseEntity<String> return201(String message){

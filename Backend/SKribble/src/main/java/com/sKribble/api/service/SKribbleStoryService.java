@@ -1,9 +1,9 @@
 package com.sKribble.api.service;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ import com.sKribble.api.dto.input.story.EditCharacterForm;
 import com.sKribble.api.dto.input.story.EditLandmarkForm;
 import com.sKribble.api.dto.input.story.NewStoryForm;
 import com.sKribble.api.dto.input.story.StoryTitleInput;
-import com.sKribble.api.dto.output.story.StoryOutput;
+import com.sKribble.api.dto.output.story.StoryListOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PageNumberException;
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
@@ -50,18 +50,22 @@ public class SKribbleStoryService extends SKribbleServiceTemplate{
         super(projectRepository, userRepository);
     }
 
-    public List<StoryOutput> findStoriesByTitle(StoryTitleInput storyTitleInput, Integer page){
+    public StoryListOutput findStoriesByTitle(StoryTitleInput storyTitleInput, Integer page){
         if(page < 1){
             throw new PageNumberException(InputErrorMessages.INVALID_PAGE_INPUT);
         }
 
-        return projectRepository.findStoriesByTitle(storyTitleInput.title(), PageRequest.of(page - 1, 5))
-        .stream()
-        .map((story) -> {
-            User owner = userRepository.findByIdentification(story.getOwnerId());
-            return DTOConverter.getStoryOutput(story, (owner == null) ? ProjectDefaultContents.DELETED_USER : owner.getUsername());
-        })
-        .collect(Collectors.toList());
+        Page<Story> storyList = projectRepository.findStoriesByTitle(storyTitleInput.title(), PageRequest.of(page - 1, 5));
+
+        return DTOConverter.getStoryListOutput(
+            storyList.stream()
+            .map((story) -> {
+                User owner = userRepository.findByIdentification(story.getOwnerId());
+                return DTOConverter.getStoryOutput(story, (owner == null) ? ProjectDefaultContents.DELETED_USER : owner.getUsername());
+            })
+            .collect(Collectors.toList()), 
+            storyList.hasNext()
+        );
     }
 
     @Transactional

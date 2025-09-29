@@ -7,3 +7,8 @@ type SongOutput{
     sheetMusicImageUrl: String
     owner: String
 }
+
+type SongListOutput{
+    songList: [SongOutput]
+    hasNext: Boolean
+}

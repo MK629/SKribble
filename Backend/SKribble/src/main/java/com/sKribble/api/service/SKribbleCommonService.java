@@ -1,8 +1,7 @@
 package com.sKribble.api.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import com.sKribble.api.database.repository.ProjectRepository;
 import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.common.ChangeOwnershipForm;
 import com.sKribble.api.dto.input.common.DeleteProjectForm;
-import com.sKribble.api.dto.output.common.ProjectOutput;
+import com.sKribble.api.dto.output.common.ProjectListOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PageNumberException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.UserNotFoundException;
 import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
@@ -36,7 +35,7 @@ public class SKribbleCommonService extends SKribbleServiceTemplate{
         super(projectRepository, userRepository);
     }
 
-    public List<ProjectOutput> getCurrentUserProjects(Integer page){
+    public ResponseEntity<ProjectListOutput> getCurrentUserProjects(Integer page){
         if(page < 1){
             throw new PageNumberException(InputErrorMessages.INVALID_PAGE_INPUT);
         }
@@ -45,9 +44,9 @@ public class SKribbleCommonService extends SKribbleServiceTemplate{
 
         CurrentUserInfoUtil.checkExistence(invoker);
 
-        return projectRepository.getCurrentUserProjects(invoker.getId(), PageRequest.of(page - 1, 5)).stream().map((p) -> {
-            return DTOConverter.getDynamicProjectOutput(p, invoker.getUsername());
-        }).collect(Collectors.toList());
+        Page<Project> projectList = projectRepository.getCurrentUserProjects(invoker.getId(), PageRequest.of(page - 1, 5));
+
+        return ResponseEntityUtil.returnObject(DTOConverter.getProjectListOutput(projectList, invoker.getUsername()));
     }
 
     @Transactional

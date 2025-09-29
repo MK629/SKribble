@@ -41,9 +41,9 @@ public class SongServiceTests extends SKribbleServiceTestTemplate{
 
         //After logging in
         assertEquals(CRUDSuccessMessages.SONG_CREATION_SUCCESS, sKribbleSongService.newSong(newSongForm));
-        assertFalse(sKribbleSongService.findSongsByTitle(makeSongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).isEmpty());
+        assertFalse(sKribbleSongService.findSongsByTitle(makeSongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).songList().isEmpty());
 
-        SongOutput songOutput = sKribbleSongService.findSongsByTitle(makeSongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).get(0);
+        SongOutput songOutput = sKribbleSongService.findSongsByTitle(makeSongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).songList().get(0);
         assertEquals(UserTestConstants.TEST_USERNAME, songOutput.owner());
     }
 
@@ -56,7 +56,7 @@ public class SongServiceTests extends SKribbleServiceTestTemplate{
 
         sKribbleSongService.newSong(newSongForm);
 
-        SongOutput songOutput = sKribbleSongService.findSongsByTitle(makeSongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).get(0);
+        SongOutput songOutput = sKribbleSongService.findSongsByTitle(makeSongTitleInput(SongTestConstants.SONG_TEST_TITLE_ROCK), 1).songList().get(0);
 
         EditSongForm editSongForm = new EditSongForm(songOutput.id(), SongTestConstants.SONG_TEST_TITLE_COUNTRY, SongTestConstants.SONG_TEST_EMPTY_STRING);
         ChangeSongSheetMusicImageForm changeSongSheetMusicImageForm = new ChangeSongSheetMusicImageForm(songOutput.id(), SongTestConstants.SONG_TEST_EMPTY_STRING);

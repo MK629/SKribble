@@ -1,8 +1,8 @@
 package com.sKribble.api.service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import com.sKribble.api.dto.input.song.ChangeSongSheetMusicImageForm;
 import com.sKribble.api.dto.input.song.EditSongForm;
 import com.sKribble.api.dto.input.song.NewSongForm;
 import com.sKribble.api.dto.input.song.SongTitleInput;
-import com.sKribble.api.dto.output.song.SongOutput;
+import com.sKribble.api.dto.output.song.SongListOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PageNumberException;
 import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
@@ -37,16 +37,21 @@ public class SKribbleSongService extends SKribbleServiceTemplate{
         super(projectRepository, userRepository);
     }
 
-    public List<SongOutput> findSongsByTitle(SongTitleInput songTitleInput, Integer page){
+    public SongListOutput findSongsByTitle(SongTitleInput songTitleInput, Integer page){
         if(page < 1){
             throw new PageNumberException(InputErrorMessages.INVALID_PAGE_INPUT);
         }
 
-        return projectRepository.findSongsByTitle(songTitleInput.title(), PageRequest.of(page - 1, 5)).stream()
-        .map((song) -> {
-            User owner = userRepository.findByIdentification(song.getOwnerId());
-            return DTOConverter.getSongOutput(song, (owner == null) ? ProjectDefaultContents.DELETED_USER : owner.getUsername());
-        }).collect(Collectors.toList());
+        Page<Song> songList = projectRepository.findSongsByTitle(songTitleInput.title(), PageRequest.of(page - 1, 5));
+
+        return DTOConverter.getSongListOutput(
+            songList.stream()
+            .map((song) -> {
+                User owner = userRepository.findByIdentification(song.getOwnerId());
+                return DTOConverter.getSongOutput(song, (owner == null) ? ProjectDefaultContents.DELETED_USER : owner.getUsername());
+            }).collect(Collectors.toList()), 
+            songList.hasNext()
+        );
     }
 
     @Transactional

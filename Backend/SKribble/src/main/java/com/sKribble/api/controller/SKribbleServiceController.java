@@ -1,7 +1,5 @@
 package com.sKribble.api.controller;
 
-import java.util.List;
-
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -29,8 +27,8 @@ import com.sKribble.api.dto.input.story.StoryTitleInput;
 import com.sKribble.api.dto.input.userManagement.ChangeUserEmailForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUserPasswordForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUsernameForm;
-import com.sKribble.api.dto.output.song.SongOutput;
-import com.sKribble.api.dto.output.story.StoryOutput;
+import com.sKribble.api.dto.output.song.SongListOutput;
+import com.sKribble.api.dto.output.story.StoryListOutput;
 import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.service.SKribbleStoryService;
 import com.sKribble.api.service.SKribbleUserManagementService;
@@ -66,7 +64,7 @@ public class SKribbleServiceController {
     //=======================================================[ Story ]=======================================================
     
     @QueryMapping
-    public List<StoryOutput> findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput, @Argument("page") Integer page){
+    public StoryListOutput findStoriesByTitle(@Argument("storyTitleInput") @Valid StoryTitleInput storyTitleInput, @Argument("page") Integer page){
         return sKribbleStoryService.findStoriesByTitle(storyTitleInput, page);
     }
 
@@ -138,7 +136,7 @@ public class SKribbleServiceController {
     //=======================================================[ Song ]======================================================= 
 
     @QueryMapping
-    public List<SongOutput> findSongsByTitle(@Argument("songTitleInput") @Valid SongTitleInput songTitleInput, @Argument("page") Integer page){
+    public SongListOutput findSongsByTitle(@Argument("songTitleInput") @Valid SongTitleInput songTitleInput, @Argument("page") Integer page){
         return sKribbleSongService.findSongsByTitle(songTitleInput, page);
     }
 
