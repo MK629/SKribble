@@ -43,6 +43,7 @@ public class CommonServiceTests extends SKribbleServiceTestTemplate{
     @Autowired
     private SKribbleSongService sKribbleSongService;
 
+    @SuppressWarnings("null")
     @Test
     @Order(1)
     void getCurrentUserProjectsTest(){

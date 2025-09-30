@@ -46,7 +46,7 @@ public class SKribbleCommonService extends SKribbleServiceTemplate{
 
         Page<Project> projectList = projectRepository.getCurrentUserProjects(invoker.getId(), PageRequest.of(page - 1, 5));
 
-        return ResponseEntityUtil.returnObject(DTOConverter.getProjectListOutput(projectList, invoker.getUsername()));
+        return ResponseEntityUtil.returnProjectListOutput(DTOConverter.getProjectListOutput(projectList, invoker.getUsername()));
     }
 
     @Transactional

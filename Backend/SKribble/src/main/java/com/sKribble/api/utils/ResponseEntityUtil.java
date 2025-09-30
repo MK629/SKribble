@@ -21,7 +21,7 @@ public class ResponseEntityUtil {
 		return buildSuccessResponseEntity(message, HttpStatus.OK);
 	}
 
-	public static ResponseEntity<ProjectListOutput> returnObject(ProjectListOutput projectListOutput){
+	public static ResponseEntity<ProjectListOutput> returnProjectListOutput(ProjectListOutput projectListOutput){
 		return new ResponseEntity<ProjectListOutput>(projectListOutput, HttpStatus.OK);
 	}
 	
