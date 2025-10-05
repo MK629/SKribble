@@ -1,6 +1,6 @@
 const page = () => {
   return (
-    <div>root</div>
+    <div>home</div>
   )
 }
 
