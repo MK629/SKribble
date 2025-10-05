@@ -1,6 +1,6 @@
 const page = () => {
   return (
-    <div>I'm home alone. Come and get me.</div>
+    <div>I'm home alone. Come and get me. HAHA!</div>
   )
 }
 
