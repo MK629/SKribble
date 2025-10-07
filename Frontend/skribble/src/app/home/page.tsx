@@ -1,6 +1,8 @@
+import React from 'react'
+
 const page = () => {
   return (
-    <div>{`I'm home alone. Come and get me. HAHA!`}</div>
+    <div>home</div>
   )
 }
 
