@@ -1,4 +1,5 @@
 type Query{
+	getCurrentUserInfo : UserInfoOutput
 	findStoriesByTitle(storyTitleInput: StoryTitleInput!, page: Int!) : StoryListOutput
 	findSongsByTitle(songTitleInput: SongTitleInput!, page: Int!) : SongListOutput
 }

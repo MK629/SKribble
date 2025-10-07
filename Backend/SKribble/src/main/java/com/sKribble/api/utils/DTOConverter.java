@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 
 import com.sKribble.api.database.entity.Project;
+import com.sKribble.api.database.entity.User;
 import com.sKribble.api.database.entity.childEntities.Song;
 import com.sKribble.api.database.entity.childEntities.Story;
 import com.sKribble.api.dto.output.common.ProjectListOutput;
@@ -15,12 +16,17 @@ import com.sKribble.api.dto.output.song.SongListOutput;
 import com.sKribble.api.dto.output.song.SongOutput;
 import com.sKribble.api.dto.output.story.StoryListOutput;
 import com.sKribble.api.dto.output.story.StoryOutput;
+import com.sKribble.api.dto.output.userManagement.UserInfoOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.IllogicalNullException;
 
 /**
  * A util class that takes data from the entites extracted from the DAOs and converts them into DTOs.
  */
 public class DTOConverter {
+
+    public static UserInfoOutput getUserInfoOutput(User user){
+        return new UserInfoOutput(user.getId(), user.getUsername(), user.getEmail());
+    }
 
     public static ProjectListOutput getProjectListOutput(Page<Project> projectList, String owner){
         return new ProjectListOutput(

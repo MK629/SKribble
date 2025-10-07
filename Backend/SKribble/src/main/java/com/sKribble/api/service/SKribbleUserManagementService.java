@@ -15,6 +15,7 @@ import com.sKribble.api.database.repository.UserRepository;
 import com.sKribble.api.dto.input.userManagement.ChangeUserEmailForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUserPasswordForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUsernameForm;
+import com.sKribble.api.dto.output.userManagement.UserInfoOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.PersistenceErrorException;
 import com.sKribble.api.error.exceptions.CRUDExceptions.userManagement.UserManagementException;
 import com.sKribble.api.messages.errorMessages.AuthenticationErrorMessages;
@@ -23,6 +24,7 @@ import com.sKribble.api.messages.errorMessages.InputErrorMessages;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.templates.SKribbleServiceTemplate;
 import com.sKribble.api.utils.CurrentUserInfoUtil;
+import com.sKribble.api.utils.DTOConverter;
 
 @Service
 public class SKribbleUserManagementService extends SKribbleServiceTemplate{
@@ -35,6 +37,14 @@ public class SKribbleUserManagementService extends SKribbleServiceTemplate{
         super(projectRepository, userRepository);
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public UserInfoOutput getCurrentUserInfo(){
+        User invoker = getInvoker();
+
+        CurrentUserInfoUtil.checkExistence(invoker);
+
+        return DTOConverter.getUserInfoOutput(invoker);
     }
 
     public String changeUserName(ChangeUsernameForm changeUsernameForm){

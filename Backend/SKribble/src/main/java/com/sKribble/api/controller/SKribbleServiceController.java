@@ -29,6 +29,7 @@ import com.sKribble.api.dto.input.userManagement.ChangeUserPasswordForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUsernameForm;
 import com.sKribble.api.dto.output.song.SongListOutput;
 import com.sKribble.api.dto.output.story.StoryListOutput;
+import com.sKribble.api.dto.output.userManagement.UserInfoOutput;
 import com.sKribble.api.service.SKribbleSongService;
 import com.sKribble.api.service.SKribbleStoryService;
 import com.sKribble.api.service.SKribbleUserManagementService;
@@ -45,6 +46,11 @@ public class SKribbleServiceController {
     private final SKribbleUserManagementService sKribbleUserManagementService;
 
     //=======================================================[ User Management ]=======================================================
+
+    @QueryMapping
+    public UserInfoOutput getCurrentUserInfo(){
+        return sKribbleUserManagementService.getCurrentUserInfo();
+    }
 
     @MutationMapping
     public String changeUserName(@Argument("changeUsernameForm") @Valid ChangeUsernameForm changeUsernameForm){

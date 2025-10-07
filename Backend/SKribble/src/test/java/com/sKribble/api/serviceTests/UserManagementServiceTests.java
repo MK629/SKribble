@@ -1,7 +1,9 @@
 package com.sKribble.api.serviceTests;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Order;
@@ -13,6 +15,7 @@ import com.sKribble.api.constants.UserTestConstants;
 import com.sKribble.api.dto.input.userManagement.ChangeUserEmailForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUserPasswordForm;
 import com.sKribble.api.dto.input.userManagement.ChangeUsernameForm;
+import com.sKribble.api.dto.output.userManagement.UserInfoOutput;
 import com.sKribble.api.error.exceptions.CRUDExceptions.userManagement.UserManagementException;
 import com.sKribble.api.messages.successMessages.CRUDSuccessMessages;
 import com.sKribble.api.service.SKribbleUserManagementService;
@@ -25,6 +28,42 @@ public class UserManagementServiceTests extends SKribbleServiceTestTemplate{
 
     @Test
     @Order(1)
+    void userInfoCallTest(){
+        //Login with correct username
+        mockLogin(UserTestConstants.TEST_USERNAME);
+
+        UserInfoOutput userInfoOutput = sKribbleUserManagementService.getCurrentUserInfo();
+
+        assertAll(() -> {
+            assertEquals(UserTestConstants.TEST_USERNAME, userInfoOutput.Username());
+            assertEquals(UserTestConstants.TEST_EMAIL, userInfoOutput.Email());
+        });
+
+        //Login with correct E-Mail
+        mockLogin(UserTestConstants.TEST_USERNAME);
+
+        UserInfoOutput userInfoOutput2 = sKribbleUserManagementService.getCurrentUserInfo();
+
+        assertAll(() -> {
+            assertEquals(UserTestConstants.TEST_USERNAME, userInfoOutput2.Username());
+            assertEquals(UserTestConstants.TEST_EMAIL, userInfoOutput2.Email());
+        });
+
+        //Another user
+        mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
+
+        UserInfoOutput userInfoOutput3 = sKribbleUserManagementService.getCurrentUserInfo();
+
+        assertAll(() -> {
+            assertNotEquals(UserTestConstants.TEST_USERNAME, userInfoOutput3.Username());
+            assertNotEquals(UserTestConstants.TEST_EMAIL, userInfoOutput3.Email());
+            assertEquals(UserTestConstants.TEST_DIFFERENT_USERNAME, userInfoOutput3.Username());
+            assertEquals(UserTestConstants.TEST_DIFFERENT_EMAIL, userInfoOutput3.Email());
+        });
+    }
+
+    @Test
+    @Order(2)
     void userNameChangeTest(){
         mockLogin(UserTestConstants.TEST_USERNAME);
 
@@ -41,7 +80,7 @@ public class UserManagementServiceTests extends SKribbleServiceTestTemplate{
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void userEmailChangeTest(){
         mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
 
@@ -58,7 +97,7 @@ public class UserManagementServiceTests extends SKribbleServiceTestTemplate{
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void userPasswordChangeTest(){
         mockLogin(UserTestConstants.TEST_DIFFERENT_USERNAME);
 

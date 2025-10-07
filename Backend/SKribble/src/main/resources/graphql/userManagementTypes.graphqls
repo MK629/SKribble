@@ -1,0 +1,5 @@
+type UserInfoOutput{
+    Id: String
+    Username: String
+    Email: String
+}
