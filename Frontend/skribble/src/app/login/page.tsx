@@ -1,10 +1,9 @@
-'use client'
-import { saveToken } from "@/server-actions/cookie-jar"
+import LoginPage from "@/components/login/LoginPage"
 
 const page = () => {
   return (
     <div>
-      <button onClick={() => {saveToken("token")}}>login</button>
+      <LoginPage/>
     </div>
   )
 }
