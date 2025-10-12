@@ -1,6 +1,8 @@
 'use server'
 
-export const unauthenticatedFetch = async (endpoint: string | undefined, jsonBody: any) : Promise<Response> => {
+import { JsonRequestBody } from "@/constants/request-dtos";
+
+export const unauthenticatedFetch = async (endpoint: string | undefined, jsonBody: JsonRequestBody) => {
     try {
         const response = await fetch(`${process.env.SKRIBBLE_BACKEND_BASE_URL}${endpoint}`, {
         method: 'POST',

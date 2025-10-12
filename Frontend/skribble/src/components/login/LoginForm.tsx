@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Feather, MailIcon, UserIcon } from "lucide-react";
-import { IconLock, IconRefresh, IconSwitch } from "@tabler/icons-react";
+import { IconLock, IconRefresh } from "@tabler/icons-react";
 import { loginAction } from "@/server-actions/credentials-actions";
 
 const LoginForm = () => {
