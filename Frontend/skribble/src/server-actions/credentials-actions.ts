@@ -2,8 +2,9 @@
 
 import { LoginTypes, tokenKey } from "@/constants/system-constants";
 import { cookies } from "next/headers";
-import { EmailLoginForm, UsernameLoginForm } from "@/constants/request-dtos";
-import { unauthenticatedFetch } from "./request-makers";
+import { EmailLoginForm, JsonRequestBody, UsernameLoginForm } from "@/constants/request-dtos";
+import { unauthenticatedFetch } from "./request-actions";
+import { TokenCarrier } from "@/constants/response-dtos";
 
 export const getToken = async () : Promise<string | undefined> => {
     const cookieJar = await cookies();
@@ -15,9 +16,8 @@ export const saveToken = async (token: string) => {
     cookieJar.set(tokenKey, token, {secure: true});
 }
 
-export const loginAction = async (data: FormData, loginType: LoginTypes) : Promise<Response> => {
-    console.log("calling server action")
-    let loginForm;
+export const loginAction = async (data: FormData, loginType: LoginTypes) : Promise<TokenCarrier> => {
+    let loginForm : JsonRequestBody;
     let endpoint: string | undefined;
 
     if(loginType === LoginTypes.Username){
@@ -35,5 +35,5 @@ export const loginAction = async (data: FormData, loginType: LoginTypes) : Promi
         } as EmailLoginForm;
     }
 
-    return unauthenticatedFetch(endpoint, loginForm);
+    return unauthenticatedFetch(endpoint, loginForm) as Promise<TokenCarrier>;
 }

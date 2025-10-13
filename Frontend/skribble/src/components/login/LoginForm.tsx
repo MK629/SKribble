@@ -1,7 +1,7 @@
 'use client'
 
 import { LoginTypes } from "@/constants/system-constants";
-import { FormEvent, useState } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -13,23 +13,27 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Feather, MailIcon, UserIcon } from "lucide-react";
-import { IconLock, IconRefresh } from "@tabler/icons-react";
-import { loginAction } from "@/server-actions/credentials-actions";
+import { IconEye, IconEyeClosed, IconLock, IconRefresh } from "@tabler/icons-react";
+import { loginAction, saveToken } from "@/server-actions/credentials-actions";
+import { useRouter } from "next/navigation";
+import { TokenCarrier } from "@/constants/response-dtos";
 
 const LoginForm = () => {
 
   const [loginType, setLoginType] = useState<LoginTypes>(LoginTypes.Username);
+  const [seePassword, setSeePassword] = useState<boolean>(false);
+  const router = useRouter()
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    loginAction(data, loginType);
+  const handleLoginCompletion = async (response: TokenCarrier) => {
+    await saveToken(response?.token || "");
+    window.alert(response?.message)
+    router.push("/home")
   }
 
   return (
     <div>
-      <form onSubmit={(e) => {handleLogin(e)}} className="w-full max-w-md space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
-        <h2 className="flex gap-1 justify-center text-2xl font-bold text-center text-gray-900 dark:text-white">
+      <form action={(data) => {loginAction(data, loginType).then((response) => {handleLoginCompletion(response)}).catch(e => window.alert(e.message))}} className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
+        <h2 className="flex gap-1 justify-center text-2xl font-bold text-center text-gray-900">
             Welcome <Feather/>
         </h2>
         <div className="flex gap-1">
@@ -57,11 +61,14 @@ const LoginForm = () => {
         </div>
 
         <div className="flex gap-1">
-          <label htmlFor="password" className="flex text-sm font-bold my-auto"><IconLock/>:</label>
-          <input type="password" placeholder={`Enter your password.`} name="password" className="px-4 py-1 border text-sm border-gray-300 rounded-md shadow-sm focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"/>
+          <label htmlFor="password" className="flex font-bold my-auto"><IconLock/>:</label>
+          <input type={seePassword ? 'text' : 'password'} placeholder={`Enter your password.`} name="password" className="px-4 py-1 border text-sm border-gray-300 rounded-md shadow-sm focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"/>
+          <Button type="button" onClick={() => setSeePassword(!seePassword)} size={"sm"}>{seePassword ? <IconEye/> : <IconEyeClosed/>}</Button>
         </div>
 
-        <button type="submit">Login</button>
+        <div className="flex">
+          <Button type="submit" className="mx-auto">Login</Button>
+        </div>
       </form>
     </div>
   )
