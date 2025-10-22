@@ -34,14 +34,15 @@ const LoginForm = () => {
   return (
     <div>
       <form action={(data) => {
-        const loadingToast = toast.loading("Authenticating..."); 
+        const loadingToast = toast.loading("Authenticating...");
         loginAction(data, loginType)
         .then((response) => {
           toast.dismiss(loadingToast); 
           handleLoginCompletion(response)})
           .catch(e => {
-            toast.dismiss(loadingToast); 
-            toast.error(e.message)
+            toast.dismiss(loadingToast);
+            const error = e.message;
+            toast.error(error)
           });
         }}
         className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
