@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const layout = ({children}: Readonly<{children: React.ReactNode}>) => {
@@ -8,6 +9,7 @@ const layout = ({children}: Readonly<{children: React.ReactNode}>) => {
       </head>
       <body>
         {children}
+        <Toaster position="top-center" toastOptions={{style: {fontSize: "12px", padding: "8px 12px"}}}/>
       </body>
     </html>
   );

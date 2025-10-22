@@ -17,6 +17,7 @@ import { IconEye, IconEyeClosed, IconLock, IconRefresh } from "@tabler/icons-rea
 import { loginAction, saveToken } from "@/server-actions/credentials-actions";
 import { useRouter } from "next/navigation";
 import { TokenCarrier } from "@/constants/response-dtos";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
 
@@ -26,13 +27,24 @@ const LoginForm = () => {
 
   const handleLoginCompletion = async (response: TokenCarrier) => {
     await saveToken(response?.token || "");
-    window.alert(response?.message)
+    toast.success(response?.message)
     router.push("/home")
   }
 
   return (
     <div>
-      <form action={(data) => {loginAction(data, loginType).then((response) => {handleLoginCompletion(response)}).catch(e => window.alert(e.message))}} className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
+      <form action={(data) => {
+        const loadingToast = toast.loading("Authenticating..."); 
+        loginAction(data, loginType)
+        .then((response) => {
+          toast.dismiss(loadingToast); 
+          handleLoginCompletion(response)})
+          .catch(e => {
+            toast.dismiss(loadingToast); 
+            toast.error(e.message)
+          });
+        }}
+        className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
         <h2 className="flex gap-1 justify-center text-2xl font-bold text-center text-gray-900">
             Welcome <Feather/>
         </h2>
@@ -48,13 +60,13 @@ const LoginForm = () => {
           <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size={"sm"}><IconRefresh/></Button>
-              </DropdownMenuTrigger>
+              </DropdownMenuTrigger> 
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>Login options</DropdownMenuLabel>
                 <DropdownMenuSeparator/>
                 <DropdownMenuRadioGroup value={loginType} onValueChange={(value) => {setLoginType(value as LoginTypes)}}>
-                  <DropdownMenuRadioItem value={LoginTypes.Username}>{`Username`}</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value={LoginTypes.Email}>{`E-Mail`}</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value={LoginTypes.Username}>{LoginTypes.Username}</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value={LoginTypes.Email}>{LoginTypes.Email}</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
           </DropdownMenu>
