@@ -34,15 +34,13 @@ const LoginForm = () => {
   return (
     <div>
       <form action={(data) => {
-        const loadingToast = toast.loading("Authenticating...");
         loginAction(data, loginType)
         .then((response) => {
-          toast.dismiss(loadingToast); 
+          toast.dismissAll(); 
           handleLoginCompletion(response)})
           .catch(e => {
-            toast.dismiss(loadingToast);
-            const error = e.message;
-            toast.error(error)
+            toast.dismissAll();
+            toast.error("Login failed.")
           });
         }}
         className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
@@ -80,7 +78,7 @@ const LoginForm = () => {
         </div>
 
         <div className="flex">
-          <Button type="submit" className="mx-auto">Login</Button>
+          <Button type="submit" className="mx-auto" onClick={() => {toast.loading("Authenticating...")}}>Login</Button>
         </div>
       </form>
     </div>
