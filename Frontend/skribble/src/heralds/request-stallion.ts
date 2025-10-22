@@ -1,11 +1,10 @@
-'use server'
-
 import { JsonRequestBody } from "@/constants/request-dtos";
 import { JsonResponseBody } from "@/constants/response-dtos";
+import { getBaseSKribbleBackendUrl } from "@/constants/dotenv-constants";
 
 export const unauthenticatedFetch = async (endpoint: string | undefined, jsonBody: JsonRequestBody) : Promise<JsonResponseBody> => {
     try {
-        const response = await fetch(`${process.env.SKRIBBLE_BACKEND_BASE_URL}${endpoint}`, {
+        const response = await fetch(`${await getBaseSKribbleBackendUrl()}${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

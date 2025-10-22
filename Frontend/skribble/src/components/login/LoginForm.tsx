@@ -14,10 +14,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Feather, MailIcon, UserIcon } from "lucide-react";
 import { IconEye, IconEyeClosed, IconLock, IconRefresh } from "@tabler/icons-react";
-import { loginAction, saveToken } from "@/server-actions/credentials-actions";
+import { saveToken } from "@/server-actions/cookie-actions";
 import { useRouter } from "next/navigation";
 import { TokenCarrier } from "@/constants/response-dtos";
 import toast from "react-hot-toast";
+import { loginAction } from "@/heralds/login-herald";
 
 const LoginForm = () => {
 
@@ -27,8 +28,8 @@ const LoginForm = () => {
 
   const handleLoginCompletion = async (response: TokenCarrier) => {
     await saveToken(response?.token || "");
-    toast.success(response?.message)
-    router.push("/home")
+    toast.success(response?.message);
+    router.push("/home");
   }
 
   return (
@@ -37,10 +38,11 @@ const LoginForm = () => {
         loginAction(data, loginType)
         .then((response) => {
           toast.dismissAll(); 
-          handleLoginCompletion(response)})
+          handleLoginCompletion(response);
+        })
           .catch(e => {
             toast.dismissAll();
-            toast.error("Login failed.")
+            toast.error(e.message);
           });
         }}
         className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
