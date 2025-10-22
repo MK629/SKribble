@@ -14,11 +14,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Feather, MailIcon, UserIcon } from "lucide-react";
 import { IconEye, IconEyeClosed, IconLock, IconRefresh } from "@tabler/icons-react";
-import { saveToken } from "@/server-actions/cookie-actions";
+import { saveToken } from "@/server-actions/cookie-baker";
 import { useRouter } from "next/navigation";
 import { TokenCarrier } from "@/constants/response-dtos";
 import toast from "react-hot-toast";
-import { loginAction } from "@/heralds/login-herald";
+import { loginAction } from "@/backend/login-herald";
 
 const LoginForm = () => {
 

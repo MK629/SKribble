@@ -1,6 +1,6 @@
 import { JsonRequestBody } from "@/constants/request-dtos";
 import { JsonResponseBody } from "@/constants/response-dtos";
-import { getBaseSKribbleBackendUrl } from "@/constants/dotenv-constants";
+import { getBaseSKribbleBackendUrl } from "@/backend/dotenv-herald";
 
 export const unauthenticatedFetch = async (endpoint: string | undefined, jsonBody: JsonRequestBody) : Promise<JsonResponseBody> => {
     try {

@@ -1,7 +1,7 @@
 import { LoginTypes} from "@/constants/system-constants";
-import { getELoginEndpoint, getULoginEndpoint } from "@/constants/dotenv-constants";
+import { getELoginEndpoint, getULoginEndpoint } from "@/backend/dotenv-herald";
 import { EmailLoginForm, JsonRequestBody, UsernameLoginForm } from "@/constants/request-dtos";
-import { unauthenticatedFetch } from "../heralds/request-stallion";
+import { unauthenticatedFetch } from "./request-stallion";
 import { TokenCarrier } from "@/constants/response-dtos";
 
 export const loginAction = async (data: FormData, loginType: LoginTypes) : Promise<TokenCarrier> => {
