@@ -5,5 +5,5 @@ import axiosSaddle from "./axios-saddle";
 
 export const unauthenticatedFetch = async (endpoint: string, jsonBody: JsonRequestBody) : Promise<JsonResponseBody> => {
     const baseUrl = await getBaseSKribbleBackendUrl();
-    return await axiosSaddle.post(baseUrl + endpoint, jsonBody);
+    return (await axiosSaddle.post(baseUrl + endpoint, jsonBody))?.data;
 }
