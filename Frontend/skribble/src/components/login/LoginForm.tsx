@@ -42,7 +42,8 @@ const LoginForm = () => {
         })
           .catch(e => {
             toast.dismissAll();
-            toast.error(e.message);
+            toast.error(e.response.data);
+            console.log(e.message)
           });
         }}
         className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">

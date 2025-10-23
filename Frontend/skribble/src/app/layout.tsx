@@ -9,7 +9,7 @@ const layout = ({children}: Readonly<{children: React.ReactNode}>) => {
       </head>
       <body>
         {children}
-        <Toaster position="top-center" toastOptions={{style: {fontSize: "12px", padding: "8px 12px"}}}/>
+        <Toaster position="top-center" toastOptions={{style: {fontSize: "13px", padding: "8px 12px"}}}/>
       </body>
     </html>
   );
