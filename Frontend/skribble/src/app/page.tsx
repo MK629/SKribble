@@ -1,6 +1,10 @@
+import RootPage from "@/components/root/RootPage"
+
 const page = () => {
   return (
-    <div>root</div>
+    <div>
+      <RootPage/>
+    </div>
   )
 }
 

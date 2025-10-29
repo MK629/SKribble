@@ -18,7 +18,7 @@ import { saveToken } from "@/server-actions/cookie-baker";
 import { useRouter } from "next/navigation";
 import { TokenCarrier } from "@/constants/response-dtos";
 import toast from "react-hot-toast";
-import { loginAction } from "@/backend/login-herald";
+import { login } from "@/backend/login-herald";
 
 const LoginForm = () => {
 
@@ -35,7 +35,7 @@ const LoginForm = () => {
   return (
     <div>
       <form action={(data) => {
-        loginAction(data, loginType)
+        login(data, loginType)
         .then((response) => {
           toast.dismissAll(); 
           handleLoginCompletion(response);
