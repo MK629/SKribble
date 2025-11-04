@@ -1,4 +1,4 @@
-"use server"
+'use server'
 
 const SKRIBBLE_BACKEND_BASE_URL = process.env.SKRIBBLE_BACKEND_BASE_URL;
 const SKRIBBLE_AUTH_ENDPOINT = process.env.SKRIBBLE_AUTH_ENDPOINT;
