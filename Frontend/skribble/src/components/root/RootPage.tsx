@@ -8,7 +8,7 @@ import { imageAlt, svgAlt } from '@/constants/system-constants'
 const RootPage = () => {
   return (
     <div className='relative h-screen w-full overflow-hidden'>
-      <Image src={RootPageImage} alt={imageAlt} fill priority className='object-cover object-center'/>
+      <Image src={RootPageImage} alt={imageAlt} fill priority quality={75} className='object-cover object-center'/>
 
       <div className='relative z-10'>
         <div className='flex justify-center mt-10'>
