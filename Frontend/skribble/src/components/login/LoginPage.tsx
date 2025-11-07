@@ -9,7 +9,7 @@ const LoginPage = () => {
   return (
     <div className="flex h-screen">
       <div className="relative w-1/2 lg:block hidden">
-        <Image alt={imageAlt} src={LoginPageImage} placeholder="blur" fill priority quality={75} sizes="100vw" className="object-cover"/>
+        <Image alt={imageAlt} src={LoginPageImage} placeholder="blur" fill priority quality={75} sizes="100vw" className="object-cover object-center"/>
       </div>
       <div className="flex flex-1 justify-center items-center bg-gradient-to-br from-amber-400/50 to-gray-500/50">
         <LoginForm/>
