@@ -1,11 +1,9 @@
-export type JsonRequestBody = object
-
-export type UsernameLoginForm = JsonRequestBody & {
+export type UsernameLoginForm = {
     username: string,
     password: string,
 }
 
-export type EmailLoginForm = JsonRequestBody & {
+export type EmailLoginForm = {
     email: string,
     password: string,
 }

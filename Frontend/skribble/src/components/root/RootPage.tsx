@@ -25,7 +25,7 @@ const RootPage = () => {
             <div className='flex-col'>
               <BookOpenText className='mx-auto' size={45}/>
               Stories
-              <div className='rounded-xl border-white border-2 p-2 mt-2'>
+              <div className='rounded-4xl border-white border-2 p-2 mt-2'>
                 <ul className='list-disc space-y-4 list-inside text-left text-sm font-semibold'>
                   <li className='list-item'>
                     Channel your inner creativity.
@@ -44,7 +44,7 @@ const RootPage = () => {
             <div>
               <ListMusic className='mx-auto' size={45}/>
               Songs
-              <div className='rounded-xl border-white border-2 p-2 mt-2'>
+              <div className='rounded-4xl border-white border-2 p-2 mt-2'>
                 <ul className='list-disc space-y-4 list-inside text-left text-sm font-semibold'>
                   <li className='list-item'>
                     Put your ideas onto a digital parchment.
@@ -63,7 +63,7 @@ const RootPage = () => {
             <div>
               <PencilLine className='mx-auto' size={45}/>
               Essays
-              <div className='rounded-xl border-white border-2 p-2 mt-2'>
+              <div className='rounded-4xl border-white border-2 p-2 mt-2'>
                 <ul className='list-disc space-y-4 list-inside text-left text-sm font-semibold'>
                   <li className='list-item'>
                     Clarify your arguments with ease.
@@ -82,7 +82,7 @@ const RootPage = () => {
             <div>
               <NotepadText className='mx-auto' size={45}/>
               Research papers
-              <div className='rounded-xl border-white border-2 p-2 mt-2'>
+              <div className='rounded-4xl border-white border-2 p-2 mt-2'>
                 <ul className='list-disc space-y-4 list-inside text-left text-sm font-semibold'>
                   <li className='list-item'>
                     Organize your insights efficiently.

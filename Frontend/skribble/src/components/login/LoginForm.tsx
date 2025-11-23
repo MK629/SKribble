@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { TokenCarrier } from "@/constants/response-dtos";
 import toast from "react-hot-toast";
 import { login } from "@/backend/login-herald";
+import { toastCss } from "@/config/toast-config";
 
 const LoginForm = () => {
 
@@ -28,7 +29,7 @@ const LoginForm = () => {
 
   const handleLoginCompletion = async (response: TokenCarrier) => {
     await saveToken(response?.token || "");
-    toast.success(response?.message);
+    toast.success(response?.message, {className: toastCss});
     router.push("/home");
   }
 
@@ -42,13 +43,13 @@ const LoginForm = () => {
         })
           .catch(e => {
             toast.dismissAll();
-            toast.error(e.response.data);
+            toast.error(e.response.data, {className: toastCss});
             console.log(e.message)
           });
         }}
-        className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
+        className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-900 p-8 rounded-lg border-[1px] border-black shadow-lg">
         <h2 className="flex gap-1 justify-center text-2xl font-bold text-center text-gray-900">
-            Welcome <Feather/>
+            Name thyself! <Feather/>
         </h2>
         <div className="flex gap-1">
           <label htmlFor="usernameOrEmail" className="flex font-bold my-auto">
@@ -58,12 +59,12 @@ const LoginForm = () => {
               <MailIcon/>
             }:
           </label>
-          <input type="text" name="usernameOrEmail" placeholder={`Enter your ${loginType}.`} className="px-4 py-1 border text-sm border-gray-300 rounded-md shadow-sm focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"/>
+          <input type="text" name="usernameOrEmail" placeholder={`Enter your ${loginType}.`} className="px-4 py-1 border text-sm border-gray-700 rounded-md shadow-sm focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"/>
           <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size={"sm"}><IconRefresh/></Button>
               </DropdownMenuTrigger> 
-              <DropdownMenuContent className="w-56">
+              <DropdownMenuContent className="w-56 border-[1px] border-black">
                 <DropdownMenuLabel>Login options</DropdownMenuLabel>
                 <DropdownMenuSeparator/>
                 <DropdownMenuRadioGroup value={loginType} onValueChange={(value) => {setLoginType(value as LoginTypes)}}>
@@ -76,7 +77,7 @@ const LoginForm = () => {
 
         <div className="flex gap-1">
           <label htmlFor="password" className="flex font-bold my-auto"><IconLock/>:</label>
-          <input type={seePassword ? 'text' : 'password'} placeholder={`Enter your password.`} name="password" className="px-4 py-1 border text-sm border-gray-300 rounded-md shadow-sm focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"/>
+          <input type={seePassword ? 'text' : 'password'} placeholder={`Enter your password.`} name="password" className="px-4 py-1 border text-sm border-gray-700 rounded-md shadow-sm focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"/>
           <Button type="button" onClick={() => setSeePassword(!seePassword)} size={"sm"}>{seePassword ? <IconEye/> : <IconEyeClosed/>}</Button>
         </div>
 

@@ -1,0 +1,1 @@
+export const toastCss = 'border border-black';

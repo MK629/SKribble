@@ -1,11 +1,11 @@
 import { LoginTypes} from "@/constants/system-constants";
 import { getELoginEndpoint, getULoginEndpoint } from "@/backend/dotenv-herald";
-import { EmailLoginForm, JsonRequestBody, UsernameLoginForm } from "@/constants/request-dtos";
+import { EmailLoginForm, UsernameLoginForm } from "@/constants/request-dtos";
 import { RESTFetch } from "./request-stallion";
 import { TokenCarrier } from "@/constants/response-dtos";
 
 export const login = async (data: FormData, loginType: LoginTypes) : Promise<TokenCarrier> => {
-    let loginForm : JsonRequestBody;
+    let loginForm: UsernameLoginForm | EmailLoginForm;
     let endpoint: string | undefined;
 
     if(loginType === LoginTypes.Username){
@@ -23,5 +23,5 @@ export const login = async (data: FormData, loginType: LoginTypes) : Promise<Tok
         } as EmailLoginForm;
     }
 
-    return RESTFetch(endpoint, loginForm) as Promise<TokenCarrier>;
+    return RESTFetch<UsernameLoginForm | EmailLoginForm, TokenCarrier>(endpoint, loginForm);
 }
