@@ -1,6 +1,4 @@
-export type JsonResponseBody = object
-
-export type TokenCarrier = JsonResponseBody & {
+export type TokenCarrier = {
     message: string,
     token: string,
 }

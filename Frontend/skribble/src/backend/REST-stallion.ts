@@ -5,7 +5,3 @@ export const RESTFetch = async <RequestBodyType, ResponeBodyType> (endpoint: str
     const baseUrl = await getBaseSKribbleBackendUrl();
     return (await axiosSaddle.post(baseUrl + endpoint, jsonBody))?.data;
 }
-
-export const GraphQLFetch = async () => {
-    
-}

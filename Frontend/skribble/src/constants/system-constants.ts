@@ -7,4 +7,3 @@ export enum LoginTypes{
     Username = 'Username',
     Email = 'E-Mail'
 }
-

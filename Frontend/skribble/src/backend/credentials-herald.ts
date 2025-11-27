@@ -1,8 +1,12 @@
 import { LoginTypes} from "@/constants/system-constants";
 import { getELoginEndpoint, getULoginEndpoint } from "@/backend/dotenv-herald";
 import { EmailLoginForm, UsernameLoginForm } from "@/constants/request-dtos";
-import { RESTFetch } from "./request-stallion";
+import { RESTFetch } from "./REST-stallion";
 import { TokenCarrier } from "@/constants/response-dtos";
+import { UserInfo } from "@/constants/graphql-response-dtos";
+import { getApolloClient } from "@/config/apolloClient-config";
+import { gql } from "@apollo/client";
+
 
 export const login = async (data: FormData, loginType: LoginTypes) : Promise<TokenCarrier> => {
     let loginForm: UsernameLoginForm | EmailLoginForm;
@@ -24,4 +28,20 @@ export const login = async (data: FormData, loginType: LoginTypes) : Promise<Tok
     }
 
     return RESTFetch<UsernameLoginForm | EmailLoginForm, TokenCarrier>(endpoint, loginForm);
+}
+
+export const getCurrentUserInfo = async () : Promise<UserInfo> => {
+    const apollo = await getApolloClient();
+
+    const QUERY = gql`
+        query {getCurrentUserInfo {Id, Username, Email} }
+    `
+
+    const {data, error} = await apollo.query({query: QUERY})
+
+    if(error){
+        throw new Error(error.message)
+    }
+
+    return data as UserInfo
 }

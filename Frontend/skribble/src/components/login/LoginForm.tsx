@@ -18,7 +18,7 @@ import { saveToken } from "@/server-actions/cookie-baker";
 import { useRouter } from "next/navigation";
 import { TokenCarrier } from "@/constants/response-dtos";
 import toast from "react-hot-toast";
-import { login } from "@/backend/login-herald";
+import { login } from "@/backend/credentials-herald";
 import { toastCss } from "@/config/toast-config";
 
 const LoginForm = () => {

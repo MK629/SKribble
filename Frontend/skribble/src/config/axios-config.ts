@@ -6,7 +6,8 @@ const axiosSaddle = axios.create({baseURL: undefined});
 
 axiosSaddle.interceptors.request.use(async (config) => {
     // Do something before request is sent
-    config.headers.Authorization = await getToken();
+    const token = await getToken();
+    config.headers.Authorization = token ? `Bearer ${token}`: null;
     return config;
   }, (error) => {
     // Do something with request error
