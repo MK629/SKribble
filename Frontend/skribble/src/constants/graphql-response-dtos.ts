@@ -1,7 +1,7 @@
 export type UserInfo = {
     getCurrentUserInfo: {
-        Id: String,
-        Username: String,
-        Email: String
+        Id: string,
+        Username: string,
+        Email: string
     }
 }
