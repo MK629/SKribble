@@ -12,5 +12,5 @@ export const middleware = async (request: NextRequest) : Promise<NextResponse> =
 }
 
 export const config = {
-    matcher: '/home/:path*',
+    matcher: '/application/:path*',
 }

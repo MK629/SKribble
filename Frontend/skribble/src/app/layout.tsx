@@ -7,7 +7,7 @@ const layout = ({children}: Readonly<{children: React.ReactNode}>) => {
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body>
+      <body className="bg-gray-200">
         {children}
         <Toaster position="top-center" toastOptions={{style: {fontSize: "13px", padding: "8px 12px"}}}/>
       </body>

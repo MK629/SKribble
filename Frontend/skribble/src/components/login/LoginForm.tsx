@@ -30,7 +30,7 @@ const LoginForm = () => {
   const handleLoginCompletion = async (response: TokenCarrier) => {
     await saveToken(response?.token || "");
     toast.success(response?.message, {className: toastCss});
-    router.push("/home");
+    router.push("/application/home");
   }
 
   return (

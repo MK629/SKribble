@@ -10,7 +10,16 @@ const RootPageDescBanner = ({children, endpoint} : {children: React.ReactNode, e
   const router = useRouter();
 
   return (
-    <div onClick={() => {endpoint ? router.push(endpoint) : toast(uDevMsg)}} className='bg-black/85 hover:bg-black/90 text-white w-full mx-auto text-center p-2 rounded-4xl transition duration-300'>
+    <div onClick={() => {
+      if(endpoint){
+        router.push(endpoint);
+      }
+      else{
+        toast(uDevMsg);
+      }
+    }} 
+    className='bg-black/85 hover:bg-black/90 backdrop-blur-xs text-white w-full mx-auto text-center p-2 rounded-4xl transition duration-300'
+    >
       {children}
     </div>
   )

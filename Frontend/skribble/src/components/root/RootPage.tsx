@@ -10,11 +10,13 @@ import { BookOpenText, ListMusic, NotepadText, PencilLine} from 'lucide-react'
 const RootPage = () => {
   return (
     <div className='relative min-h-screen w-full overflow-hidden'>
-      <Image src={RootPageImage} alt={imageAlt} placeholder='blur' fill priority quality={75} sizes="100vw" className='object-cover object-center'/>
+      <Image src={RootPageImage} alt={imageAlt} placeholder='blur' fill priority quality={75} sizes="100vw" className='object-cover object-center z-0'/>
 
-      <div className='relative z-10'>
+      <div className='fixed inset-0 bg-gray-200/15 z-10'></div>
+
+      <div className='relative z-20'>
         <div className='flex justify-center mt-10'>
-          <h1 className='flex text-[45px] bg-white opacity-90 inset-0 backdrop-blur-3xl font-extrabold px-4 py-2 border-2 rounded-2xl text-center border-black text-black'>
+          <h1 className='flex text-[45px] bg-white/50 inset-0 backdrop-blur-xs font-extrabold px-4 py-2 border-2 rounded-2xl text-center border-black text-black'>
             SKribble
             <Image src={Feather} alt={svgAlt} width={56} height={56}/>
           </h1>
@@ -100,7 +102,7 @@ const RootPage = () => {
         </div>
 
         <div className='flex justify-center mt-8 mb-8'>
-          <NavigatorButton text={`Let's make some cool stuff!`} className='' endpoint='\home'/>
+          <NavigatorButton text={`Let's make some cool stuff!`} className='' endpoint='/application/home'/>
         </div>
       </div>
     </div>
