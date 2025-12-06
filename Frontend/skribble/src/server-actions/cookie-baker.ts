@@ -12,3 +12,8 @@ export const saveToken = async (token: string) => {
     const cookieJar = await cookies();
     cookieJar.set(tokenKey, token, {secure: true});
 }
+
+export const clearToken = async () => {
+    const cookieJar = await cookies();
+    cookieJar.delete(tokenKey);
+}

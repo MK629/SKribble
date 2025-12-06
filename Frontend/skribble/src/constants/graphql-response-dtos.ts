@@ -1,7 +1,9 @@
+export type UserInfoResponse = {
+    getCurrentUserInfo: UserInfo
+}
+
 export type UserInfo = {
-    getCurrentUserInfo: {
-        Id: string,
-        Username: string,
-        Email: string
-    }
+    Id: string,
+    Username: string,
+    Email: string
 }

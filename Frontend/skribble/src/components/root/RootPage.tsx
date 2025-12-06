@@ -12,7 +12,7 @@ const RootPage = () => {
     <div className='relative min-h-screen w-full overflow-hidden'>
       <Image src={RootPageImage} alt={imageAlt} placeholder='blur' fill priority quality={75} sizes="100vw" className='object-cover object-center z-0'/>
 
-      <div className='fixed inset-0 bg-gray-200/15 z-10'></div>
+      <div className='absolute inset-0 bg-gray-200/15 z-10'></div>
 
       <div className='relative z-20'>
         <div className='flex justify-center mt-10'>

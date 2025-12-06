@@ -3,9 +3,10 @@ import { getELoginEndpoint, getULoginEndpoint } from "@/backend/dotenv-herald";
 import { EmailLoginForm, UsernameLoginForm } from "@/constants/request-dtos";
 import { RESTFetch } from "./REST-stallion";
 import { TokenCarrier } from "@/constants/response-dtos";
-import { UserInfo } from "@/constants/graphql-response-dtos";
+import { UserInfoResponse } from "@/constants/graphql-response-dtos";
 import { getApolloClient } from "@/config/apolloClient-config";
 import { gql } from "@apollo/client";
+import { clearToken } from "@/server-actions/cookie-baker";
 
 
 export const login = async (data: FormData, loginType: LoginTypes) : Promise<TokenCarrier> => {
@@ -30,7 +31,7 @@ export const login = async (data: FormData, loginType: LoginTypes) : Promise<Tok
     return RESTFetch<UsernameLoginForm | EmailLoginForm, TokenCarrier>(endpoint, loginForm);
 }
 
-export const getCurrentUserInfo = async () : Promise<UserInfo> => {
+export const getCurrentUserInfo = async () : Promise<UserInfoResponse> => {
     const apollo = await getApolloClient();
 
     const QUERY = gql`
@@ -43,5 +44,9 @@ export const getCurrentUserInfo = async () : Promise<UserInfo> => {
         throw new Error(error.message)
     }
 
-    return data as UserInfo
+    return data as UserInfoResponse
+}
+
+export const logout = async () => {
+    await clearToken();
 }
