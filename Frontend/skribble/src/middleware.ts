@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { getToken } from './server-actions/cookie-baker'
- 
+
 // This function can be marked `async` if using `await` inside
 export const middleware = async (request: NextRequest) : Promise<NextResponse> => {
     if(await getToken()){

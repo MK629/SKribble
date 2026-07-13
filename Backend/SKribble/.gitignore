@@ -34,4 +34,7 @@ build/
 
 ### Environment variables ###
 /src/main/resources/.env
-.env
+*.env
+
+### DB INIT FILE ###
+./SKribbleMongodbInit.js

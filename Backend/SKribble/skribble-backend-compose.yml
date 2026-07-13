@@ -1,0 +1,30 @@
+name: skribble-stack
+
+services:
+  mongodb-skribble:
+    container_name: mongodb-skribble-container
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - skribble_data:/data/db
+      - ./SKribbleMongodbInit.js:/docker-entrypoint-initdb.d/init.js:ro
+    ports:
+      - "27017:27017"
+
+  skribble-backend:
+    container_name: skribble-backend-container
+    build: ./.
+    image: skribble-backend:latest-local
+    ports: 
+      - "8080:8080"
+    env_file: ./docker.env
+    depends_on: 
+      - mongodb-skribble
+    restart: always
+
+volumes:
+  skribble_data:
+    external: true

@@ -27,30 +27,30 @@ public class SecurityConfig {
 
 	@Value("${SKribble.frontend.origin}")
 	private String frontendOrigin;
-	
+
 	@Value("${spring.graphql.http.path}")
 	private String graphqlPath;
-	
+
 	@Value("${SKribble.auth.path}")
 	private String authPath;
 
 	@Value("${SKribble.common.service.path}")
 	private String commonServicePath;
-	
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-	
+
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.httpBasic(Customizer.withDefaults());
-		
+
 		http.csrf(c -> c.disable());
 
 		http.cors(c -> {
@@ -67,14 +67,14 @@ public class SecurityConfig {
 			};
 			c.configurationSource(source);
 		});
-		
+
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-		
+
 		http.authorizeHttpRequests(c -> {
 			c.requestMatchers(graphqlPath + "/**", commonServicePath + "/**").hasAnyRole("USER");
 			c.requestMatchers(authPath + "/**").permitAll();
 		});
-		
+
 		return http.build();
 	}
 }

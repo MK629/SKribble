@@ -44,7 +44,6 @@ const MiniProfileCard = () => {
               Loading user info...
             </div>
           }
-
         </div>
 
         <button className="flex items-center justify-center gap-1 px-2 py-1 text-sm rounded-md border-[1px] border-black hover:bg-gray-100 dark:hover:bg-gray-800 transition">
