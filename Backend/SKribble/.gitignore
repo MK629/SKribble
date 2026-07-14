@@ -37,4 +37,4 @@ build/
 *.env
 
 ### DB INIT FILE ###
-./SKribbleMongodbInit.js
+SKribbleMongodbInit.js
